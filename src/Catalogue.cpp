@@ -201,7 +201,7 @@ char * Catalogue::ScanString(const char * message) const
 {
 	char * temp = new char[20];
 	cout << message << endl;
-	cin >> temp;
+	cin.getline(temp, 20);
 	return temp;
 }// ---- fin de ScanString
 

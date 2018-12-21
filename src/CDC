@@ -1,0 +1,21 @@
+Comment on sauvegarde
+Comment on charge
+Qu'est ce que l'utilisateur ne peut pas faire
+
+- fichier xml
+- Pour la sélection 3 : voir si on peut utiliser IsCityIn
+- Eviter de rentrer des chiffres (amélioration de l'esthétique de l'interface)
+- Ajouter code AjouterTrajetCompose d'Ahmed
+- Implémenter le MVC (Modèle Vue Controleur)
+	- Modèle : Trajet%s + Collection
+	- Controleur : Catalogue
+	- Vue : Interface = singleton (classe qui n'a qu'une seule instance)
+- 1 trajet = 1 ligne
+- Opérateur de redirection pour sauvegarder
+- POLYMORPHISME
+- choix du nom du fichier de sauvegarde
+
+
+- UML
+- Faire CR
+- Faire GitHub
