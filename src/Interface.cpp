@@ -73,23 +73,30 @@ void Interface::Menu()
 
 void Interface::Afficher() const
 {
-	m_collectionTrajet->Afficher();
 }// ---- fin de Afficher
 
 
-void Interface::AjouterTrajet(Trajet * trajet)
+void Interface::AjouterTrajet()
 {
-	m_collectionTrajet->AjouterTrajet(trajet);
 }// ---- fin de AjouterTrajet
 
-void Rechercher() const
+void Interface::Rechercher() const
+{
+
+}
+
+void Interface::Charger()
+{
+
+}
+
+void Interface::Sauvegarder()
 {
 
 }
 
 Interface::~Interface()
 {
-	delete m_collectionTrajet;
 #ifdef MAP
 	cout << "Appel au destructeur de <Interface>" << endl;
 #endif
