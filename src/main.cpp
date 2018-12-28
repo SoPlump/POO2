@@ -1,18 +1,20 @@
 #include <stdio.h>
 #include <iostream>
-#include "catalogue.h"
-#include "trajet.h"
-#include "trajetsimple.h"
-#include "trajetcompose.h"
+#include "interface.h"
 
 using namespace std;
 
 int main()
 {
-	Catalogue* catalogue = new Catalogue();
+	Interface* interface = new Interface();
+	interface->Menu();
+
+	delete interface;
+
+	/*Catalogue* catalogue = new Catalogue();
 	catalogue->Interface();
 
-	delete catalogue;
+	delete catalogue;*/
 
 	return 0;
 }
