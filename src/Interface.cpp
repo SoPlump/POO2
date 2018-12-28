@@ -45,31 +45,40 @@ void Interface::Menu()
 //4. Afficher tout le Interface
 {
 	char lecture[100];
-	std::cout << "Bienvenue !" << endl;
-	std::cout << "****************************" << endl;
-	std::cout << "1. Ajouter un trajet simple" << endl;
-	std::cout << "2. Ajouter un trajet compose" << endl;
-	std::cout << "3. Chercher un Trajet Complexe" << endl;
-	std::cout << "4. Chercher un Trajet Simple" << endl;
-	std::cout << "5. Afficher tout le Interface" << endl;
-	std::cout << "****************************" << endl;
+	cout << "Bienvenue !" << endl;
+	cout << "****************************" << endl;
+	cout << "ajouter : Ajouter un Trajet" << endl;
+	cout << "chercher : Chercher un Trajet" << endl;
+	cout << "afficher : Afficher tous les Trajets du Catalogue" << endl;
+	cout << "charger : Charger un Catalogue pre existant" << endl;
+	cout << "sauvegarder : Sauvegarder un Catalogue" << endl;
+	cout << "****************************" << endl;
 
 	fscanf(stdin, "%99s", lecture);
 	while (strcmp(lecture, "bye") != 0)
 	{
-		if (strcmp(lecture, "ajout") == 0)
+		if (strcmp(lecture, "ajouter") == 0)
 		{
 			AjouterTrajet();
 		}
-
-		if (strcmp(lecture, "recherche") == 0)
+		if (strcmp(lecture, "chercher") == 0)
 		{
 			Rechercher();
 		}
-		if (strcmp(lecture, "affichage") == 0)
+		if (strcmp(lecture, "afficher") == 0)
 		{
 			Afficher();
 		}
+		if (strcmp(lecture, "charger") == 0)
+		{
+			Charger();
+		}
+
+		if (strcmp(lecture, "sauvegarder") == 0)
+		{
+			Sauvegarder();
+		}
+
 
 		fscanf(stdin, "%99s", lecture);
 	}

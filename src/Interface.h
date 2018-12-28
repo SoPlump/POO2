@@ -11,10 +11,6 @@ e-mail               : guilhem.cerba@insa-lyon.fr, sophie.raudrant@insa-lyon.fr
 #define Interface_H
 
 //--------------------------------------------------- Interfaces utilisees
-#include "Trajet.h"
-#include "TrajetSimple.h"
-#include "TrajetCompose.h"
-#include "Collection.h"
 #include "Catalogue.h"
 
 //------------------------------------------------------------- Constantes
