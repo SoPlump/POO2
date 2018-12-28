@@ -102,73 +102,71 @@ void Interface::Rechercher() const
 void Interface::Charger()
 {    
 	// File pointer 
-    fstream file; 
-  
+	fstream file; 
+	
     // Open an existing file 
-    file.open("test.csv", ios::in); 
-  
+	file.open("test.csv", ios::in); 
+	
     // Get the roll number 
     // of which the data is required 
-    int rollnum, roll2, count = 0; 
-    cout << "Enter the roll number "
-         << "of the student to display details: "; 
-    cin >> rollnum; 
-  
+	int rollnum, roll2, count = 0; 
+	cout << "Enter the roll number "
+	<< "of the student to display details: "; 
+	cin >> rollnum; 
+	
     // Read the Data from the file 
     // as String Vector 
-    vector<string> row; 
-    string line, word, temp; 
-  
-    while (file >> temp) 
-    { 
-  
-        row.clear(); 
-  
+	vector<string> row; 
+	string line, word, temp; 
+	
         // read an entire row and 
         // store it in a string variable 'line' 
-        getline(file, line); 
-  
+	while(getline(file, line))
+	{ 
+		row.clear(); 
+		
         // used for breaking words 
-        stringstream s(line); 
-  
+		stringstream s(line); 
+		
         // read every column data of a row and 
         // store it in a string variable, 'word' 
-        while (getline(s, word, ',')) 
-        { 
-  
+		while (getline(s, word, ',')) 
+		{ 
             // add all the column data 
             // of a row to a vector 
-            row.push_back(word); 
-        } 
-  
+			row.push_back(word); 
+		} 
+		
         // convert string to integer for comparison 
-        roll2 = stoi(row[0]); 
-  		
+		roll2 = stoi(row[0]); 
+		
 
   		// TODO: Faire en sorte d'Afficher toutes les lignes
         // Compare the roll number 
-        if (roll2 == rollnum) 
-        { 
-  
+		if (roll2 == rollnum) 
+		{ 
             // Print the found data 
-            count = 1; 
-            cout << "Details of Roll " << row[0] << " : \n"; 
-            cout << "Name: " << row[1] << "\n"; 
-            cout << "Maths: " << row[2] << "\n"; 
-            cout << "Physics: " << row[3] << "\n"; 
-            cout << "Chemistry: " << row[4] << "\n"; 
-            cout << "Biology: " << row[5] << "\n"; 
-            break; 
-        } 
-    } 
-    if (count == 0) 
-        cout << "Record not found\n"; 
+			count = 1; 
+			cout << "Details of Roll " << row[0] << " : \n"; 
+			cout << "Name: " << row[1] << "\n"; 
+			cout << "Maths: " << row[2] << "\n"; 
+			cout << "Physics: " << row[3] << "\n"; 
+			cout << "Chemistry: " << row[4] << "\n"; 
+			cout << "Biology: " << row[5] << "\n"; 
+		} 
+	} 
+	if (count == 0) 
+		cout << "Record not found\n"; 
 
 }// ---- file de Charger
 
 void Interface::Sauvegarder()
 {
-
+    // file pointer 
+	fstream fout; 
+	
+    // opens an existing csv file or creates a new file. 
+	fout.open("creation.csv", ios::out | ios::app); 
 }// ---- file de Sauvegarder
 
 Interface::Interface()
