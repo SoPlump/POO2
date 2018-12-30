@@ -45,6 +45,7 @@ void Interface::Menu()
 //4. Afficher tout le Interface
 {
 	char lecture[100];
+	cout << "\n\n\n";
 	cout << "Bienvenue !" << endl;
 	cout << "****************************" << endl;
 	cout << "ajouter : Ajouter un Trajet" << endl;
@@ -53,6 +54,7 @@ void Interface::Menu()
 	cout << "charger : Charger un Catalogue pre existant" << endl;
 	cout << "sauvegarder : Sauvegarder un Catalogue" << endl;
 	cout << "****************************" << endl;
+	cout << "\n\n\n"; 
 
 	fscanf(stdin, "%99s", lecture);
 	while (strcmp(lecture, "bye") != 0)
@@ -80,98 +82,138 @@ void Interface::Menu()
 		}
 
 
+		cout << "\n\n\n";
+		cout << "****************************" << endl;
+		cout << "ajouter : Ajouter un Trajet" << endl;
+		cout << "chercher : Chercher un Trajet" << endl;
+		cout << "afficher : Afficher tous les Trajets du Catalogue" << endl;
+		cout << "charger : Charger un Catalogue pre existant" << endl;
+		cout << "sauvegarder : Sauvegarder un Catalogue" << endl;
+		cout << "****************************" << endl;
+		cout << "\n\n\n";
 		fscanf(stdin, "%99s", lecture);
 	}
 }// ---- file de Menu
 
 void Interface::Afficher() const
 {
-
+	m_catalogue->Afficher();
 }// ---- fin de Afficher
 
 
 void Interface::AjouterTrajet()
 {
+	char lecture[100];
+
+	cout << "simple : Ajouter un Trajet Simple" << endl;
+	cout << "compose : Ajouter un Trajet Compose" << endl;
+	cout << "exit : Vous ne voulez pas ajouter de trajet" << endl;
+
+	fscanf(stdin, "%99s", lecture);
+	while ((strcmp(lecture, "simple") != 0)&&(strcmp(lecture, "compose") != 0)&&(strcmp(lecture, "exit") != 0))
+	{
+		fscanf(stdin, "%99s", lecture);
+	}
+
+	if (strcmp(lecture, "simple") == 0)
+	{
+		m_catalogue->AjouterTrajetSimple();
+	}
+	if (strcmp(lecture, "compose") == 0)
+	{
+		m_catalogue->AjouterTrajetCompose();
+	}
+
 }// ---- fin de AjouterTrajet
 
 void Interface::Rechercher() const
 {
+	char lecture[100];
+	string depart, arrivee;
 
+	cout << "simple : Recherche Simple" << endl;
+	cout << "complexe : Recherche Complexe" << endl;
+	cout << "exit : Vous ne voulez pas ajouter de trajet" << endl;
+
+	fscanf(stdin, "%99s", lecture);
+	while ((strcmp(lecture, "simple") != 0)&&(strcmp(lecture, "complexe") != 0)&&(strcmp(lecture, "exit") != 0))
+	{
+		fscanf(stdin, "%99s", lecture);
+	}
+
+	cout << "Choisissez un Depart" << endl;
+	cin >> depart;
+	cout << "Choisissez une Arrivee" << endl;
+	cin >> arrivee;
+
+	if (strcmp(lecture, "simple") == 0)
+	{
+		m_catalogue->RechercheSimple(depart.c_str(), arrivee.c_str());
+	}
+	if (strcmp(lecture, "complexe") == 0)
+	{
+		m_catalogue->RechercheComplexe(depart.c_str(), arrivee.c_str());
+	}
 }// ---- fin de Rechercher
 
 void Interface::Charger()
 {    
 	// File pointer 
 	fstream file; 
-	
+
+	string path = "saves/";
+
+	//TODO: Verifier les actions de l'utilisateur et boucler si il faut
+	string fileName;
+	cout << "Quel fichier voulez vous charger ?" << endl;
+	cin >> fileName;
+
     // Open an existing file 
-	file.open("test.csv", ios::in); 
-	
-    // Get the roll number 
-    // of which the data is required 
-	int rollnum, roll2, count = 0; 
-	cout << "Enter the roll number "
-	<< "of the student to display details: "; 
-	cin >> rollnum; 
-	
-    // Read the Data from the file 
-    // as String Vector 
-	vector<string> row; 
-	string line, word, temp; 
-	
-        // read an entire row and 
-        // store it in a string variable 'line' 
-	while(getline(file, line))
-	{ 
-		row.clear(); 
-		
-        // used for breaking words 
-		stringstream s(line); 
-		
-        // read every column data of a row and 
-        // store it in a string variable, 'word' 
-		while (getline(s, word, ',')) 
-		{ 
-            // add all the column data 
-            // of a row to a vector 
-			row.push_back(word); 
-		} 
-		
-        // convert string to integer for comparison 
-		roll2 = stoi(row[0]); 
-		
+	file.open((path + fileName + ".csv").c_str(), ios::in);
+	while(!file.is_open())
+	{
+		cout << "Impossible d'ouvrir ce fichier." << endl;
+		string answer;
+		cout << "Voulez vous reellement charger un fichier ? y/n" << endl;
+		cin >> answer;
 
-  		// TODO: Faire en sorte d'Afficher toutes les lignes
-        // Compare the roll number 
-		if (roll2 == rollnum) 
-		{ 
-            // Print the found data 
-			count = 1; 
-			cout << "Details of Roll " << row[0] << " : \n"; 
-			cout << "Name: " << row[1] << "\n"; 
-			cout << "Maths: " << row[2] << "\n"; 
-			cout << "Physics: " << row[3] << "\n"; 
-			cout << "Chemistry: " << row[4] << "\n"; 
-			cout << "Biology: " << row[5] << "\n"; 
-		} 
-	} 
-	if (count == 0) 
-		cout << "Record not found\n"; 
+		if(answer == "n") return;
 
-}// ---- file de Charger
+
+		string fileName;
+		cout << "Quel fichier voulez vous charger ? Numero attenu" << endl;
+		cin >> fileName;
+
+    // Open an existing file 
+		file.open((path + fileName + ".csv").c_str(), ios::in);
+	}
+
+	m_catalogue->Charger(file);
+}// ---- fin de Charger
 
 void Interface::Sauvegarder()
 {
     // file pointer 
-	fstream fout; 
-	
+	fstream file; 
+
+	string path = "saves/";
+
+	string fileName;
+	cout << "Dans quel fichier voulez vous sauvegarder ?" << endl;
+	cin >> fileName;
+
     // opens an existing csv file or creates a new file. 
-	fout.open("creation.csv", ios::out | ios::app); 
-}// ---- file de Sauvegarder
+	file.open((path + fileName + ".csv").c_str(), ios::out | ios::app);
+
+	m_catalogue->Sauvegarder(file);
+}// ---- fin de Sauvegarder
 
 Interface::Interface()
 {
-
+	m_catalogue = new Catalogue();
+#ifdef MAP
+	cout << "Appel au constructeur de <Interface>" << endl;
+#endif
 }
 
 Interface::~Interface()

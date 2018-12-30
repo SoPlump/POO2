@@ -10,6 +10,8 @@ e-mail               : guilhem.cerba@insa-lyon.fr, sophie.raudrant@insa-lyon.fr
 #if ! defined ( Catalogue_H )
 #define Catalogue_H
 
+#include <iostream>
+#include <fstream>
 //--------------------------------------------------- Interfaces utilisees
 #include "Trajet.h"
 #include "TrajetSimple.h"
@@ -36,14 +38,12 @@ class Catalogue
 public:
 	//----------------------------------------------------- Methodes publiques
 	
-	void Interface();
+	void Afficher() const;
 	// Mode d'emploi :
-	// Interface avec l'utilisateur , boucle jusqu'a l'ecriture de "bye"
-	//--numero de la commande a realiser
-	//1. Ajouter un trajet simple
-	//2. Ajouter un trajet compose
-	//3. Chercher un trajet
-	//4. Afficher tout le catalogue
+	// Affiche l'ensemble des trajets contenus dans le catalogue
+	// Un trajet composants un trajet compose sont precedes d'une tabulation pour les differencier des autres trajets du catalogue
+	// Contrat :
+	// Il est suppose qu'un TrajetCompose n'est compose QUE de trajets simples
 	
 	//-------------------------------------------- Constructeurs - destructeur
 
@@ -55,32 +55,16 @@ public:
 	virtual ~Catalogue();
 	// Mode d'emploi : Fonction recursive appelant les destructeurs des objets qu'il contient
 
-	//------------------------------------------------------------------ PRIVE
+	void Charger(std::fstream& file);
+	void Sauvegarder(std::fstream& file);
 
-	//----------------------------------------------------- Methodes privees
-private:
-	void Chemin(const char * depart, const char * arrivee, Collection & wayToHere) const;
-	// Mode d'emploi : Fonction recursive
-	// Fonction appelee lors de la RechercheComplexe
-	// Retourne toutes les combinaisons des trajets du catalogue permettant de relier la ville de depart a celle d'arrivee
-	// wayToHere permet d'enregistrer le chemin parcouru par l'algorithme , pour le premier appel , lui donner une collection vide
-
-protected:
-	//----------------------------------------------------- Methodes protegees
-
-	void Afficher() const;
+	void AjouterTrajetSimple();
+	void AjouterTrajetCompose();
 	// Mode d'emploi :
-	// Affiche l'ensemble des trajets contenus dans le catalogue
-	// Un trajet composants un trajet compose sont precedes d'une tabulation pour les differencier des autres trajets du catalogue
-	// Contrat :
-	// Il est suppose qu'un TrajetCompose n'est compose QUE de trajets simples
-
-	void AjouterTrajet(Trajet*);
-	// Mode d'emploi :
-	// Permet d'ajouter un Trajet au Catalogue
-	// -> dans le cas d'un TrajetCompose , une verification de validite sera appliquee a chaque trajets simples le composant
-	// afin de s'assurer que le TrajetCompose soit valide dans son integralite (ville de depart d'un trajet = ville d'arrivee du trajet le precedent) 
-
+	// Ajoute un Trajet au Catalogue en precisant via selection de quel type de trajet il s'agit
+	// Les verifications de coherence des trajets seront effectuees dans les classes des Trajets
+	// -> selection = 1 : TrajetSimple
+	// -> selection = 2 : TrajetCompose
 
 	void RechercheSimple(const char* depart, const char* arrivee) const;
 	// Mode d'emploi :une ville de depart et d'arrivee sont donnees en entree
@@ -97,12 +81,28 @@ protected:
 	// -> les cycles ne sont pas consideres comme de protentielles solutions
 	// -> un trajet (simple ou compose) ne peut etre emprunte qu'une seule fois dans une meme solution
 
-	void AjouterTrajet(int selection);
+	//------------------------------------------------------------------ PRIVE
+
+	//----------------------------------------------------- Methodes privees
+private:
+	void Chemin(const char * depart, const char * arrivee, Collection & wayToHere) const;
+	// Mode d'emploi : Fonction recursive
+	// Fonction appelee lors de la RechercheComplexe
+	// Retourne toutes les combinaisons des trajets du catalogue permettant de relier la ville de depart a celle d'arrivee
+	// wayToHere permet d'enregistrer le chemin parcouru par l'algorithme , pour le premier appel , lui donner une collection vide
+
+protected:
+	//----------------------------------------------------- Methodes protegees
+
+
+	void AjouterTrajet(Trajet*);
 	// Mode d'emploi :
-	// Ajoute un Trajet au Catalogue en precisant via selection de quel type de trajet il s'agit
-	// Les verifications de coherence des trajets seront effectuees dans les classes des Trajets
-	// -> selection = 1 : TrajetSimple
-	// -> selection = 2 : TrajetCompose
+	// Permet d'ajouter un Trajet au Catalogue
+	// -> dans le cas d'un TrajetCompose , une verification de validite sera appliquee a chaque trajets simples le composant
+	// afin de s'assurer que le TrajetCompose soit valide dans son integralite (ville de depart d'un trajet = ville d'arrivee du trajet le precedent) 
+
+
+
 
 	TrajetSimple* ScanTrajetSimple() const;
 	// Mode d'emploi :

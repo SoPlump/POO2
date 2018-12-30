@@ -11,8 +11,12 @@ e-mail               : guilhem.cerba@insa-lyon.fr, sophie.raudrant@insa-lyon.fr
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include systeme
-#include <iostream>
+
 #include <cstring>
+#include <vector>
+#include <string>
+#include <fstream>
+#include <sstream>
 using namespace std;
 
 //------------------------------------------------------ Include personnel
@@ -37,7 +41,6 @@ void Catalogue::Afficher() const
 {
 	m_collectionTrajet->Afficher();
 }// ---- fin de Afficher
-
 
 void Catalogue::AjouterTrajet(Trajet * trajet)
 {
@@ -90,7 +93,7 @@ void Catalogue::Chemin(const char * depart, const char * arrivee, Collection & w
 		else if(!wayToHere.isCityIn(departs->GetListeTrajet()[i]->GetArrivee()))
 		{
 			wayToHere.AjouterTrajet(departs->GetListeTrajet()[i]->Copier());
-				
+
 			Chemin(departs->GetListeTrajet()[i]->GetArrivee(), arrivee, wayToHere);
 			wayToHere.DepilerTrajet();
 		}
@@ -114,16 +117,14 @@ Catalogue::~Catalogue()
 #endif
 }// ---- fin de ~Catalogue
 
-void Catalogue::AjouterTrajet(int selection)
+void Catalogue::AjouterTrajetSimple()
 {
-	if (selection == 1) 
-	{
-		AjouterTrajet(ScanTrajetSimple());
-	}
-	else 
-	{
-		AjouterTrajet(ScanTrajetCompose());
-	}
+	AjouterTrajet(ScanTrajetSimple());
+}// ---- fin de AjouterTrajet
+
+void Catalogue::AjouterTrajetCompose()
+{
+	AjouterTrajet(ScanTrajetCompose());
 }// ---- fin de AjouterTrajet
 
 TrajetSimple* Catalogue::ScanTrajetSimple() const
@@ -154,6 +155,7 @@ TrajetCompose * Catalogue::ScanTrajetCompose() const
 	uint nbTrajets;
 	cout << "Combien de trajets simples composent ce nouveau trajet ? ";
 	cin >> nbTrajets;
+	//TODO: Modifier pour rentrer uniquement la ville suivante
 	if (nbTrajets != 0)
 	{
 		TrajetCompose* trajetC = new TrajetCompose();
@@ -188,7 +190,7 @@ void Catalogue::ChercherTrajet(int selection) const
 	{
 		RechercheSimple(depart, arrivee);
 	}
-		
+
 	delete[] depart;
 	delete[] arrivee;
 } // ---- fin de ChercherTrajet
@@ -201,51 +203,214 @@ char * Catalogue::ScanString(const char * message) const
 {
 	char * temp = new char[20];
 	cout << message << endl;
-	cin.getline(temp, 20);
+	cin >> temp;
+	//cin.getline(temp, 20); // TODO: Corriger le getline
 	return temp;
 }// ---- fin de ScanString
 
-void Catalogue::Interface()
-//Entrees :
-//--numero de la commande a realiser
-//1. Ajouter un trajet simple
-//2. Ajouter un trajet compose
-//3. Chercher un trajet
-//4. Afficher tout le catalogue
+void Catalogue::Charger(fstream& file)
 {
-	char lecture[100];
-	cout << "Bienvenue !" << endl;
-	cout << "****************************" << endl;
-	cout << "1. Ajouter un trajet simple" << endl;
-	cout << "2. Ajouter un trajet compose" << endl;
-	cout << "3. Chercher un Trajet Complexe" << endl;
-	cout << "4. Chercher un Trajet Simple" << endl;
-	cout << "5. Afficher tout le catalogue" << endl;
-	cout << "****************************" << endl;
+	// Get the roll number 
+    // of which the data is required 
+	uint nbTrajet;
 
-	fscanf(stdin, "%99s", lecture);
-	while (strcmp(lecture, "bye") != 0)
+    // Read the Data from the file 
+    // as String Vector 
+	vector<string> row; 
+	string line, word; 
+
+	// read an entire row and 
+    // store it in a string variable 'line' 
+	while(getline(file, line))
+	{ 
+		row.clear(); 
+
+        // used for breaking words 
+		stringstream s(line); 
+
+        // read every column data of a row and 
+        // store it in a string variable, 'word' 
+		while (getline(s, word, ',')) 
+		{ 
+            // add all the column data 
+            // of a row to a vector 
+			row.push_back(word); 
+		} 
+
+        // convert string to integer for comparison 
+		nbTrajet = stoi(row[0]); 
+		// Cas pour les trajets composes
+		if(nbTrajet != 1)
+		{
+			TrajetCompose* trajetC = new TrajetCompose();
+			for (uint i = 0; i < nbTrajet; ++i)
+			{
+				getline(file, line);
+
+				row.clear(); 
+
+        		// used for breaking words 
+				stringstream s(line); 
+
+        		// read every column data of a row and 
+        		// store it in a string variable, 'word' 
+				while (getline(s, word, ',')) 
+				{ 
+           		// add all the column data 
+            	// of a row to a vector 
+					row.push_back(word); 
+				} 
+
+
+				TrajetSimple* trajet = new TrajetSimple(row[1].c_str(), row[2].c_str(), row[3].c_str());
+				trajetC->AjouterTrajet(trajet);
+
+			}
+
+			m_collectionTrajet->AjouterTrajet(trajetC);
+		}
+
+  		// TODO: Faire en sorte d'Afficher toutes les lignes
+        // Compare the roll number 
+		else 
+		{ 
+			TrajetSimple* trajet = new TrajetSimple(row[1].c_str(), row[2].c_str(), row[3].c_str());
+			m_collectionTrajet->AjouterTrajet(trajet);
+		}
+	} 
+}
+
+void Catalogue::Sauvegarder(fstream& file)
+{
+	Trajet** liste = new Trajet*[m_collectionTrajet->GetNbTrajet()];
+	liste = m_collectionTrajet->GetListeTrajet();
+	for (uint i = 0; i < m_collectionTrajet->GetNbTrajet(); ++i)
 	{
-		if (strcmp(lecture, "1") == 0 || strcmp(lecture, "2") == 0)
-		{
-			AjouterTrajet(atoi(lecture));
-		}
-
-		if ((strcmp(lecture, "3") == 0) || strcmp(lecture, "4") == 0)
-		{
-			ChercherTrajet(atoi(lecture));
-		}
-		if (strcmp(lecture, "5") == 0)
-		{
-			Afficher();
-		}
-
-		fscanf(stdin, "%99s", lecture);
+		if()
+		file << liste[0]->GetDepart() << ","
+			 << liste[0]->GetDepart() << ","
+			 << liste[0]->GetDepart() << ","
 	}
-}// ---- fin de Interface
+	delete liste;
+}
 
 //------------------------------------------------------------------ PRIVE
 
 //----------------------------------------------------- Methodes protegees
 
+/***********************************/
+// Affichage d'un csv
+/*
+// Get the roll number 
+    // of which the data is required 
+	uint nbTrajet;
 
+    // Read the Data from the file 
+    // as String Vector 
+	vector<string> row; 
+	string line, word; 
+
+	// read an entire row and 
+    // store it in a string variable 'line' 
+	while(getline(file, line))
+	{ 
+		row.clear(); 
+
+        // used for breaking words 
+		stringstream s(line); 
+
+        // read every column data of a row and 
+        // store it in a string variable, 'word' 
+		while (getline(s, word, ',')) 
+		{ 
+            // add all the column data 
+            // of a row to a vector 
+			row.push_back(word); 
+		} 
+
+        // convert string to integer for comparison 
+		nbTrajet = stoi(row[0]); 
+		// Cas pour les trajets composes
+		if(nbTrajet != 1)
+		{
+			cout << "Trajet " << row[1] << " " << row[2] << "\n";
+			cout << "Compose de " << row[0] << " Trajets : \n"; 
+			for (uint i = 0; i < nbTrajet; ++i)
+			{
+				getline(file, line);
+
+				row.clear(); 
+
+        		// used for breaking words 
+				stringstream s(line); 
+
+        		// read every column data of a row and 
+        		// store it in a string variable, 'word' 
+				while (getline(s, word, ',')) 
+				{ 
+           		// add all the column data 
+            	// of a row to a vector 
+					row.push_back(word); 
+				} 
+            	// Print the found data 
+				cout << "Departs : " << row[1] << "\n"; 
+				cout << "Arrivee : " << row[2] << "\n"; 
+				cout << "Moyen de Transport : " << row[3] << "\n\n"; 
+
+			}
+		}
+
+  		// TODO: Faire en sorte d'Afficher toutes les lignes
+        // Compare the roll number 
+		else 
+		{ 
+            // Print the found data 
+			cout << "Trajet Simple\n";
+			cout << "Departs : " << row[1] << "\n"; 
+			cout << "Arrivee : " << row[2] << "\n"; 
+			cout << "Moyen de Transport : " << row[3] << "\n\n"; 
+		}
+	} 
+*/
+
+
+
+/*        // read an entire row and 
+        // store it in a string variable 'line' 
+	while(getline(file, line))
+	{ 
+		row.clear(); 
+
+        // used for breaking words 
+		stringstream s(line); 
+
+        // read every column data of a row and 
+        // store it in a string variable, 'word' 
+		while (getline(s, word, ',')) 
+		{ 
+            // add all the column data 
+            // of a row to a vector 
+			row.push_back(word); 
+		} 
+
+        // convert string to integer for comparison 
+		nbTrajet = stoi(row[0]); 
+		if(nbTrajet == 2)
+			getline(file, line);
+
+  		// TODO: Faire en sorte d'Afficher toutes les lignes
+        // Compare the roll number 
+		if (true) 
+		{ 
+            // Print the found data 
+			count = 1; 
+			cout << "Details of Roll " << row[0] << " : \n"; 
+			cout << "Name: " << row[1] << "\n"; 
+			cout << "Maths: " << row[2] << "\n"; 
+			cout << "Physics: " << row[3] << "\n"; 
+			cout << "Chemistry: " << row[4] << "\n"; 
+			cout << "Biology: " << row[5] << "\n\n"; 
+		} 
+	} 
+	if (count == 0) 
+		cout << "Record not found\n"; */
