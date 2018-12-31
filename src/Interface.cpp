@@ -205,7 +205,7 @@ void Interface::Sauvegarder()
     // opens an existing csv file or creates a new file. 
 	file.open((path + fileName + ".csv").c_str(), ios::out | ios::app);
 
-	m_catalogue->Sauvegarder(file);
+	//m_catalogue->Sauvegarder(file);
 }// ---- fin de Sauvegarder
 
 Interface::Interface()

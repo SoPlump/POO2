@@ -156,17 +156,41 @@ TrajetCompose * Catalogue::ScanTrajetCompose() const
 	cout << "Combien de trajets simples composent ce nouveau trajet ? ";
 	cin >> nbTrajets;
 	//TODO: Modifier pour rentrer uniquement la ville suivante
-	if (nbTrajets != 0)
+	if (nbTrajets > 1)
 	{
 		TrajetCompose* trajetC = new TrajetCompose();
-		for (uint i = 0; i < nbTrajets; ++i)
-		{
-			TrajetSimple* ts = ScanTrajetSimple();
+		const char* depart = ScanString("Choisissez un depart : ");
+		const char* arrivee;
+		const char* transport;
+
+		for (uint i = 0; i < nbTrajets-1; ++i)
+		{	
+			arrivee = ScanString("Entrez la ville suivante : ");
+			transport = ScanString("\nChoisissez un moyen de transport : ");
+			TrajetSimple* ts = new TrajetSimple(depart, arrivee, transport);
+
+			depart = arrivee;
+			while (!trajetC->AjouterTrajet(ts))
+			{
+				delete ts;
+			}
+
+
+
+			/*TrajetSimple* ts = ScanTrajetSimple();
 			while (!trajetC->AjouterTrajet(ts))
 			{
 				delete ts;
 				ts = ScanTrajetSimple();
-			}	
+			}*/	
+		}
+		arrivee = ScanString("Entrez la ville d'arrivee : ");
+		transport = ScanString("\nChoisissez un moyen de transport : ");
+		TrajetSimple* ts = new TrajetSimple(depart, arrivee, transport);
+
+		while (!trajetC->AjouterTrajet(ts))
+		{
+			delete ts;
 		}
 		return trajetC;
 	}
@@ -280,7 +304,7 @@ void Catalogue::Charger(fstream& file)
 	} 
 }
 
-void Catalogue::Sauvegarder(fstream& file)
+/*void Catalogue::Sauvegarder(fstream& file)
 {
 	Trajet** liste = new Trajet*[m_collectionTrajet->GetNbTrajet()];
 	liste = m_collectionTrajet->GetListeTrajet();

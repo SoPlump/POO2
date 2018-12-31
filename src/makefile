@@ -17,3 +17,6 @@ main : $(OBJET)
 	
 valgrind :
 	valgrind --leak-check=yes ./main
+
+clean :
+	rm *.o main

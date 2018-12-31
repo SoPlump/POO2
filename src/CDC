@@ -19,3 +19,15 @@ Qu'est ce que l'utilisateur ne peut pas faire
 - UML
 - Faire CR
 - Faire GitHub
+
+
+
+------------------- Ahmed (31/12) :
+
+- ville suivante pour TrajetComposé (à checker avec valgrind)
+- clean makefile (supprime tous les fichiers .o et l'executable)
+- méthode sauvegarder (catalogue:307) mise en comm pour pouvoir compiler
+
+
+=> mettre 1 2 3 4 pour faciliter menu ?
+=> utiliser un fichier txt pr sauvegarder (ac extension .cat) ?

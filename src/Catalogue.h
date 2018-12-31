@@ -56,7 +56,7 @@ public:
 	// Mode d'emploi : Fonction recursive appelant les destructeurs des objets qu'il contient
 
 	void Charger(std::fstream& file);
-	void Sauvegarder(std::fstream& file);
+	//void Sauvegarder(std::fstream& file);
 
 	void AjouterTrajetSimple();
 	void AjouterTrajetCompose();
