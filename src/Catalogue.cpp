@@ -174,15 +174,6 @@ TrajetCompose * Catalogue::ScanTrajetCompose() const
 			{
 				delete ts;
 			}
-
-
-
-			/*TrajetSimple* ts = ScanTrajetSimple();
-			while (!trajetC->AjouterTrajet(ts))
-			{
-				delete ts;
-				ts = ScanTrajetSimple();
-			}*/	
 		}
 		arrivee = ScanString("Entrez la ville d'arrivee : ");
 		transport = ScanString("\nChoisissez un moyen de transport : ");
@@ -541,10 +532,12 @@ void Catalogue::Sauvegarder(fstream& file)
 	}
 }
 
+//TODO : faire marcher mdr
 void Catalogue::Sauvegarder(fstream& file, bool isSimple)
 {
 	for (uint i = 0; i < m_collectionTrajet->GetNbTrajet(); ++i)
 	{
+		//cout << m_collectionTrajet->GetListeTrajet()[i]->ToCSV()[0] << endl;
 		if(isSimple && m_collectionTrajet->GetListeTrajet()[i]->ToCSV()[0]==1)
 		{
 			file << m_collectionTrajet->GetListeTrajet()[i]->ToCSV() << "\n";

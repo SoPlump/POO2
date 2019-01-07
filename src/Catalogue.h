@@ -60,7 +60,7 @@ public:
 	void Charger(std::fstream& file, bool isDep, std::string ville);
 	void Charger(std::fstream& file, std::string depart, std::string arrivee);
 	void Sauvegarder(std::fstream& file);
-	void Sauvegarder(fstream& file, bool isSimple);
+	void Sauvegarder(std::fstream& file, bool isSimple);
 
 	void AjouterTrajetSimple();
 	void AjouterTrajetCompose();
