@@ -211,7 +211,19 @@ void Interface::Charger()
 	}
 	if (strcmp(lecture, "type") == 0)
 	{
-		//m_catalogue->Charger(file);
+		bool isSimple = true;
+		cout << "simple : chargement des trajets simples" << endl;
+		cout << "compose : chargement des trajets composés" << endl;
+		fscanf(stdin, "%99s", lecture);
+		while ((strcmp(lecture, "simple") != 0)&&(strcmp(lecture, "compose") != 0))
+		{
+			fscanf(stdin, "%99s", lecture);
+		}
+		if (strcmp(lecture, "compose") == 0)
+		{
+			isSimple = false;
+		}
+		m_catalogue->Charger(file,isSimple);
 	}
 	if (strcmp(lecture, "ville") == 0)
 	{

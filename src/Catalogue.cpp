@@ -304,6 +304,81 @@ void Catalogue::Charger(fstream& file)
 	} 
 }
 
+void Catalogue::Charger(fstream& file, bool isSimple)
+{
+	// Get the roll number 
+    // of which the data is required 
+	uint nbTrajet;
+
+    // Read the Data from the file 
+    // as String Vector 
+	vector<string> row; 
+	string line, word; 
+
+	// read an entire row and 
+    // store it in a string variable 'line' 
+	while(getline(file, line))
+	{ 
+		row.clear(); 
+
+        // used for breaking words 
+		stringstream s(line); 
+
+        // read every column data of a row and 
+        // store it in a string variable, 'word' 
+		while (getline(s, word, ',')) 
+		{ 
+            // add all the column data 
+            // of a row to a vector 
+			row.push_back(word); 
+		} 
+
+        // convert string to integer for comparison 
+		nbTrajet = stoi(row[0]); 
+		// Cas pour les trajets composes
+		if (!isSimple && nbTrajet !=1)
+		{
+			TrajetCompose* trajetC = new TrajetCompose();
+			for (uint i = 0; i < nbTrajet; ++i)
+			{
+				getline(file, line);
+
+				row.clear(); 
+
+        		// used for breaking words 
+				stringstream s(line); 
+
+        		// read every column data of a row and 
+        		// store it in a string variable, 'word' 
+				while (getline(s, word, ',')) 
+				{ 
+           		// add all the column data 
+            	// of a row to a vector 
+					row.push_back(word); 
+				} 
+
+
+				TrajetSimple* trajet = new TrajetSimple(row[1].c_str(), row[2].c_str(), row[3].c_str());
+				trajetC->AjouterTrajet(trajet);
+
+				//todo: supprimer trajet simple ? 
+			}
+			m_collectionTrajet->AjouterTrajet(trajetC);
+		} else if (isSimple && nbTrajet != 1)
+		{
+			for (uint i = 0; i < nbTrajet; ++i)
+			{
+				getline(file, line);
+			}	
+		} else if (isSimple && nbTrajet == 1)
+		{
+			TrajetSimple* trajet = new TrajetSimple(row[1].c_str(), row[2].c_str(), row[3].c_str());
+			m_collectionTrajet->AjouterTrajet(trajet);
+		}
+	}
+}
+
+
 void Catalogue::Charger(std::fstream& file, bool isDep, string ville)
 {
 

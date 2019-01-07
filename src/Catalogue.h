@@ -56,8 +56,9 @@ public:
 	// Mode d'emploi : Fonction recursive appelant les destructeurs des objets qu'il contient
 
 	void Charger(std::fstream& file);
-	void Charger(std::fstream& file, bool isDep, string ville);
-	void Charger(std::fstream& file, string depart, string arrivee);
+	void Charger(std::fstream& file, bool isSimple);
+	void Charger(std::fstream& file, bool isDep, std::string ville);
+	void Charger(std::fstream& file, std::string depart, std::string arrivee);
 	void Sauvegarder(std::fstream& file);
 
 	void AjouterTrajetSimple();
