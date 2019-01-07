@@ -260,14 +260,7 @@ void Interface::Charger()
 
 			m_catalogue->Charger(file, false, arrivee);
 		}
-		//m_catalogue->Charger(file);
 	}
-	if (strcmp(lecture, "selection") == 0)
-	{
-		//m_catalogue->Charger(file);
-	}
-
-	m_catalogue->Charger(file);
 }// ---- fin de Charger
 
 void Interface::Sauvegarder()
@@ -282,7 +275,71 @@ void Interface::Sauvegarder()
 	cin >> fileName;
 
     // opens an existing csv file or creates a new file. 
+    remove((path + fileName + ".csv").c_str());
 	file.open((path + fileName + ".csv").c_str(), ios::out | ios::app);
+
+	/* Lecture du choix de chargement de l'utilisateur*/
+	//TODO: pas beau (faire des fonctions)
+	char lecture[100];
+	string depart, arrivee;
+
+	cout << "none : Sauvegarde sans criteres de selection" << endl;
+	cout << "type : Sauvegarde selon le type de trajets" << endl;
+	cout << "ville : Sauvegarde selon la ville de depart et/ou la ville d'arrivee" << endl;
+	cout << "selection : Sauvegarde selon un intervalle de selection" << endl;
+	cout << "exit : Vous ne voulez pas sauvegarder de fichier" << endl;
+
+	fscanf(stdin, "%99s", lecture);
+	while ((strcmp(lecture, "none") != 0)&&(strcmp(lecture, "type") != 0)&&(strcmp(lecture, "ville") != 0)&&(strcmp(lecture, "selection") != 0)&&(strcmp(lecture, "exit") != 0))
+	{
+		fscanf(stdin, "%99s", lecture);
+	}
+
+	if (strcmp(lecture, "none") == 0)
+	{	
+		m_catalogue->Sauvegarder(file);
+	}
+	if (strcmp(lecture, "type") == 0)
+	{
+		//m_catalogue->Charger(file);
+	}
+	if (strcmp(lecture, "ville") == 0)
+	{
+		cout << "both : Critere sur les deux villes" << endl;
+		cout << "depart : Critere sur la ville de depart" << endl;
+		cout << "arrivee : Critere sur la ville d'arrivee" << endl;
+
+		fscanf(stdin, "%99s", lecture);
+		while ((strcmp(lecture, "both") != 0)&&(strcmp(lecture, "depart") != 0)&&(strcmp(lecture, "arrivee") != 0))
+		{
+			fscanf(stdin, "%99s", lecture);
+		}
+
+		if (strcmp(lecture, "both") == 0)
+		{
+			cout << "Choisissez un Depart" << endl;
+			cin >> depart;
+			cout << "Choisissez une Arrivee" << endl;
+			cin >> arrivee;
+
+			m_catalogue->Sauvegarder(file, depart, arrivee);
+		}
+		if (strcmp(lecture, "depart") == 0)
+		{
+			cout << "Choisissez un Depart" << endl;
+			cin >> depart;
+
+			m_catalogue->Sauvegarder(file, true, depart);
+		}
+		if (strcmp(lecture, "arrivee") == 0)
+		{
+			cout << "Choisissez une Arrivee" << endl;
+			cin >> arrivee;
+
+			m_catalogue->Sauvegarder(file, false, arrivee);
+		}
+	}
+
 
 	m_catalogue->Sauvegarder(file);
 }// ---- fin de Sauvegarder
