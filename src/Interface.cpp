@@ -270,6 +270,7 @@ void Interface::Sauvegarder()
 	cin >> fileName;
 
     // opens an existing csv file or creates a new file. 
+    remove((path + fileName + ".csv").c_str());
 	file.open((path + fileName + ".csv").c_str(), ios::out | ios::app);
 
 	m_catalogue->Sauvegarder(file);
