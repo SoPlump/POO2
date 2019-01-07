@@ -36,3 +36,7 @@ Qu'est ce que l'utilisateur ne peut pas faire
 
 - chargement sans option
 - sauvegarde sans option
+
+------------------- Ahmed (07/01) :
+
+- chargement selon le type
