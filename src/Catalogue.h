@@ -56,6 +56,8 @@ public:
 	// Mode d'emploi : Fonction recursive appelant les destructeurs des objets qu'il contient
 
 	void Charger(std::fstream& file);
+	void Charger(std::fstream& file, bool isDep, string ville);
+	void Charger(std::fstream& file, string depart, string arrivee);
 	void Sauvegarder(std::fstream& file);
 
 	void AjouterTrajetSimple();
@@ -100,9 +102,6 @@ protected:
 	// Permet d'ajouter un Trajet au Catalogue
 	// -> dans le cas d'un TrajetCompose , une verification de validite sera appliquee a chaque trajets simples le composant
 	// afin de s'assurer que le TrajetCompose soit valide dans son integralite (ville de depart d'un trajet = ville d'arrivee du trajet le precedent) 
-
-
-
 
 	TrajetSimple* ScanTrajetSimple() const;
 	// Mode d'emploi :

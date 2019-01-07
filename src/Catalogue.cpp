@@ -289,12 +289,12 @@ void Catalogue::Charger(fstream& file)
 				TrajetSimple* trajet = new TrajetSimple(row[1].c_str(), row[2].c_str(), row[3].c_str());
 				trajetC->AjouterTrajet(trajet);
 
+				//todo: supprimer trajet simple ? 
 			}
 
 			m_collectionTrajet->AjouterTrajet(trajetC);
 		}
 
-  		// TODO: Faire en sorte d'Afficher toutes les lignes
         // Compare the roll number 
 		else 
 		{ 
@@ -304,25 +304,23 @@ void Catalogue::Charger(fstream& file)
 	} 
 }
 
+void Catalogue::Charger(std::fstream& file, bool isDep, string ville)
+{
+
+}
+
+void Catalogue::Charger(std::fstream& file, string depart, string arrivee)
+{
+
+}
+
 void Catalogue::Sauvegarder(fstream& file)
 {
 	for (uint i = 0; i < m_collectionTrajet->GetNbTrajet(); ++i)
 	{
 		file << m_collectionTrajet->GetListeTrajet()[i]->ToCSV() << "\n";
-		//cout << liste[i]->ToCSV() << endl;
 	}
 }
-	/*Trajet** liste = new Trajet*[m_collectionTrajet->GetNbTrajet()];
-	liste = m_collectionTrajet->GetListeTrajet();
-	for (uint i = 0; i < m_collectionTrajet->GetNbTrajet(); ++i)
-	{
-		if()
-		file << liste[0]->GetDepart() << ","
-			 << liste[0]->GetDepart() << ","
-			 << liste[0]->GetDepart() << ","
-	}
-	delete liste;
-}*/
 
 //------------------------------------------------------------------ PRIVE
 
