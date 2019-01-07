@@ -4,3 +4,4 @@
 # Exuctables
 *.exe
 *.out
+*.exe.stackdump
