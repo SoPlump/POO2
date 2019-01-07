@@ -397,6 +397,20 @@ void Catalogue::Sauvegarder(fstream& file)
 	}
 }
 
+void Catalogue::Sauvegarder(fstream& file, bool isSimple)
+{
+	for (uint i = 0; i < m_collectionTrajet->GetNbTrajet(); ++i)
+	{
+		if(isSimple && m_collectionTrajet->GetListeTrajet()[i]->ToCSV()[0]==1)
+		{
+			file << m_collectionTrajet->GetListeTrajet()[i]->ToCSV() << "\n";
+		} else if (!isSimple && m_collectionTrajet->GetListeTrajet()[i]->ToCSV()[0]!=1)
+		{
+			file << m_collectionTrajet->GetListeTrajet()[i]->ToCSV() << "\n";
+		}
+	}
+}
+
 //------------------------------------------------------------------ PRIVE
 
 //----------------------------------------------------- Methodes protegees
