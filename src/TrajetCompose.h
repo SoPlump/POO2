@@ -61,6 +61,8 @@ public:
 	// Construit une nouvelle instance de la classe TrajetCompose en copiant 
 	// l'instance de TrajetCompose qui lui est passe par reference.
 
+	std::string ToCSV();
+
 	virtual ~TrajetCompose();
 	// Mode d'emploi (destructeur) :
 	// Destructeur d'une instance de la classe TrajetCompose.

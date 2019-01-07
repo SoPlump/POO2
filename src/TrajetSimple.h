@@ -59,6 +59,8 @@ public:
 	// Construit une nouvelle instance de la classe TrajetSimple en copiant l'instance
 	// de TrajetSimple qui lui est passe par reference.
 
+	std::string ToCSV();
+
 	virtual ~TrajetSimple();
 	// Mode d'emploi (destructeur) :
 	// Destructeur d'une instance de la classe TrajetSimple.

@@ -95,6 +95,18 @@ TrajetCompose::TrajetCompose(TrajetCompose const& model) : Trajet(model.m_depart
 #endif
 } //----- Fin de TrajetCompose (constructeur par copie)
 
+string TrajetCompose::ToCSV()
+{
+	string info = to_string(m_collectionTrajet->GetNbTrajet()) + "," + Trajet::ToCSV();
+
+	for (uint i = 0; i < m_collectionTrajet->GetNbTrajet(); ++i)
+	{
+		info += "\n" + m_collectionTrajet->GetListeTrajet()[i]->ToCSV();
+	}
+
+	return info;
+}
+
 TrajetCompose::~TrajetCompose()
 // Algorithme :
 // Destructeur d'une instance de TrajetCompose. Appelle automatiquement le

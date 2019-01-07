@@ -11,6 +11,7 @@ e-mail               : guilhem.cerba@insa-lyon.fr, sophie.raudrant@insa-lyon.fr
 #define Trajet_H
 
 //--------------------------------------------------- Interfaces utilisees
+#include <string>
 
 //------------------------------------------------------------- Constantes
 
@@ -57,7 +58,10 @@ public:
 	// Retourne la ville d'arrivee d'une instance de la classe trajet, en tant
 	// que pointeur sur une chaine de caracteres. 
 
+	virtual std::string ToCSV();
+
 	//-------------------------------------------- Constructeurs - destructeur
+
 
 	virtual ~Trajet();
 	// Mode d'emploi (destructeur) :

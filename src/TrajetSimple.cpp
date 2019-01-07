@@ -76,6 +76,12 @@ TrajetSimple::TrajetSimple(TrajetSimple const& model) : Trajet(model.m_depart, m
 #endif
 } //----- Fin de TrajetSimple (constructeur de copie)
 
+string TrajetSimple::ToCSV()
+{
+	string moyenT(m_moyenTransport);
+	string info = "1," + Trajet::ToCSV() + "," + moyenT;
+	return info;
+}
 
 TrajetSimple::~TrajetSimple()
 // Algorithme :

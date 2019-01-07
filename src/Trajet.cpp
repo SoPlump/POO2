@@ -54,6 +54,14 @@ char* Trajet::GetArrivee() const
 	return m_arrivee;
 } //----- Fin de GetArrivee
 
+string Trajet::ToCSV()
+{
+	string depart (m_depart);
+	string arrivee(m_arrivee);
+	string info = depart + "," + arrivee;
+	return info;
+}
+
 //-------------------------------------------- Destructeur
 
 Trajet::~Trajet()
