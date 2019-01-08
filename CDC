@@ -22,6 +22,8 @@ TODO:
 - UML
 - Faire CR
 - Faire GitHub OK
+- Ajouter de la metadonnee au debut du fichier (nb trajets dans fichier)
+- Remplacer les cin par des getline
 
 
 ------------------- Ahmed (31/12) :
