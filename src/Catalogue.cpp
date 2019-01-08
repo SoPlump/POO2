@@ -42,11 +42,6 @@ void Catalogue::Afficher() const
 	m_collectionTrajet->Afficher();
 }// ---- fin de Afficher
 
-void Catalogue::AjouterTrajet(Trajet * trajet)
-{
-	m_collectionTrajet->AjouterTrajet(trajet);
-}// ---- fin de AjouterTrajet
-
 void Catalogue::RechercheSimple(const char * depart, const char * arrivee) const
 //Algorithme :
 //Regarde tous les trajets du catalogue , si les villes de depart et d'arrivee correspondent
@@ -119,12 +114,12 @@ Catalogue::~Catalogue()
 
 void Catalogue::AjouterTrajetSimple()
 {
-	AjouterTrajet(ScanTrajetSimple());
+	m_collectionTrajet->AjouterTrajet(ScanTrajetSimple());
 }// ---- fin de AjouterTrajet
 
 void Catalogue::AjouterTrajetCompose()
 {
-	AjouterTrajet(ScanTrajetCompose());
+	m_collectionTrajet->AjouterTrajet(ScanTrajetCompose());
 }// ---- fin de AjouterTrajet
 
 TrajetSimple* Catalogue::ScanTrajetSimple() const
@@ -152,18 +147,18 @@ TrajetCompose * Catalogue::ScanTrajetCompose() const
 //--nombre de trajets composant le trajet composee
 //Appel a ScanTrajetSimple()
 {
-	uint nbTrajets;
+	uint iTrajets;
 	cout << "Combien de trajets simples composent ce nouveau trajet ? ";
-	cin >> nbTrajets;
+	cin >> iTrajets;
 	//TODO: Modifier pour rentrer uniquement la ville suivante
-	if (nbTrajets > 1)
+	if (iTrajets > 1)
 	{
 		TrajetCompose* trajetC = new TrajetCompose();
 		const char* depart = ScanString("Choisissez un depart : ");
 		const char* arrivee;
 		const char* transport;
 
-		for (uint i = 0; i < nbTrajets-1; ++i)
+		for (uint i = 0; i < iTrajets-1; ++i)
 		{	
 			arrivee = ScanString("Entrez la ville suivante : ");
 			transport = ScanString("\nChoisissez un moyen de transport : ");
@@ -234,11 +229,12 @@ char * Catalogue::ScanString(const char * message) const
 
 void Catalogue::Charger(fstream& file)
 {
-	uint nbTrajet;
+	uint iTrajet;
 
     // Read the Data from the file as String Vector 
 	vector<string> row; 
 	string line, word; 
+	getline(file, line); // ignore les metadonnees
 
 	// read an entire row and store it in a string variable 'line' 
 	while(getline(file, line))
@@ -258,12 +254,12 @@ void Catalogue::Charger(fstream& file)
 		} 
 
         // convert string to integer for comparison 
-		nbTrajet = stoi(row[0]); 
+		iTrajet = stoi(row[0]); 
 		// Cas pour les trajets composes
-		if(nbTrajet != 1)
+		if(iTrajet != 1)
 		{
 			TrajetCompose* trajetC = new TrajetCompose();
-			for (uint i = 0; i < nbTrajet; ++i)
+			for (uint i = 0; i < iTrajet; ++i)
 			{
 				getline(file, line);
 
@@ -306,11 +302,12 @@ void Catalogue::Charger(std::fstream& file, bool isDep, string ville)
 	if(isDep) indexVille = 1; //Le critere est sur la ville de depart
 	else indexVille = 2; //Le critere est sur la ville d'arrivee
 	
-	uint nbTrajet;
+	uint iTrajet;
 
     // Read the Data from the file as String Vector 
 	vector<string> row; 
 	string line, word; 
+	getline(file, line); // ignore les metadonnees
 
 	// read an entire row and store it in a string variable 'line' 
 	while(getline(file, line))
@@ -330,14 +327,14 @@ void Catalogue::Charger(std::fstream& file, bool isDep, string ville)
 		} 
 
         // convert string to integer for comparison 
-		nbTrajet = stoi(row[0]); 
+		iTrajet = stoi(row[0]); 
 		// Cas pour les trajets composes
-		if(nbTrajet != 1)
+		if(iTrajet != 1)
 		{
 			if(row[indexVille] == ville)
 			{
 				TrajetCompose* trajetC = new TrajetCompose();
-				for (uint i = 0; i < nbTrajet; ++i)
+				for (uint i = 0; i < iTrajet; ++i)
 				{
 					getline(file, line);
 
@@ -366,7 +363,7 @@ void Catalogue::Charger(std::fstream& file, bool isDep, string ville)
 			}
 			else
 			{
-				for (uint i = 0; i < nbTrajet; ++i)
+				for (uint i = 0; i < iTrajet; ++i)
 					getline(file, line);
 			}
 		}
@@ -383,11 +380,12 @@ void Catalogue::Charger(std::fstream& file, bool isDep, string ville)
 
 void Catalogue::Charger(std::fstream& file, string depart, string arrivee)
 {	
-	uint nbTrajet;
+	uint iTrajet;
 
     // Read the Data from the file as String Vector 
 	vector<string> row; 
-	string line, word; 
+	string line, word;
+	getline(file, line); // ignore les metadonnees 
 
 	// read an entire row and store it in a string variable 'line' 
 	while(getline(file, line))
@@ -407,14 +405,14 @@ void Catalogue::Charger(std::fstream& file, string depart, string arrivee)
 		} 
 
         // convert string to integer for comparison 
-		nbTrajet = stoi(row[0]); 
+		iTrajet = stoi(row[0]); 
 		// Cas pour les trajets composes
-		if(nbTrajet != 1)
+		if(iTrajet != 1)
 		{
 			if((row[1] == depart)&&(row[2] == arrivee))
 			{
 				TrajetCompose* trajetC = new TrajetCompose();
-				for (uint i = 0; i < nbTrajet; ++i)
+				for (uint i = 0; i < iTrajet; ++i)
 				{
 					getline(file, line);
 
@@ -443,7 +441,7 @@ void Catalogue::Charger(std::fstream& file, string depart, string arrivee)
 			}
 			else
 			{
-				for (uint i = 0; i < nbTrajet; ++i)
+				for (uint i = 0; i < iTrajet; ++i)
 					getline(file, line);
 			}
 		}
@@ -456,6 +454,85 @@ void Catalogue::Charger(std::fstream& file, string depart, string arrivee)
 			}
 		}
 	}
+}
+
+void Catalogue::Charger(std::fstream& file, uint begin, uint end)
+{
+	// m - n > 0
+	uint iTrajet, nbTrajet;
+
+    // Read the Data from the file as String Vector 
+	vector<string> row; 
+	string line, word; 
+	getline(file, line); // ignore les metadonnees
+	nbTrajet = stoi(line);
+
+		cout << begin << endl ;
+		cout << end << endl;
+	if(end - begin > 0)
+	{
+		cout << "ok";
+	// read an entire row and store it in a string variable 'line' 
+		while(getline(file, line))
+		{ 
+			row.clear(); 
+
+        // used for breaking words 
+			stringstream s(line); 
+
+        // read every column data of a row and 
+        // store it in a string variable, 'word' 
+			while (getline(s, word, ',')) 
+			{ 
+            // add all the column data 
+            // of a row to a vector 
+				row.push_back(word); 
+			} 
+
+        // convert string to integer for comparison 
+			iTrajet = stoi(row[0]); 
+		// Cas pour les trajets composes
+			if(iTrajet != 1)
+			{
+				TrajetCompose* trajetC = new TrajetCompose();
+				for (uint i = 0; i < iTrajet; ++i)
+				{
+					getline(file, line);
+
+					row.clear(); 
+
+        		// used for breaking words 
+					stringstream s(line); 
+
+        		// read every column data of a row and 
+        		// store it in a string variable, 'word' 
+					while (getline(s, word, ',')) 
+					{ 
+           		// add all the column data 
+            	// of a row to a vector 
+						row.push_back(word); 
+					} 
+
+
+					TrajetSimple* trajet = new TrajetSimple(row[1].c_str(), row[2].c_str(), row[3].c_str());
+					trajetC->AjouterTrajet(trajet);
+
+				//todo: supprimer trajet simple ? 
+				}
+
+				m_collectionTrajet->AjouterTrajet(trajetC);
+			}
+
+        // Compare the roll number 
+			else 
+			{ 
+				TrajetSimple* trajet = new TrajetSimple(row[1].c_str(), row[2].c_str(), row[3].c_str());
+				m_collectionTrajet->AjouterTrajet(trajet);
+			}
+		} 
+	}
+	else
+		cout << "Ce fichier contient " << nbTrajet << ", or vos intervalles sont trop grand";
 }
 
 void Catalogue::Sauvegarder(fstream& file)
