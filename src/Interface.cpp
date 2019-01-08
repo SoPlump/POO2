@@ -327,9 +327,6 @@ void Interface::Sauvegarder()
 			m_catalogue->Sauvegarder(file, false, arrivee);
 		}
 	}
-
-
-	m_catalogue->Sauvegarder(file);
 }// ---- fin de Sauvegarder
 
 Interface::Interface()
@@ -342,6 +339,7 @@ Interface::Interface()
 
 Interface::~Interface()
 {
+	delete m_catalogue;
 #ifdef MAP
 	cout << "Appel au destructeur de <Interface>" << endl;
 #endif

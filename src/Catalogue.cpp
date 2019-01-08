@@ -466,6 +466,28 @@ void Catalogue::Sauvegarder(fstream& file)
 	}
 }
 
+void Catalogue::Sauvegarder(fstream& file, bool isDep, string ville)
+{	
+	for (uint i = 0; i < m_collectionTrajet->GetNbTrajet(); ++i)
+	{
+		if(((isDep)&&(m_collectionTrajet->GetListeTrajet()[i]->GetDepart() == ville))||((!isDep)&&(m_collectionTrajet->GetListeTrajet()[i]->GetArrivee() == ville)))
+		{
+			file << m_collectionTrajet->GetListeTrajet()[i]->ToCSV() << "\n";
+		}
+	}
+}
+
+void Catalogue::Sauvegarder(fstream& file, string depart, string arrivee)
+{
+	for (uint i = 0; i < m_collectionTrajet->GetNbTrajet(); ++i)
+	{
+		if((m_collectionTrajet->GetListeTrajet()[i]->GetDepart() == depart)&&(m_collectionTrajet->GetListeTrajet()[i]->GetArrivee() == arrivee))
+		{
+			file << m_collectionTrajet->GetListeTrajet()[i]->ToCSV() << "\n";
+		}
+	}
+}
+
 //------------------------------------------------------------------ PRIVE
 
 //----------------------------------------------------- Methodes protegees

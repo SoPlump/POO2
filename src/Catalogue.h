@@ -56,11 +56,38 @@ public:
 	// Mode d'emploi : Fonction recursive appelant les destructeurs des objets qu'il contient
 
 	void Charger(std::fstream& file);
+	// Mode d'emploi :
+	// Charge les trajets d'un fichier choisi par l'utilisateur
+	// Contrat :
+	// Le fichier doit etre un csv
+	// Le fichier doit correspondre aux criteres de lecture
+
 	void Charger(std::fstream& file, bool isDep, string ville);
+	// Mode d'emploi :
+	// Charge les trajets d'un fichier choisi par l'utilisateur avec un critere sur la ville de depart ou la ville d'arrivee
+	// Contrat :
+	// Le fichier doit etre un csv
+	// Le fichier doit correspondre aux criteres de lecture
+
 	void Charger(std::fstream& file, string depart, string arrivee);
+	// Mode d'emploi :
+	// Charge les trajets d'un fichier choisi par l'utilisateur avec un critere sur la ville de depart et la ville d'arrivee
+	// Contrat :
+	// Le fichier doit etre un csv
+	// Le fichier doit correspondre aux criteres de lecture
+
 	void Sauvegarder(std::fstream& file);
+	// Mode d'emploi :
+	// Sauvegarde dans un fichier choisi par l'utilisateur le catalogue entier
+	void Sauvegarder(fstream& file, bool isDep, string ville);
+	// Mode d'emploi :
+	// Sauvegarde dans un fichier choisi par l'utilisateur le catalogue avec un critere sur la ville de depart ou la ville d'arrivee
+	void Sauvegarder(fstream& file, string depart, string arrivee);
+	// Mode d'emploi :
+	// Sauvegarde dans un fichier choisi par l'utilisateur le catalogue avec un critere sur la ville de depart et la ville d'arrivee
 
 	void AjouterTrajetSimple();
+	
 	void AjouterTrajetCompose();
 	// Mode d'emploi :
 	// Ajoute un Trajet au Catalogue en precisant via selection de quel type de trajet il s'agit
