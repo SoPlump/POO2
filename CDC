@@ -2,24 +2,26 @@ Comment on sauvegarde
 Comment on charge
 Qu'est ce que l'utilisateur ne peut pas faire
 
-- fichier xml
-- Pour la sélection 3 : voir si on peut utiliser IsCityIn
-- Eviter de rentrer des chiffres (amélioration de l'esthétique de l'interface)
-- Ajouter code AjouterTrajetCompose d'Ahmed
-- Implémenter le MVC (Modèle Vue Controleur)
+- fichier csv OK
+- Pour la sélection 3 : voir si on peut utiliser IsCityIn Pas utile
+- Eviter de rentrer des chiffres (amélioration de l'esthétique de l'interface) OK
+- Ajouter code AjouterTrajetCompose d'Ahmed OK
+- Implémenter le MVC (Modèle Vue Controleur) OK
 	- Modèle : Trajet%s + Collection
 	- Controleur : Catalogue
 	- Vue : Interface = singleton (classe qui n'a qu'une seule instance)
-- 1 trajet = 1 ligne
-- Opérateur de redirection pour sauvegarder
-- POLYMORPHISME
-- choix du nom du fichier de sauvegarde
+- 1 trajet = 1 ligne OK
+- Opérateur de redirection pour sauvegarder OK
+- POLYMORPHISME OK
+- choix du nom du fichier de sauvegarde OK
 
-
+TODO:
+- Corriger la fuite mémoire de la recherche simple
+- Ajouter l'interdiction de rentrer des virgules dans les noms de ville (lors de la création de trajets)
+- Tester avec Valgrind
 - UML
 - Faire CR
-- Faire GitHub
-
+- Faire GitHub OK
 
 
 ------------------- Ahmed (31/12) :
@@ -36,3 +38,8 @@ Qu'est ce que l'utilisateur ne peut pas faire
 
 - chargement sans option
 - sauvegarde sans option
+
+----- (8/1)
+
+- chargement avec l'option de la/les ville(s)
+- sauvegarde avec l'option de la/les ville(s)
