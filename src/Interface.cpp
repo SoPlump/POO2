@@ -192,6 +192,7 @@ void Interface::Charger()
 	//TODO: pas beau (faire des fonctions)
 	char lecture[100];
 	string depart, arrivee;
+	uint begin, end;
 
 	cout << "none : Chargement sans criteres de selection" << endl;
 	cout << "type : Chargement selon le type de trajets" << endl;
@@ -248,6 +249,15 @@ void Interface::Charger()
 
 			m_catalogue->Charger(file, false, arrivee);
 		}
+	}
+	if (strcmp(lecture, "selection") == 0)
+	{
+			cout << "Soit l'intervalle [n, m]. Choisissez l'indice n" << endl;
+			cin >> begin;
+			cout << "Choisissez l'indice m" << endl;
+			cin >> end;
+
+			m_catalogue->Charger(file, begin, end);
 	}
 }// ---- fin de Charger
 
