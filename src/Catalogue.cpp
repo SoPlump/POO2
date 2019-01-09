@@ -700,6 +700,7 @@ bool Catalogue::Sauvegarder(fstream& file, int begin, int end)
 
 	if((end - begin >= 0)&&(1 <= begin)&&(begin <= nbTrajet)&&(1 <= end)&&(end<= nbTrajet))
 	{
+		file << m-n << "\n";
 		for (int i = begin-1; i <= end-1; ++i)
 		{
 			// Recupere le type de trajet
