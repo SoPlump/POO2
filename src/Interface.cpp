@@ -332,7 +332,7 @@ void Interface::Sauvegarder()
 		{
 			isSimple = false;
 		}
-		m_catalogue->Charger(file,isSimple);
+		m_catalogue->Sauvegarder(file,isSimple);
 	}
 	if (strcmp(lecture, "ville") == 0)
 	{
@@ -353,21 +353,21 @@ void Interface::Sauvegarder()
 			cout << "Choisissez une Arrivee" << endl;
 			cin >> arrivee;
 
-			//m_catalogue->Sauvegarder(file, depart, arrivee);
+			m_catalogue->Sauvegarder(file, depart, arrivee);
 		}
 		if (strcmp(lecture, "depart") == 0)
 		{
 			cout << "Choisissez un Depart" << endl;
 			cin >> depart;
 
-			//m_catalogue->Sauvegarder(file, true, depart);
+			m_catalogue->Sauvegarder(file, true, depart);
 		}
 		if (strcmp(lecture, "arrivee") == 0)
 		{
 			cout << "Choisissez une Arrivee" << endl;
 			cin >> arrivee;
 
-			//m_catalogue->Sauvegarder(file, false, arrivee);
+			m_catalogue->Sauvegarder(file, false, arrivee);
 		}
 	}
 }// ---- fin de Sauvegarder
