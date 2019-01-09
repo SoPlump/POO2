@@ -12,6 +12,7 @@ e-mail               : guilhem.cerba@insa-lyon.fr, sophie.raudrant@insa-lyon.fr
 
 #include <iostream>
 #include <fstream>
+#include <string>
 //--------------------------------------------------- Interfaces utilisees
 #include "Trajet.h"
 #include "TrajetSimple.h"
@@ -62,30 +63,30 @@ public:
 	// Le fichier doit etre un csv
 	// Le fichier doit correspondre aux criteres de lecture
 
-	void Charger(std::fstream& file, bool isDep, string ville);
+	void Charger(std::fstream& file, bool isDep, std::string ville);
 	// Mode d'emploi :
 	// Charge les trajets d'un fichier choisi par l'utilisateur avec un critere sur la ville de depart ou la ville d'arrivee
 	// Contrat :
 	// Le fichier doit etre un csv
 	// Le fichier doit correspondre aux criteres de lecture
 
-	void Charger(std::fstream& file, string depart, string arrivee);
+	void Charger(std::fstream& file, std::string depart, std::string arrivee);
 	// Mode d'emploi :
 	// Charge les trajets d'un fichier choisi par l'utilisateur avec un critere sur la ville de depart et la ville d'arrivee
 	// Contrat :
 	// Le fichier doit etre un csv
 	// Le fichier doit correspondre aux criteres de lecture
 
-	void Charger(std::fstream& file, int begin, int end);
+	bool Charger(std::fstream& file, int begin, int end);
 	void Charger(std::fstream& file, bool isSimple);
 
 	void Sauvegarder(std::fstream& file);
 	// Mode d'emploi :
 	// Sauvegarde dans un fichier choisi par l'utilisateur le catalogue entier
-	void Sauvegarder(fstream& file, bool isDep, string ville);
+	void Sauvegarder(std::fstream& file, bool isDep, std::string ville);
 	// Mode d'emploi :
 	// Sauvegarde dans un fichier choisi par l'utilisateur le catalogue avec un critere sur la ville de depart ou la ville d'arrivee
-	void Sauvegarder(fstream& file, string depart, string arrivee);
+	void Sauvegarder(std::fstream& file, std::string depart, std::string arrivee);
 	// Mode d'emploi :
 	// Sauvegarde dans un fichier choisi par l'utilisateur le catalogue avec un critere sur la ville de depart et la ville d'arrivee
 
