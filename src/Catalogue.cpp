@@ -183,29 +183,6 @@ TrajetCompose * Catalogue::ScanTrajetCompose() const
 	return nullptr;
 }// ---- fin de ScanTrajetCompose
 
-void Catalogue::ChercherTrajet(int selection) const
-//Entrees :
-//--nom de la ville de depart
-//--nom de la ville d'arrivee
-// de l'itineraire recherche dans le catalogue
-{
-	const char* depart = ScanString("Choisissez un depart : ");
-	const char* arrivee = ScanString("\nChoisissez une arrivee : ");
-
-	if (selection == 3)
-	{
-		RechercheComplexe(depart, arrivee);
-	}
-	else
-	{
-		RechercheSimple(depart, arrivee);
-	}
-
-	delete[] depart;
-	delete[] arrivee;
-} // ---- fin de ChercherTrajet
-
-
 char * Catalogue::ScanString(const char * message) const
 //Entrees :
 //--Chaine de char a retourner
@@ -700,7 +677,7 @@ bool Catalogue::Sauvegarder(fstream& file, int begin, int end)
 
 	if((end - begin >= 0)&&(1 <= begin)&&(begin <= nbTrajet)&&(1 <= end)&&(end<= nbTrajet))
 	{
-		file << m-n << "\n";
+		file << end-begin << "\n";
 		for (int i = begin-1; i <= end-1; ++i)
 		{
 			// Recupere le type de trajet
