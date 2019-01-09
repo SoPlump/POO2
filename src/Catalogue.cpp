@@ -540,11 +540,11 @@ bool Catalogue::Charger(std::fstream& file, int begin, int end)
 	if((end - begin >= 0)&&(1 <= begin)&&((uint)begin <= nbTrajet)&&(1 <= end)&&((uint)end<= nbTrajet))
 	{
 		int x;
-		for(x=0; x<begin-1;x++)
+		for(x=0; x<begin-1;++x)
 		{
 			getline(file, line);
 		}
-		for (x=begin; x<=end;x++)
+		for (x=begin; x<=end;++x)
 		{
 			getline(file, line);
 			row.clear(); 
@@ -661,6 +661,33 @@ void Catalogue::Sauvegarder(fstream& file, bool isSimple)
 			file << m_collectionTrajet->GetListeTrajet()[i]->ToCSV() << "\n";
 		}
 	}
+}
+
+bool Catalogue::Sauvegarder(fstream& file, int begin, int end)
+{
+	int nbTrajet = m_collectionTrajet->GetNbTrajet();
+
+	if((end - begin >= 0)&&(1 <= begin)&&(begin <= nbTrajet)&&(1 <= end)&&(end<= nbTrajet))
+	{
+		for (int i = begin-1; i <= end-1; ++i)
+		{
+			// Recupere le type de trajet
+			string typeTrajet;
+			stringstream s(m_collectionTrajet->GetListeTrajet()[i]->ToCSV()); 
+			getline(s, typeTrajet, ',');
+			cout << stoi(typeTrajet) << endl;
+
+			file << m_collectionTrajet->GetListeTrajet()[i]->ToCSV() << "\n";
+		}
+		return true;
+	}
+	else 
+	{
+		cout << "Intervalles incorrectes" << endl;
+		return false;
+	}
+
+	
 }
 
 //------------------------------------------------------------------ PRIVE

@@ -298,6 +298,7 @@ void Interface::Sauvegarder()
 	//TODO: pas beau (faire des fonctions)
 	char lecture[100];
 	string depart, arrivee;
+	int begin, end;
 
 	cout << "none : Sauvegarde sans criteres de selection" << endl;
 	cout << "type : Sauvegarde selon le type de trajets" << endl;
@@ -369,6 +370,18 @@ void Interface::Sauvegarder()
 
 			m_catalogue->Sauvegarder(file, false, arrivee);
 		}
+	}
+	if (strcmp(lecture, "selection") == 0)
+	{
+		bool valide;
+		do
+		{
+			cout << "Soit l'intervalle [n, m]. Choisissez l'indice n (supérieur ou égal à 1)" << endl;
+			cin >> begin;
+			cout << "Choisissez l'indice m" << endl;
+			cin >> end;
+			valide = m_catalogue->Sauvegarder(file, begin, end);
+		} while (!valide);
 	}
 }// ---- fin de Sauvegarder
 

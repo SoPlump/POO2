@@ -92,6 +92,8 @@ public:
 
 	void Sauvegarder(std::fstream& file, bool isSimple);
 
+	bool Sauvegarder(std::fstream& file, int begin, int end);
+
 	void AjouterTrajetSimple();
 
 	void AjouterTrajetCompose();
