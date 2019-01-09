@@ -77,6 +77,7 @@ public:
 	// Le fichier doit correspondre aux criteres de lecture
 
 	void Charger(std::fstream& file, uint begin, uint end);
+	void Charger(std::fstream& file, bool isSimple);
 
 	void Sauvegarder(std::fstream& file);
 	// Mode d'emploi :
@@ -87,6 +88,8 @@ public:
 	void Sauvegarder(fstream& file, string depart, string arrivee);
 	// Mode d'emploi :
 	// Sauvegarde dans un fichier choisi par l'utilisateur le catalogue avec un critere sur la ville de depart et la ville d'arrivee
+
+	void Sauvegarder(std::fstream& file, bool isSimple);
 
 	void AjouterTrajetSimple();
 

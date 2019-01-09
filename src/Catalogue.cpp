@@ -169,15 +169,6 @@ TrajetCompose * Catalogue::ScanTrajetCompose() const
 			{
 				delete ts;
 			}
-
-
-
-			/*TrajetSimple* ts = ScanTrajetSimple();
-			while (!trajetC->AjouterTrajet(ts))
-			{
-				delete ts;
-				ts = ScanTrajetSimple();
-			}*/	
 		}
 		arrivee = ScanString("Entrez la ville d'arrivee : ");
 		transport = ScanString("\nChoisissez un moyen de transport : ");
@@ -295,6 +286,81 @@ void Catalogue::Charger(fstream& file)
 		}
 	} 
 }
+
+void Catalogue::Charger(fstream& file, bool isSimple)
+{
+	// Get the roll number 
+    // of which the data is required 
+	uint nbTrajet;
+
+    // Read the Data from the file 
+    // as String Vector 
+	vector<string> row; 
+	string line, word; 
+
+	// read an entire row and 
+    // store it in a string variable 'line' 
+	while(getline(file, line))
+	{ 
+		row.clear(); 
+
+        // used for breaking words 
+		stringstream s(line); 
+
+        // read every column data of a row and 
+        // store it in a string variable, 'word' 
+		while (getline(s, word, ',')) 
+		{ 
+            // add all the column data 
+            // of a row to a vector 
+			row.push_back(word); 
+		} 
+
+        // convert string to integer for comparison 
+		nbTrajet = stoi(row[0]); 
+		// Cas pour les trajets composes
+		if (!isSimple && nbTrajet !=1)
+		{
+			TrajetCompose* trajetC = new TrajetCompose();
+			for (uint i = 0; i < nbTrajet; ++i)
+			{
+				getline(file, line);
+
+				row.clear(); 
+
+        		// used for breaking words 
+				stringstream s(line); 
+
+        		// read every column data of a row and 
+        		// store it in a string variable, 'word' 
+				while (getline(s, word, ',')) 
+				{ 
+           		// add all the column data 
+            	// of a row to a vector 
+					row.push_back(word); 
+				} 
+
+
+				TrajetSimple* trajet = new TrajetSimple(row[1].c_str(), row[2].c_str(), row[3].c_str());
+				trajetC->AjouterTrajet(trajet);
+
+				//todo: supprimer trajet simple ? 
+			}
+			m_collectionTrajet->AjouterTrajet(trajetC);
+		} else if (isSimple && nbTrajet != 1)
+		{
+			for (uint i = 0; i < nbTrajet; ++i)
+			{
+				getline(file, line);
+			}	
+		} else if (isSimple && nbTrajet == 1)
+		{
+			TrajetSimple* trajet = new TrajetSimple(row[1].c_str(), row[2].c_str(), row[3].c_str());
+			m_collectionTrajet->AjouterTrajet(trajet);
+		}
+	}
+}
+
 
 void Catalogue::Charger(std::fstream& file, bool isDep, string ville)
 {	
@@ -559,6 +625,20 @@ void Catalogue::Sauvegarder(fstream& file, string depart, string arrivee)
 	for (uint i = 0; i < m_collectionTrajet->GetNbTrajet(); ++i)
 	{
 		if((m_collectionTrajet->GetListeTrajet()[i]->GetDepart() == depart)&&(m_collectionTrajet->GetListeTrajet()[i]->GetArrivee() == arrivee))
+			file << m_collectionTrajet->GetListeTrajet()[i]->ToCSV() << "\n";
+	}
+}
+
+//TODO : faire marcher mdr
+void Catalogue::Sauvegarder(fstream& file, bool isSimple)
+{
+	for (uint i = 0; i < m_collectionTrajet->GetNbTrajet(); ++i)
+	{
+		//cout << m_collectionTrajet->GetListeTrajet()[i]->ToCSV()[0] << endl;
+		if(isSimple && m_collectionTrajet->GetListeTrajet()[i]->ToCSV()[0]==1)
+		{
+			file << m_collectionTrajet->GetListeTrajet()[i]->ToCSV() << "\n";
+		} else if (!isSimple && m_collectionTrajet->GetListeTrajet()[i]->ToCSV()[0]!=1)
 		{
 			file << m_collectionTrajet->GetListeTrajet()[i]->ToCSV() << "\n";
 		}

@@ -45,3 +45,8 @@ TODO:
 
 - chargement avec l'option de la/les ville(s)
 - sauvegarde avec l'option de la/les ville(s)
+
+------------------- Ahmed (07/01) :
+
+- chargement selon le type
+- sauvegarde selon le type (ca rentre pas dans les if a cause de la comparaison string-int)

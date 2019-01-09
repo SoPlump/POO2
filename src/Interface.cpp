@@ -212,7 +212,22 @@ void Interface::Charger()
 	}
 	if (strcmp(lecture, "type") == 0)
 	{
-		//m_catalogue->Charger(file);
+		bool isSimple = true;
+		cout << endl;
+		cout << endl;
+		cout << "Sauvegarde selon le type de trajet :" << endl;
+		cout << "simple : chargement des trajets simples" << endl;
+		cout << "compose : chargement des trajets composés" << endl;
+		fscanf(stdin, "%99s", lecture);
+		while ((strcmp(lecture, "simple") != 0)&&(strcmp(lecture, "compose") != 0))
+		{
+			fscanf(stdin, "%99s", lecture);
+		}
+		if (strcmp(lecture, "compose") == 0)
+		{
+			isSimple = false;
+		}
+		m_catalogue->Charger(file,isSimple);
 	}
 	if (strcmp(lecture, "ville") == 0)
 	{
@@ -299,7 +314,22 @@ void Interface::Sauvegarder()
 	}
 	if (strcmp(lecture, "type") == 0)
 	{
-		//m_catalogue->Charger(file);
+		bool isSimple = true;
+		cout << endl;
+		cout << endl;
+		cout << "Sauvegarde selon le type de trajets :" << endl;
+		cout << "simple : sauvegarde des trajets simples" << endl;
+		cout << "compose : sauvegarde des trajets composés" << endl;
+		fscanf(stdin, "%99s", lecture);
+		while ((strcmp(lecture, "simple") != 0)&&(strcmp(lecture, "compose") != 0))
+		{
+			fscanf(stdin, "%99s", lecture);
+		}
+		if (strcmp(lecture, "compose") == 0)
+		{
+			isSimple = false;
+		}
+		m_catalogue->Charger(file,isSimple);
 	}
 	if (strcmp(lecture, "ville") == 0)
 	{
@@ -320,21 +350,21 @@ void Interface::Sauvegarder()
 			cout << "Choisissez une Arrivee" << endl;
 			cin >> arrivee;
 
-			m_catalogue->Sauvegarder(file, depart, arrivee);
+			//m_catalogue->Sauvegarder(file, depart, arrivee);
 		}
 		if (strcmp(lecture, "depart") == 0)
 		{
 			cout << "Choisissez un Depart" << endl;
 			cin >> depart;
 
-			m_catalogue->Sauvegarder(file, true, depart);
+			//m_catalogue->Sauvegarder(file, true, depart);
 		}
 		if (strcmp(lecture, "arrivee") == 0)
 		{
 			cout << "Choisissez une Arrivee" << endl;
 			cin >> arrivee;
 
-			m_catalogue->Sauvegarder(file, false, arrivee);
+			//m_catalogue->Sauvegarder(file, false, arrivee);
 		}
 	}
 }// ---- fin de Sauvegarder
