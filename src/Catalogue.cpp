@@ -277,7 +277,6 @@ void Catalogue::Charger(fstream& file)
 
 			m_collectionTrajet->AjouterTrajet(trajetC);
 		}
-
         // Compare the roll number 
 		else 
 		{ 
@@ -297,6 +296,8 @@ void Catalogue::Charger(fstream& file, bool isSimple)
     // as String Vector 
 	vector<string> row; 
 	string line, word; 
+
+	getline(file, line); // ignore les metadonnees
 
 	// read an entire row and 
     // store it in a string variable 'line' 
@@ -347,7 +348,8 @@ void Catalogue::Charger(fstream& file, bool isSimple)
 				//todo: supprimer trajet simple ? 
 			}
 			m_collectionTrajet->AjouterTrajet(trajetC);
-		} else if (isSimple && nbTrajet != 1)
+		} 
+		else if (isSimple && nbTrajet != 1)
 		{
 			for (uint i = 0; i < nbTrajet; ++i)
 			{
@@ -602,6 +604,7 @@ void Catalogue::Charger(std::fstream& file, int begin, int end)
 
 void Catalogue::Sauvegarder(fstream& file)
 {
+	file << m_collectionTrajet->GetNbTrajet() << "\n";
 	for (uint i = 0; i < m_collectionTrajet->GetNbTrajet(); ++i)
 	{
 		file << m_collectionTrajet->GetListeTrajet()[i]->ToCSV() << "\n";
@@ -610,6 +613,7 @@ void Catalogue::Sauvegarder(fstream& file)
 
 void Catalogue::Sauvegarder(fstream& file, bool isDep, string ville)
 {	
+	file << m_collectionTrajet->GetNbTrajet() << "\n";
 	for (uint i = 0; i < m_collectionTrajet->GetNbTrajet(); ++i)
 	{
 		if(((isDep)&&(m_collectionTrajet->GetListeTrajet()[i]->GetDepart() == ville))||((!isDep)&&(m_collectionTrajet->GetListeTrajet()[i]->GetArrivee() == ville)))
@@ -621,6 +625,7 @@ void Catalogue::Sauvegarder(fstream& file, bool isDep, string ville)
 
 void Catalogue::Sauvegarder(fstream& file, string depart, string arrivee)
 {
+	file << m_collectionTrajet->GetNbTrajet() << "\n";
 	for (uint i = 0; i < m_collectionTrajet->GetNbTrajet(); ++i)
 	{
 		if((m_collectionTrajet->GetListeTrajet()[i]->GetDepart() == depart)&&(m_collectionTrajet->GetListeTrajet()[i]->GetArrivee() == arrivee))
@@ -628,16 +633,22 @@ void Catalogue::Sauvegarder(fstream& file, string depart, string arrivee)
 	}
 }
 
-//TODO : faire marcher mdr
 void Catalogue::Sauvegarder(fstream& file, bool isSimple)
 {
+	file << m_collectionTrajet->GetNbTrajet() << "\n";
 	for (uint i = 0; i < m_collectionTrajet->GetNbTrajet(); ++i)
 	{
-		//cout << m_collectionTrajet->GetListeTrajet()[i]->ToCSV()[0] << endl;
-		if(isSimple && stoi(m_collectionTrajet->GetListeTrajet()[i]->ToCSV()[0])==1)
+		// Recupere le type de trajet
+		string typeTrajet;
+		stringstream s(m_collectionTrajet->GetListeTrajet()[i]->ToCSV()); 
+		getline(s, typeTrajet, ',');
+		cout << stoi(typeTrajet) << endl;
+
+		if(isSimple && stoi(typeTrajet)==1)
 		{
 			file << m_collectionTrajet->GetListeTrajet()[i]->ToCSV() << "\n";
-		} else if (!isSimple && stoi(m_collectionTrajet->GetListeTrajet()[i]->ToCSV()[0]) !=1)
+		} 
+		else if (!isSimple && stoi(typeTrajet) !=1)
 		{
 			file << m_collectionTrajet->GetListeTrajet()[i]->ToCSV() << "\n";
 		}
