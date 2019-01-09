@@ -267,12 +267,15 @@ void Interface::Charger()
 	}
 	if (strcmp(lecture, "selection") == 0)
 	{
-			cout << "Soit l'intervalle [n, m]. Choisissez l'indice n" << endl;
+		bool valide;
+		do
+		{
+			cout << "Soit l'intervalle [n, m]. Choisissez l'indice n (supérieur ou égal à 1)" << endl;
 			cin >> begin;
 			cout << "Choisissez l'indice m" << endl;
 			cin >> end;
-
-			m_catalogue->Charger(file, begin, end);
+			valide = m_catalogue->Charger(file, begin, end);
+		} while (!valide);
 	}
 }// ---- fin de Charger
 

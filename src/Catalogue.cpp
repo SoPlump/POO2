@@ -522,7 +522,7 @@ void Catalogue::Charger(std::fstream& file, string depart, string arrivee)
 	}
 }
 
-void Catalogue::Charger(std::fstream& file, int begin, int end)
+bool Catalogue::Charger(std::fstream& file, int begin, int end)
 {
 	// m - n > 0
 	uint iTrajet, nbTrajet;
@@ -535,11 +535,16 @@ void Catalogue::Charger(std::fstream& file, int begin, int end)
 	nbTrajet = stoi(line);
 
 		// Les bornes ne sont pas inversees // Les indices designe un trajet existant
-	if((end - begin >= 0)&&(0 <= begin)&&((uint)begin < nbTrajet)&&(0 <= end)&&((uint)end< nbTrajet))
+	if((end - begin >= 0)&&(1 <= begin)&&((uint)begin < nbTrajet)&&(1 <= end)&&((uint)end< nbTrajet))
 	{
-	// read an entire row and store it in a string variable 'line' 
-		while(getline(file, line))
-		{ 
+		int x;
+		for(x=0; x<begin;x++)
+		{
+			getline(file, line);
+		}
+		for (x=begin; x<=end;x++)
+		{
+			getline(file, line);
 			row.clear(); 
 
         // used for breaking words 
@@ -587,17 +592,20 @@ void Catalogue::Charger(std::fstream& file, int begin, int end)
 
 				m_collectionTrajet->AjouterTrajet(trajetC);
 			}
-
-        // Compare the roll number 
+			// Cas des trajets simples
 			else 
 			{ 
 				TrajetSimple* trajet = new TrajetSimple(row[1].c_str(), row[2].c_str(), row[3].c_str());
 				m_collectionTrajet->AjouterTrajet(trajet);
 			}
 		} 
+		return true;
 	}
-	else
+	else 
+	{
 		cout << "Intervalles incorrectes" << endl;
+		return false;
+	}
 }
 
 void Catalogue::Sauvegarder(fstream& file)
