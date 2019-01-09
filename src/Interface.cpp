@@ -36,6 +36,15 @@ using namespace std;
 
 //-------------------------------------------- Constructeurs - destructeur
 
+Interface* Interface::m_instance = NULL;
+
+Interface* Interface::GetInstance()
+{
+	if (m_instance == 0)
+		m_instance = new Interface();
+	return m_instance;
+}
+
 void Interface::Menu()
 //Entrees :
 //--numero de la commande a realiser
@@ -279,7 +288,7 @@ void Interface::Charger()
 	}
 }// ---- fin de Charger
 
-void Interface::Sauvegarder()
+void Interface::Sauvegarder() const
 {
     // file pointer 
 	fstream file; 
