@@ -77,7 +77,7 @@ public:
 	// Le fichier doit etre un csv
 	// Le fichier doit correspondre aux criteres de lecture
 
-	void Charger(std::fstream& file, int begin, int end);
+	bool Charger(std::fstream& file, int begin, int end);
 	void Charger(std::fstream& file, bool isSimple);
 
 	void Sauvegarder(std::fstream& file);

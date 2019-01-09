@@ -537,10 +537,10 @@ bool Catalogue::Charger(std::fstream& file, int begin, int end)
 	nbTrajet = stoi(line);
 
 		// Les bornes ne sont pas inversees // Les indices designe un trajet existant
-	if((end - begin >= 0)&&(1 <= begin)&&((uint)begin < nbTrajet)&&(1 <= end)&&((uint)end< nbTrajet))
+	if((end - begin >= 0)&&(1 <= begin)&&((uint)begin <= nbTrajet)&&(1 <= end)&&((uint)end<= nbTrajet))
 	{
 		int x;
-		for(x=0; x<begin;x++)
+		for(x=0; x<begin-1;x++)
 		{
 			getline(file, line);
 		}
