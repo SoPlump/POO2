@@ -613,29 +613,52 @@ void Catalogue::Sauvegarder(fstream& file)
 
 void Catalogue::Sauvegarder(fstream& file, bool isDep, string ville)
 {	
-	file << m_collectionTrajet->GetNbTrajet() << "\n";
+	uint nbTrajet = 0;
+	std::vector<string> info;
+
 	for (uint i = 0; i < m_collectionTrajet->GetNbTrajet(); ++i)
 	{
 		if(((isDep)&&(m_collectionTrajet->GetListeTrajet()[i]->GetDepart() == ville))||((!isDep)&&(m_collectionTrajet->GetListeTrajet()[i]->GetArrivee() == ville)))
 		{
-			file << m_collectionTrajet->GetListeTrajet()[i]->ToCSV() << "\n";
+			++nbTrajet;
+			info.push_back(m_collectionTrajet->GetListeTrajet()[i]->ToCSV());
 		}
 	}
+
+	file << nbTrajet << "\n";
+	for (uint i = 0; i < nbTrajet; ++i)
+	{
+		file << info[i] << "\n";
+	}
+
 }
 
 void Catalogue::Sauvegarder(fstream& file, string depart, string arrivee)
 {
-	file << m_collectionTrajet->GetNbTrajet() << "\n";
+	uint nbTrajet = 0;
+	std::vector<string> info;
+
 	for (uint i = 0; i < m_collectionTrajet->GetNbTrajet(); ++i)
 	{
 		if((m_collectionTrajet->GetListeTrajet()[i]->GetDepart() == depart)&&(m_collectionTrajet->GetListeTrajet()[i]->GetArrivee() == arrivee))
-			file << m_collectionTrajet->GetListeTrajet()[i]->ToCSV() << "\n";
+		{
+			++nbTrajet;
+			info.push_back(m_collectionTrajet->GetListeTrajet()[i]->ToCSV());
+		}
+	}
+
+	file << nbTrajet << "\n";
+	for (uint i = 0; i < nbTrajet; ++i)
+	{
+		file << info[i] << "\n";
 	}
 }
 
 void Catalogue::Sauvegarder(fstream& file, bool isSimple)
 {
-	file << m_collectionTrajet->GetNbTrajet() << "\n";
+	uint nbTrajet = 0;
+	std::vector<string> info;
+
 	for (uint i = 0; i < m_collectionTrajet->GetNbTrajet(); ++i)
 	{
 		// Recupere le type de trajet
@@ -646,12 +669,20 @@ void Catalogue::Sauvegarder(fstream& file, bool isSimple)
 
 		if(isSimple && stoi(typeTrajet)==1)
 		{
-			file << m_collectionTrajet->GetListeTrajet()[i]->ToCSV() << "\n";
+			++nbTrajet;
+			info.push_back(m_collectionTrajet->GetListeTrajet()[i]->ToCSV());
 		} 
 		else if (!isSimple && stoi(typeTrajet) !=1)
 		{
-			file << m_collectionTrajet->GetListeTrajet()[i]->ToCSV() << "\n";
+			++nbTrajet;
+			info.push_back(m_collectionTrajet->GetListeTrajet()[i]->ToCSV());
 		}
+	}
+	
+	file << nbTrajet << "\n";
+	for (uint i = 0; i < nbTrajet; ++i)
+	{
+		file << info[i] << "\n";
 	}
 }
 
