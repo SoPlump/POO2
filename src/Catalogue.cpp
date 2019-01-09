@@ -522,7 +522,7 @@ void Catalogue::Charger(std::fstream& file, string depart, string arrivee)
 	}
 }
 
-void Catalogue::Charger(std::fstream& file, uint begin, uint end)
+void Catalogue::Charger(std::fstream& file, int begin, int end)
 {
 	// m - n > 0
 	uint iTrajet, nbTrajet;
@@ -530,14 +530,13 @@ void Catalogue::Charger(std::fstream& file, uint begin, uint end)
     // Read the Data from the file as String Vector 
 	vector<string> row; 
 	string line, word; 
+
 	getline(file, line); // ignore les metadonnees
 	nbTrajet = stoi(line);
 
-		cout << begin << endl ;
-		cout << end << endl;
-	if(end - begin > 0)
+		// Les bornes ne sont pas inversees // Les indices designe un trajet existant
+	if((end - begin >= 0)&&(0 <= begin)&&((uint)begin < nbTrajet)&&(0 <= end)&&((uint)end< nbTrajet))
 	{
-		cout << "ok";
 	// read an entire row and store it in a string variable 'line' 
 		while(getline(file, line))
 		{ 
@@ -598,7 +597,7 @@ void Catalogue::Charger(std::fstream& file, uint begin, uint end)
 		} 
 	}
 	else
-		cout << "Ce fichier contient " << nbTrajet << ", or vos intervalles sont trop grand";
+		cout << "Intervalles incorrectes" << endl;
 }
 
 void Catalogue::Sauvegarder(fstream& file)
@@ -635,10 +634,10 @@ void Catalogue::Sauvegarder(fstream& file, bool isSimple)
 	for (uint i = 0; i < m_collectionTrajet->GetNbTrajet(); ++i)
 	{
 		//cout << m_collectionTrajet->GetListeTrajet()[i]->ToCSV()[0] << endl;
-		if(isSimple && m_collectionTrajet->GetListeTrajet()[i]->ToCSV()[0]==1)
+		if(isSimple && stoi(m_collectionTrajet->GetListeTrajet()[i]->ToCSV()[0])==1)
 		{
 			file << m_collectionTrajet->GetListeTrajet()[i]->ToCSV() << "\n";
-		} else if (!isSimple && m_collectionTrajet->GetListeTrajet()[i]->ToCSV()[0]!=1)
+		} else if (!isSimple && stoi(m_collectionTrajet->GetListeTrajet()[i]->ToCSV()[0]) !=1)
 		{
 			file << m_collectionTrajet->GetListeTrajet()[i]->ToCSV() << "\n";
 		}

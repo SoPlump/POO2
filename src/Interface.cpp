@@ -192,7 +192,7 @@ void Interface::Charger()
 	//TODO: pas beau (faire des fonctions)
 	char lecture[100];
 	string depart, arrivee;
-	uint begin, end;
+	int begin, end;
 
 	cout << "none : Chargement sans criteres de selection" << endl;
 	cout << "type : Chargement selon le type de trajets" << endl;
