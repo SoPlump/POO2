@@ -87,7 +87,7 @@ Collection* Collection::RechercheSimple(const char * depart, const char * arrive
 	{
 		if (!strcmp(m_listeTrajet[i]->GetDepart(), depart) && !strcmp(m_listeTrajet[i]->GetArrivee(), arrivee))
 		{
-			itineraires->AjouterTrajet(m_listeTrajet[i]);
+			itineraires->AjouterTrajet(m_listeTrajet[i]->Copier());
 		}
 	}
 	return itineraires;
