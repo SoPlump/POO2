@@ -36,6 +36,15 @@ using namespace std;
 
 //-------------------------------------------- Constructeurs - destructeur
 
+Interface* Interface::m_instance = NULL;
+
+Interface* Interface::GetInstance()
+{
+	if (m_instance == 0)
+		m_instance = new Interface();
+	return m_instance;
+}
+
 void Interface::Menu()
 //Entrees :
 //--numero de la commande a realiser
@@ -142,9 +151,9 @@ void Interface::Rechercher() const
 	}
 
 	cout << "Choisissez un Depart" << endl;
-	cin >> depart;
+	getline(cin,depart);
 	cout << "Choisissez une Arrivee" << endl;
-	cin >> arrivee;
+	getline(cin,arrivee);
 
 	if (strcmp(lecture, "simple") == 0)
 	{
@@ -166,7 +175,7 @@ void Interface::Charger()
 	//TODO: Verifier les actions de l'utilisateur et boucler si il faut
 	string fileName;
 	cout << "Quel fichier voulez vous charger ?" << endl;
-	cin >> fileName;
+	getline(cin,fileName);
 
     // Open an existing file 
 	file.open((path + fileName + ".csv").c_str(), ios::in);
@@ -175,14 +184,14 @@ void Interface::Charger()
 		cout << "Impossible d'ouvrir ce fichier." << endl;
 		string answer;
 		cout << "Voulez vous reellement charger un fichier ? y/n" << endl;
-		cin >> answer;
+		getline(cin,answer);
 
 		if(answer == "n") return;
 
 
 		string fileName;
 		cout << "Quel fichier voulez vous charger ? Numero attenu" << endl;
-		cin >> fileName;
+		getline(cin,fileName);
 
     // Open an existing file 
 		file.open((path + fileName + ".csv").c_str(), ios::in);
@@ -244,42 +253,44 @@ void Interface::Charger()
 		if (strcmp(lecture, "both") == 0)
 		{
 			cout << "Choisissez un Depart" << endl;
-			cin >> depart;
+			getline(cin,depart);
 			cout << "Choisissez une Arrivee" << endl;
-			cin >> arrivee;
+			getline(cin,arrivee);
 
 			m_catalogue->Charger(file, depart, arrivee);
 		}
 		if (strcmp(lecture, "depart") == 0)
 		{
 			cout << "Choisissez un Depart" << endl;
-			cin >> depart;
+			getline(cin,depart);
 
 			m_catalogue->Charger(file, true, depart);
 		}
 		if (strcmp(lecture, "arrivee") == 0)
 		{
 			cout << "Choisissez une Arrivee" << endl;
-			cin >> arrivee;
+			getline(cin,arrivee);
 
 			m_catalogue->Charger(file, false, arrivee);
 		}
 	}
 	if (strcmp(lecture, "selection") == 0)
 	{
+		string temp;
 		bool valide;
 		do
 		{
 			cout << "Soit l'intervalle [n, m]. Choisissez l'indice n (supérieur ou égal à 1)" << endl;
-			cin >> begin;
+			getline(cin,temp);
+			begin=stoi(temp);
 			cout << "Choisissez l'indice m" << endl;
-			cin >> end;
+			end=stoi(temp);
 			valide = m_catalogue->Charger(file, begin, end);
 		} while (!valide);
 	}
 }// ---- fin de Charger
 
-void Interface::Sauvegarder()
+void Interface::Sauvegarder() const
 {
     // file pointer 
 	fstream file; 
@@ -288,7 +299,7 @@ void Interface::Sauvegarder()
 
 	string fileName;
 	cout << "Dans quel fichier voulez vous sauvegarder ?" << endl;
-	cin >> fileName;
+	getline(cin,fileName);
 
     // opens an existing csv file or creates a new file. 
     remove((path + fileName + ".csv").c_str());
@@ -350,23 +361,23 @@ void Interface::Sauvegarder()
 		if (strcmp(lecture, "both") == 0)
 		{
 			cout << "Choisissez un Depart" << endl;
-			cin >> depart;
+			getline(cin,depart);
 			cout << "Choisissez une Arrivee" << endl;
-			cin >> arrivee;
+			getline(cin,arrivee);
 
 			m_catalogue->Sauvegarder(file, depart, arrivee);
 		}
 		if (strcmp(lecture, "depart") == 0)
 		{
 			cout << "Choisissez un Depart" << endl;
-			cin >> depart;
+			getline(cin,depart);
 
 			m_catalogue->Sauvegarder(file, true, depart);
 		}
 		if (strcmp(lecture, "arrivee") == 0)
 		{
 			cout << "Choisissez une Arrivee" << endl;
-			cin >> arrivee;
+			getline(cin,arrivee);
 
 			m_catalogue->Sauvegarder(file, false, arrivee);
 		}

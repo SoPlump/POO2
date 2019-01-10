@@ -32,7 +32,8 @@ class Interface
 
 public:
 	//----------------------------------------------------- Methodes publiques
-	
+	static Interface* GetInstance();
+
 	void Menu();
 	// Mode d'emploi :
 	// Interface avec l'utilisateur , boucle jusqu'a l'ecriture de "bye"
@@ -44,13 +45,14 @@ public:
 	
 	//-------------------------------------------- Constructeurs - destructeur
 
+	virtual ~Interface();
+	// Mode d'emploi : Fonction recursive appelant les destructeurs des objets qu'il contient
+private:
+	static Interface* m_instance;
+
 	Interface();
 	// Mode d'emploi :
 	// Constructeur d'un Interface en donnant une taille initiale 'tailleDeBase' a la Collection 'm_collectionTrajet' du Interface
-
-
-	virtual ~Interface();
-	// Mode d'emploi : Fonction recursive appelant les destructeurs des objets qu'il contient
 
 protected:
 	//----------------------------------------------------- Methodes protegees
@@ -72,7 +74,7 @@ protected:
 
 	void Charger();
 
-	void Sauvegarder();
+	void Sauvegarder() const;
 
 	//----------------------------------------------------- Attributs proteges
 	Catalogue* m_catalogue;

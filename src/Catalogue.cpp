@@ -129,6 +129,7 @@ TrajetSimple* Catalogue::ScanTrajetSimple() const
 //--moyen de transport
 //du nouveau TrajetSimple cree
 {
+
 	const char* depart = ScanString("Choisissez un depart : ");
 	const char* arrivee = ScanString("\nChoisissez une arrivee : ");
 	const char* transport = ScanString("\nChoisissez un moyen de transport : ");
@@ -211,10 +212,11 @@ char * Catalogue::ScanString(const char * message) const
 //--Chaine de char a retourner
 //utilisee pour demander a l'utilisateur le nom des villes et les moyens de transports
 {
-	char * temp = new char[20];
+
+	char* temp= new char [30];
 	cout << message << endl;
-	cin >> temp;
-	//cin.getline(temp, 20); // TODO: Corriger le getline
+	cin.ignore();
+	cin.getline(temp, 30); // TODO: Corriger le getline
 	return temp;
 }// ---- fin de ScanString
 
@@ -362,7 +364,6 @@ void Catalogue::Charger(fstream& file, bool isSimple)
 		}
 	}
 }
-
 
 void Catalogue::Charger(std::fstream& file, bool isDep, string ville)
 {	
@@ -700,7 +701,7 @@ bool Catalogue::Sauvegarder(fstream& file, int begin, int end)
 
 	if((end - begin >= 0)&&(1 <= begin)&&(begin <= nbTrajet)&&(1 <= end)&&(end<= nbTrajet))
 	{
-		file << m-n << "\n";
+		file << end-begin << "\n";
 		for (int i = begin-1; i <= end-1; ++i)
 		{
 			// Recupere le type de trajet
@@ -718,8 +719,6 @@ bool Catalogue::Sauvegarder(fstream& file, int begin, int end)
 		cout << "Intervalles incorrectes" << endl;
 		return false;
 	}
-
-	
 }
 
 //------------------------------------------------------------------ PRIVE

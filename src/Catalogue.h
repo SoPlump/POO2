@@ -83,14 +83,15 @@ public:
 	void Sauvegarder(std::fstream& file);
 	// Mode d'emploi :
 	// Sauvegarde dans un fichier choisi par l'utilisateur le catalogue entier
+
+	void Sauvegarder(std::fstream& file, bool isSimple);
+
 	void Sauvegarder(std::fstream& file, bool isDep, std::string ville);
 	// Mode d'emploi :
 	// Sauvegarde dans un fichier choisi par l'utilisateur le catalogue avec un critere sur la ville de depart ou la ville d'arrivee
 	void Sauvegarder(std::fstream& file, std::string depart, std::string arrivee);
 	// Mode d'emploi :
 	// Sauvegarde dans un fichier choisi par l'utilisateur le catalogue avec un critere sur la ville de depart et la ville d'arrivee
-
-	void Sauvegarder(std::fstream& file, bool isSimple);
 
 	bool Sauvegarder(std::fstream& file, int begin, int end);
 
@@ -102,6 +103,8 @@ public:
 	// Les verifications de coherence des trajets seront effectuees dans les classes des Trajets
 	// -> selection = 1 : TrajetSimple
 	// -> selection = 2 : TrajetCompose
+
+	void ChercherTrajet(int selection) const;
 
 	void RechercheSimple(const char* depart, const char* arrivee) const;
 	// Mode d'emploi :une ville de depart et d'arrivee sont donnees en entree
@@ -141,11 +144,6 @@ protected:
 	// Mode d'emploi :
 	// Affiche les phrases d'interactions avec l'utilisateur
 	// Cree et renseigne un nouveau TrajetCompose et le retourne en sortie
-
-	void ChercherTrajet(int selection) const;
-	// Mode d'emploi :
-	// Demande a l'utilisateur de rentrer le nom de la ville de depart et d'arrivee de l'itineraire qu'il recherche
-	// Appelle ensuite une fonction de recherche
 
 	char* ScanString(const char*) const;
 	// Mode d'emploi :

@@ -6,7 +6,10 @@ using namespace std;
 
 int main()
 {
-	Interface* interface = new Interface();
+	//Interface* interface = new Interface();
+	//interface->Menu();
+
+	Interface* interface = Interface::GetInstance();
 	interface->Menu();
 
 	delete interface;
