@@ -129,7 +129,7 @@ TrajetSimple* Catalogue::ScanTrajetSimple() const
 //--moyen de transport
 //du nouveau TrajetSimple cree
 {
-
+	cin.ignore();
 	const char* depart = ScanString("Choisissez un depart : ");
 	const char* arrivee = ScanString("\nChoisissez une arrivee : ");
 	const char* transport = ScanString("\nChoisissez un moyen de transport : ");
@@ -155,6 +155,7 @@ TrajetCompose * Catalogue::ScanTrajetCompose() const
 	if (iTrajets > 1)
 	{
 		TrajetCompose* trajetC = new TrajetCompose();
+		cin.ignore();
 		const char* depart = ScanString("Choisissez un depart : ");
 		const char* arrivee;
 		const char* transport;
@@ -192,7 +193,6 @@ char * Catalogue::ScanString(const char * message) const
 
 	char* temp= new char [30];
 	cout << message << endl;
-	cin.ignore();
 	cin.getline(temp, 30); // TODO: Corriger le getline
 	return temp;
 }// ---- fin de ScanString
