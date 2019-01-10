@@ -47,7 +47,7 @@ void Catalogue::RechercheSimple(const char * depart, const char * arrivee) const
 //Regarde tous les trajets du catalogue , si les villes de depart et d'arrivee correspondent
 //L'ajoute a la collection rendue en retour
 {
-	Collection* itineraires = new Collection();
+	Collection* itineraires;
 	itineraires = m_collectionTrajet->RechercheSimple(depart, arrivee);
 
 	if (itineraires->GetNbTrajet() != 0)
@@ -56,6 +56,7 @@ void Catalogue::RechercheSimple(const char * depart, const char * arrivee) const
 		cout << "Aucun trajet ne correspond a votre recherche" << endl;
 
 	itineraires->Afficher();
+	delete itineraires;
 }// ---- fin de RechercheSimple
 
 
@@ -679,7 +680,7 @@ bool Catalogue::Sauvegarder(fstream& file, int begin, int end)
 
 	if((end - begin >= 0)&&(1 <= begin)&&(begin <= nbTrajet)&&(1 <= end)&&(end<= nbTrajet))
 	{
-		file << end-begin << "\n";
+		file << end-begin+1 << "\n";
 		for (int i = begin-1; i <= end-1; ++i)
 		{
 			// Recupere le type de trajet
