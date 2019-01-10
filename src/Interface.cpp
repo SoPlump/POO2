@@ -150,6 +150,7 @@ void Interface::Rechercher() const
 		fscanf(stdin, "%99s", lecture);
 	}
 
+	cin.ignore();
 	cout << "Choisissez un Depart" << endl;
 	getline(cin,depart);
 	cout << "Choisissez une Arrivee" << endl;
@@ -215,7 +216,7 @@ void Interface::Charger()
 	{
 		fscanf(stdin, "%99s", lecture);
 	}
-
+	cin.ignore();
 	if (strcmp(lecture, "none") == 0)
 	{	
 		m_catalogue->Charger(file);
@@ -250,7 +251,7 @@ void Interface::Charger()
 		{
 			fscanf(stdin, "%99s", lecture);
 		}
-
+		cin.ignore();
 		if (strcmp(lecture, "both") == 0)
 		{
 			cout << "Choisissez un Depart" << endl;
@@ -304,7 +305,7 @@ void Interface::Sauvegarder() const
 	getline(cin,fileName);
 
     // opens an existing csv file or creates a new file. 
-    remove((path + fileName + ".csv").c_str());
+	remove((path + fileName + ".csv").c_str());
 	file.open((path + fileName + ".csv").c_str(), ios::out | ios::app);
 
 	/* Lecture du choix de chargement de l'utilisateur*/
@@ -324,7 +325,7 @@ void Interface::Sauvegarder() const
 	{
 		fscanf(stdin, "%99s", lecture);
 	}
-
+	cin.ignore();
 	if (strcmp(lecture, "none") == 0)
 	{	
 		m_catalogue->Sauvegarder(file);
@@ -359,7 +360,7 @@ void Interface::Sauvegarder() const
 		{
 			fscanf(stdin, "%99s", lecture);
 		}
-
+		cin.ignore();
 		if (strcmp(lecture, "both") == 0)
 		{
 			cout << "Choisissez un Depart" << endl;
