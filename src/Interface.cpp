@@ -286,6 +286,7 @@ void Interface::Charger()
 			getline(cin,temp);
 			begin=stoi(temp);
 			cout << "Choisissez l'indice m" << endl;
+			getline(cin,temp);
 			end=stoi(temp);
 			valide = m_catalogue->Charger(file, begin, end);
 		} while (!valide);
