@@ -175,6 +175,7 @@ void Interface::Charger()
 	//TODO: Verifier les actions de l'utilisateur et boucler si il faut
 	string fileName;
 	cout << "Quel fichier voulez vous charger ?" << endl;
+	cin.ignore();
 	getline(cin,fileName);
 
     // Open an existing file 
@@ -299,6 +300,7 @@ void Interface::Sauvegarder() const
 
 	string fileName;
 	cout << "Dans quel fichier voulez vous sauvegarder ?" << endl;
+	cin.ignore();
 	getline(cin,fileName);
 
     // opens an existing csv file or creates a new file. 
