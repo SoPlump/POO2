@@ -104,7 +104,7 @@ public:
 	// -> selection = 1 : TrajetSimple
 	// -> selection = 2 : TrajetCompose
 
-	void ChercherTrajet(int selection) const;
+	void ChercherTrajet(int selection) const; //TODO : relier a l'interface
 
 	void RechercheSimple(const char* depart, const char* arrivee) const;
 	// Mode d'emploi :une ville de depart et d'arrivee sont donnees en entree
