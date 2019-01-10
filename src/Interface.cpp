@@ -53,7 +53,7 @@ void Interface::Menu()
 //3. Chercher un trajet
 //4. Afficher tout le Interface
 {
-	char lecture[100];
+	string lecture;
 	cout << "\n\n\n";
 	cout << "Bienvenue !" << endl;
 	cout << "****************************" << endl;
@@ -65,27 +65,27 @@ void Interface::Menu()
 	cout << "****************************" << endl;
 	cout << "\n\n\n"; 
 
-	fscanf(stdin, "%99s", lecture);
-	while (strcmp(lecture, "bye") != 0)
+	getline(cin, lecture);
+	while (lecture != "bye")
 	{
-		if (strcmp(lecture, "ajouter") == 0)
+		if (lecture == "ajouter")
 		{
 			AjouterTrajet();
 		}
-		if (strcmp(lecture, "chercher") == 0)
+		if (lecture == "chercher")
 		{
 			Rechercher();
 		}
-		if (strcmp(lecture, "afficher") == 0)
+		if (lecture == "afficher")
 		{
 			Afficher();
 		}
-		if (strcmp(lecture, "charger") == 0)
+		if (lecture == "charger")
 		{
 			Charger();
 		}
 
-		if (strcmp(lecture, "sauvegarder") == 0)
+		if (lecture == "sauvegarder")
 		{
 			Sauvegarder();
 		}
@@ -100,7 +100,7 @@ void Interface::Menu()
 		cout << "sauvegarder : Sauvegarder un Catalogue" << endl;
 		cout << "****************************" << endl;
 		cout << "\n\n\n";
-		fscanf(stdin, "%99s", lecture);
+		getline(cin, lecture);
 	}
 }// ---- file de Menu
 
@@ -112,23 +112,23 @@ void Interface::Afficher() const
 
 void Interface::AjouterTrajet()
 {
-	char lecture[100];
+	string lecture;
 
 	cout << "simple : Ajouter un Trajet Simple" << endl;
 	cout << "compose : Ajouter un Trajet Compose" << endl;
 	cout << "exit : Vous ne voulez pas ajouter de trajet" << endl;
 
-	fscanf(stdin, "%99s", lecture);
-	while ((strcmp(lecture, "simple") != 0)&&(strcmp(lecture, "compose") != 0)&&(strcmp(lecture, "exit") != 0))
+	getline(cin,lecture);
+	while ((lecture != "simple")&&(lecture != "compose")&&(lecture != "exit"))
 	{
-		fscanf(stdin, "%99s", lecture);
+		getline(cin, lecture);
 	}
 
-	if (strcmp(lecture, "simple") == 0)
+	if (lecture == "simple")
 	{
 		m_catalogue->AjouterTrajetSimple();
 	}
-	if (strcmp(lecture, "compose") == 0)
+	if (lecture == "compose")
 	{
 		m_catalogue->AjouterTrajetCompose();
 	}
@@ -137,17 +137,16 @@ void Interface::AjouterTrajet()
 
 void Interface::Rechercher() const
 {
-	char lecture[100];
-	string depart, arrivee;
+	string lecture, depart, arrivee;
 
 	cout << "simple : Recherche Simple" << endl;
 	cout << "complexe : Recherche Complexe" << endl;
 	cout << "exit : Vous ne voulez pas ajouter de trajet" << endl;
 
-	fscanf(stdin, "%99s", lecture);
-	while ((strcmp(lecture, "simple") != 0)&&(strcmp(lecture, "complexe") != 0)&&(strcmp(lecture, "exit") != 0))
+	getline(cin, lecture);
+	while ((lecture != "simple")&&(lecture != "complexe")&&(lecture != "exit"))
 	{
-		fscanf(stdin, "%99s", lecture);
+		getline(cin, lecture);
 	}
 
 	cout << "Choisissez un Depart" << endl;
@@ -155,11 +154,11 @@ void Interface::Rechercher() const
 	cout << "Choisissez une Arrivee" << endl;
 	getline(cin,arrivee);
 
-	if (strcmp(lecture, "simple") == 0)
+	if (lecture == "simple")
 	{
 		m_catalogue->RechercheSimple(depart.c_str(), arrivee.c_str());
 	}
-	if (strcmp(lecture, "complexe") == 0)
+	if (lecture == "complexe")
 	{
 		m_catalogue->RechercheComplexe(depart.c_str(), arrivee.c_str());
 	}
@@ -190,7 +189,7 @@ void Interface::Charger()
 
 
 		string fileName;
-		cout << "Quel fichier voulez vous charger ? Numero attenu" << endl;
+		cout << "Quel fichier voulez vous charger ?" << endl;
 		getline(cin,fileName);
 
     // Open an existing file 
@@ -199,8 +198,7 @@ void Interface::Charger()
 
 	/* Lecture du choix de chargement de l'utilisateur*/
 	//TODO: pas beau (faire des fonctions)
-	char lecture[100];
-	string depart, arrivee;
+	string lecture, depart, arrivee;
 	int begin, end;
 
 	cout << "none : Chargement sans criteres de selection" << endl;
@@ -209,48 +207,46 @@ void Interface::Charger()
 	cout << "selection : Chargement selon un intervalle de selection" << endl;
 	cout << "exit : Vous ne voulez pas charger de fichier" << endl;
 
-	fscanf(stdin, "%99s", lecture);
-	while ((strcmp(lecture, "none") != 0)&&(strcmp(lecture, "type") != 0)&&(strcmp(lecture, "ville") != 0)&&(strcmp(lecture, "selection") != 0)&&(strcmp(lecture, "exit") != 0))
+		getline(cin, lecture);
+	while ((lecture != "none")&&(lecture !=, "type")&&(lecture != "ville")&&(lecture != "selection")&&(lecture != "exit"))
 	{
-		fscanf(stdin, "%99s", lecture);
+		getline(cin, lecture);
 	}
 
-	if (strcmp(lecture, "none") == 0)
+	if (lecture == "none")
 	{	
 		m_catalogue->Charger(file);
 	}
-	if (strcmp(lecture, "type") == 0)
+	if (lecture == "type")
 	{
 		bool isSimple = true;
-		cout << endl;
-		cout << endl;
-		cout << "Sauvegarde selon le type de trajet :" << endl;
+		cout << "\n\nSauvegarde selon le type de trajet :" << endl;
 		cout << "simple : chargement des trajets simples" << endl;
 		cout << "compose : chargement des trajets composés" << endl;
-		fscanf(stdin, "%99s", lecture);
-		while ((strcmp(lecture, "simple") != 0)&&(strcmp(lecture, "compose") != 0))
+		getline(cin, lecture);
+		while ((lecture != "simple")&&(lecture != "compose"))
 		{
-			fscanf(stdin, "%99s", lecture);
+		getline(cin, lecture);
 		}
-		if (strcmp(lecture, "compose") == 0)
+		if ((lecture == "compose"))
 		{
 			isSimple = false;
 		}
 		m_catalogue->Charger(file,isSimple);
 	}
-	if (strcmp(lecture, "ville") == 0)
+	if (lecture == "ville")
 	{
 		cout << "both : Critere sur les deux villes" << endl;
 		cout << "depart : Critere sur la ville de depart" << endl;
 		cout << "arrivee : Critere sur la ville d'arrivee" << endl;
 
-		fscanf(stdin, "%99s", lecture);
-		while ((strcmp(lecture, "both") != 0)&&(strcmp(lecture, "depart") != 0)&&(strcmp(lecture, "arrivee") != 0))
+		getline(cin, lecture);
+		while ((lecture != "both")&&(lecture != "depart")&&(lecture != "arrivee"))
 		{
-			fscanf(stdin, "%99s", lecture);
+			getline(cin, lecture);
 		}
 
-		if (strcmp(lecture, "both") == 0)
+		if (lecture == "both")
 		{
 			cout << "Choisissez un Depart" << endl;
 			getline(cin,depart);
@@ -259,14 +255,14 @@ void Interface::Charger()
 
 			m_catalogue->Charger(file, depart, arrivee);
 		}
-		if (strcmp(lecture, "depart") == 0)
+		if (lecture == "depart")
 		{
 			cout << "Choisissez un Depart" << endl;
 			getline(cin,depart);
 
 			m_catalogue->Charger(file, true, depart);
 		}
-		if (strcmp(lecture, "arrivee") == 0)
+		if (lecture == "arrivee")
 		{
 			cout << "Choisissez une Arrivee" << endl;
 			getline(cin,arrivee);
@@ -274,7 +270,7 @@ void Interface::Charger()
 			m_catalogue->Charger(file, false, arrivee);
 		}
 	}
-	if (strcmp(lecture, "selection") == 0)
+	if (lecture == "selection")
 	{
 		string temp;
 		bool valide;
@@ -284,6 +280,7 @@ void Interface::Charger()
 			getline(cin,temp);
 			begin=stoi(temp);
 			cout << "Choisissez l'indice m" << endl;
+			getline(cin,temp);
 			end=stoi(temp);
 			valide = m_catalogue->Charger(file, begin, end);
 		} while (!valide);
@@ -302,13 +299,12 @@ void Interface::Sauvegarder() const
 	getline(cin,fileName);
 
     // opens an existing csv file or creates a new file. 
-    remove((path + fileName + ".csv").c_str());
+	remove((path + fileName + ".csv").c_str());
 	file.open((path + fileName + ".csv").c_str(), ios::out | ios::app);
 
 	/* Lecture du choix de chargement de l'utilisateur*/
 	//TODO: pas beau (faire des fonctions)
-	char lecture[100];
-	string depart, arrivee;
+	string lecture, depart, arrivee, temp;
 	int begin, end;
 
 	cout << "none : Sauvegarde sans criteres de selection" << endl;
@@ -317,17 +313,17 @@ void Interface::Sauvegarder() const
 	cout << "selection : Sauvegarde selon un intervalle de selection" << endl;
 	cout << "exit : Vous ne voulez pas sauvegarder de fichier" << endl;
 
-	fscanf(stdin, "%99s", lecture);
-	while ((strcmp(lecture, "none") != 0)&&(strcmp(lecture, "type") != 0)&&(strcmp(lecture, "ville") != 0)&&(strcmp(lecture, "selection") != 0)&&(strcmp(lecture, "exit") != 0))
+		getline(cin, lecture);
+	while ((lecture != "none")&&(lecture != "type")&&(lecture != "ville")&&(lecture != "selection")&&(lecture != "exit"))
 	{
-		fscanf(stdin, "%99s", lecture);
+		getline(cin, lecture);
 	}
 
-	if (strcmp(lecture, "none") == 0)
+	if (lecture == "none")
 	{	
 		m_catalogue->Sauvegarder(file);
 	}
-	if (strcmp(lecture, "type") == 0)
+	if (lecture == "type")
 	{
 		bool isSimple = true;
 		cout << endl;
@@ -335,30 +331,31 @@ void Interface::Sauvegarder() const
 		cout << "Sauvegarde selon le type de trajets :" << endl;
 		cout << "simple : sauvegarde des trajets simples" << endl;
 		cout << "compose : sauvegarde des trajets composés" << endl;
-		fscanf(stdin, "%99s", lecture);
-		while ((strcmp(lecture, "simple") != 0)&&(strcmp(lecture, "compose") != 0))
+
+		getline(cin, lecture);
+		while ((lecture != "simple")&&(lecture != "simple"))
 		{
-			fscanf(stdin, "%99s", lecture);
+		getline(cin, lecture);
 		}
-		if (strcmp(lecture, "compose") == 0)
+		if (slecture == "compose")
 		{
 			isSimple = false;
 		}
 		m_catalogue->Sauvegarder(file,isSimple);
 	}
-	if (strcmp(lecture, "ville") == 0)
+	if (lecture == "ville")
 	{
 		cout << "both : Critere sur les deux villes" << endl;
 		cout << "depart : Critere sur la ville de depart" << endl;
 		cout << "arrivee : Critere sur la ville d'arrivee" << endl;
 
-		fscanf(stdin, "%99s", lecture);
-		while ((strcmp(lecture, "both") != 0)&&(strcmp(lecture, "depart") != 0)&&(strcmp(lecture, "arrivee") != 0))
+		getline(cin, lecture);
+		while ((lecture != "both")&&(lecture != "depart")&&(lecture != "arrivee"))
 		{
-			fscanf(stdin, "%99s", lecture);
+		getline(cin, lecture);
 		}
 
-		if (strcmp(lecture, "both") == 0)
+		if (lecture == "both")
 		{
 			cout << "Choisissez un Depart" << endl;
 			getline(cin,depart);
@@ -367,14 +364,14 @@ void Interface::Sauvegarder() const
 
 			m_catalogue->Sauvegarder(file, depart, arrivee);
 		}
-		if (strcmp(lecture, "depart") == 0)
+		if (lecture == "depart")
 		{
 			cout << "Choisissez un Depart" << endl;
 			getline(cin,depart);
 
 			m_catalogue->Sauvegarder(file, true, depart);
 		}
-		if (strcmp(lecture, "arrivee") == 0)
+		if (lecture == "arrivee")
 		{
 			cout << "Choisissez une Arrivee" << endl;
 			getline(cin,arrivee);
@@ -382,15 +379,18 @@ void Interface::Sauvegarder() const
 			m_catalogue->Sauvegarder(file, false, arrivee);
 		}
 	}
-	if (strcmp(lecture, "selection") == 0)
+	if (lecture == "selection")
 	{
 		bool valide;
 		do
 		{
+
 			cout << "Soit l'intervalle [n, m]. Choisissez l'indice n (supérieur ou égal à 1)" << endl;
-			cin >> begin;
+			getline(cin,temp);
+			begin=stoi(temp);
 			cout << "Choisissez l'indice m" << endl;
-			cin >> end;
+			getline(cin,temp);
+			end=stoi(temp);
 			valide = m_catalogue->Sauvegarder(file, begin, end);
 		} while (!valide);
 	}
