@@ -37,8 +37,15 @@ class Catalogue
 	//----------------------------------------------------------------- PUBLIC
 
 public:
+
+	//-------------------------------------------- Destructeur
+
+	virtual ~Catalogue();
+	// Mode d'emploi : Fonction recursive appelant les destructeurs des objets qu'il contient
+
 	//----------------------------------------------------- Methodes publiques
-	
+	static Catalogue* GetInstance(uint tailleDeBase = 10);
+
 	void Afficher() const;
 	// Mode d'emploi :
 	// Affiche l'ensemble des trajets contenus dans le catalogue
@@ -46,16 +53,6 @@ public:
 	// Contrat :
 	// Il est suppose qu'un TrajetCompose n'est compose QUE de trajets simples
 	
-	//-------------------------------------------- Constructeurs - destructeur
-
-	Catalogue(uint tailleDeBase = 10);
-	// Mode d'emploi :
-	// Constructeur d'un catalogue en donnant une taille initiale 'tailleDeBase' a la Collection 'm_collectionTrajet' du Catalogue
-
-
-	virtual ~Catalogue();
-	// Mode d'emploi : Fonction recursive appelant les destructeurs des objets qu'il contient
-
 	void Charger(std::fstream& file);
 	// Mode d'emploi :
 	// Charge les trajets d'un fichier choisi par l'utilisateur
@@ -125,6 +122,12 @@ public:
 
 	//----------------------------------------------------- Methodes privees
 private:
+	static Catalogue* m_instance;
+
+	Catalogue(uint tailleDeBase = 10);
+	// Mode d'emploi :
+	// Constructeur d'un catalogue en donnant une taille initiale 'tailleDeBase' a la Collection 'm_collectionTrajet' du Catalogue
+
 	void Chemin(const char * depart, const char * arrivee, Collection & wayToHere) const;
 	// Mode d'emploi : Fonction recursive
 	// Fonction appelee lors de la RechercheComplexe
