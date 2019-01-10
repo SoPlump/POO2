@@ -192,7 +192,7 @@ void Interface::Charger()
 
 
 		string fileName;
-		cout << "Quel fichier voulez vous charger ? Numero attenu" << endl;
+		cout << "Quel fichier voulez vous charger ?" << endl;
 		getline(cin,fileName);
 
     // Open an existing file 
