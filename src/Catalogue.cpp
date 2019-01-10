@@ -156,30 +156,31 @@ TrajetCompose * Catalogue::ScanTrajetCompose() const
 	{
 		TrajetCompose* trajetC = new TrajetCompose();
 		cin.ignore();
-		const char* depart = ScanString("Choisissez un depart : ");
-		const char* arrivee;
-		const char* transport;
+		char* depart = ScanString("Choisissez un depart : ");
+		char* arrivee;
+		char* transport;
 
 		for (uint i = 0; i < iTrajets-1; ++i)
 		{	
 			arrivee = ScanString("Entrez la ville suivante : ");
 			transport = ScanString("\nChoisissez un moyen de transport : ");
 			TrajetSimple* ts = new TrajetSimple(depart, arrivee, transport);
+			trajetC->AjouterTrajet(ts);
 
-			depart = arrivee;
-			while (!trajetC->AjouterTrajet(ts))
-			{
-				delete ts;
-			}
+			strcpy(depart, arrivee);
+
+			delete[] transport;
+			delete[] arrivee;
 		}
 		arrivee = ScanString("Entrez la ville d'arrivee : ");
 		transport = ScanString("\nChoisissez un moyen de transport : ");
 		TrajetSimple* ts = new TrajetSimple(depart, arrivee, transport);
+		trajetC->AjouterTrajet(ts);
 
-		while (!trajetC->AjouterTrajet(ts))
-		{
-			delete ts;
-		}
+		delete[]  depart;
+		delete[] arrivee;
+		delete[] transport;
+
 		return trajetC;
 	}
 	return nullptr;
