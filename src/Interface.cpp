@@ -402,7 +402,7 @@ void Interface::Sauvegarder() const
 
 Interface::Interface()
 {
-	m_catalogue = new Catalogue();
+	m_catalogue = Catalogue::GetInstance();
 #ifdef MAP
 	cout << "Appel au constructeur de <Interface>" << endl;
 #endif
