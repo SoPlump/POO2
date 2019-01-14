@@ -15,7 +15,7 @@ e-mail               : guilhem.cerba@insa-lyon.fr, sophie.raudrant@insa-lyon.fr
 using namespace std;
 
 //------------------------------------------------------ Include personnel
-#include "trajetcompose.h"
+#include "TrajetCompose.h"
 
 //------------------------------------------------------------- Constantes
 

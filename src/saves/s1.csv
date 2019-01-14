@@ -1,12 +1,3 @@
-3,Nice,Paris
-1,Nice,Lyon,TGV
-1,Lyon,Grenoble,TER
-1,Grenoble,Paris,TGV
+2
 1,Paris,Geneve,TGV
-2,Geneve,Lyon
-1,Geneve,Dijon,TER
-1,Dijon,Lyon,TER
-3,Bordeaux,Paris
-1,Bordeaux,Nime,Bus
-1,Nime,Brest,TGV
-1,Brest,Paris,TGV
+1,Paris,Lyon,TGV

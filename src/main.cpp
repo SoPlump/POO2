@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <iostream>
-#include "interface.h"
+#include "Interface.h"
 
 using namespace std;
 
@@ -13,11 +13,6 @@ int main()
 	interface->Menu();
 
 	delete interface;
-
-	/*Catalogue* catalogue = new Catalogue();
-	catalogue->Interface();
-
-	delete catalogue;*/
 
 	return 0;
 }

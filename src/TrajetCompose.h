@@ -11,8 +11,8 @@ e-mail               : guilhem.cerba@insa-lyon.fr, sophie.raudrant@insa-lyon.fr
 #define TrajetCompose_H
 
 //--------------------------------------------------- Interfaces utilisees
-#include "trajet.h"
-#include "collection.h"
+#include "Trajet.h"
+#include "Collection.h"
 
 //------------------------------------------------------------- Constantes
 

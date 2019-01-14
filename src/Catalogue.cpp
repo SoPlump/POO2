@@ -33,6 +33,14 @@ using namespace std;
 //{
 //} //----- Fin de Methode
 
+Catalogue* Catalogue::m_instance = NULL;
+
+Catalogue* Catalogue::GetInstance(uint tailleDeBase)
+{
+	if (m_instance == 0)
+		m_instance = new Catalogue(tailleDeBase);
+	return m_instance;
+}
 
 //-------------------------------------------- Constructeurs - destructeur
 

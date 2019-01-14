@@ -11,7 +11,7 @@ e-mail               : guilhem.cerba@insa-lyon.fr, sophie.raudrant@insa-lyon.fr
 #define TrajetSimple_H
 
 //--------------------------------------------------- Interfaces utilisees
-#include "trajet.h"
+#include "Trajet.h"
 
 //------------------------------------------------------------- Constantes
 
