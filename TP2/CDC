@@ -1,0 +1,7 @@
+CDC
+
+TODO :
+- Spécifications des besoins + Tests
+- Pas stocker les lignes, les lire, les découper et direct renvoyer la donnée interessante
+- GetLine(index, string "source") voir si il existe fgets
+- 
