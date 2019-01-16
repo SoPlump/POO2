@@ -16,14 +16,14 @@ Qu'est ce que l'utilisateur ne peut pas faire
 - choix du nom du fichier de sauvegarde OK
 
 TODO:
-- Corriger la fuite mémoire de la recherche simple
-- Ajouter l'interdiction de rentrer des virgules dans les noms de ville (lors de la création de trajets)
-- Tester avec Valgrind
-- UML
-- Faire CR
+- Corriger la fuite mémoire de la recherche simple OK
+- Ajouter l'interdiction de rentrer des virgules dans les noms de ville (lors de la création de trajets) ON FAIT PAS
+- Tester avec Valgrind OK
+- UML OK
+- Faire CR OK
 - Faire GitHub OK
 - Ajouter de la metadonnee au debut du fichier (nb trajets dans fichier) OK
-- Remplacer les cin par des getline
+- Remplacer les cin par des getline OK
 - Mettre l'interface en singleton OK
 
 
