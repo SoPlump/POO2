@@ -11,7 +11,10 @@
 #define FileManager_H
 
 //--------------------------------------------------- Interfaces utilisées
-
+#include <fstream>
+#include <sstream>
+#include <vector>
+using namespace std;
 //------------------------------------------------------------- Constantes
 
 //------------------------------------------------------------------ Types
@@ -34,7 +37,7 @@ public:
     // Contrat :
     //
 
-vector <string> Decoupage (stringstream s);
+    vector <std::string> Decoupage (stringstream s);
 
 //------------------------------------------------- Surcharge d'opérateurs
     FileManager & operator = ( const FileManager & unFileManager );
