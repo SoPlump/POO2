@@ -11,7 +11,11 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
-#include <iostream>
+#include <cstring>
+#include <vector>
+#include <string>
+#include <fstream>
+#include <sstream>
 using namespace std;
 
 //------------------------------------------------------ Include personnel
@@ -28,36 +32,24 @@ using namespace std;
 //{
 //} //----- Fin de Méthode
 
-
-//------------------------------------------------- Surcharge d'opérateurs
-FileManager & FileManager::operator = ( const FileManager & unFileManager )
+vector <string> FileManager::Decoupage (stringstream s)
 // Algorithme :
 //
 {
-} //----- Fin de operator =
+	vector <string> elts;
+	string word;
+
+	while (std::getline(s, word,' ')) 
+	{ 
+		elts.push_back(word); 
+	}
+
+	return elts;
+} //----- Fin de Méthode
+
 
 
 //-------------------------------------------- Constructeurs - destructeur
-FileManager::FileManager ( const FileManager & unFileManager )
-// Algorithme :
-//
-{
-#ifdef MAP
-    cout << "Appel au constructeur de copie de <FileManager>" << endl;
-#endif
-} //----- Fin de FileManager (constructeur de copie)
-
-
-FileManager::FileManager ( )
-// Algorithme :
-//
-{
-#ifdef MAP
-    cout << "Appel au constructeur de <FileManager>" << endl;
-#endif
-} //----- Fin de FileManager
-
-
 FileManager::~FileManager ( )
 // Algorithme :
 //

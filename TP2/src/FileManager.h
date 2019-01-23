@@ -22,7 +22,7 @@
 //
 //------------------------------------------------------------------------
 
-class FileManager : public Ancetre
+class FileManager : public ifstream
 {
 //----------------------------------------------------------------- PUBLIC
 
@@ -34,6 +34,7 @@ public:
     // Contrat :
     //
 
+vector <string> Decoupage (stringstream s);
 
 //------------------------------------------------- Surcharge d'opérateurs
     FileManager & operator = ( const FileManager & unFileManager );
@@ -44,13 +45,7 @@ public:
 
 
 //-------------------------------------------- Constructeurs - destructeur
-    FileManager ( const FileManager & unFileManager );
-    // Mode d'emploi (constructeur de copie) :
-    //
-    // Contrat :
-    //
-
-    FileManager ( );
+    FileManager (string fileName) : ifstream(fileName.c_str()) {}
     // Mode d'emploi :
     //
     // Contrat :
@@ -68,7 +63,6 @@ protected:
 //----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
-
 };
 
 //-------------------------------- Autres définitions dépendantes de <FileManager>
