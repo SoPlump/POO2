@@ -37,7 +37,7 @@ public:
     // Contrat :
     //
 
-    vector <std::string> Decoupage (stringstream s);
+    vector <string> Decouper (stringstream& s);
 
 //------------------------------------------------- Surcharge d'opérateurs
     FileManager & operator = ( const FileManager & unFileManager );
