@@ -36,6 +36,8 @@ public:
     // Contrat :
     //
 
+    void Ajouter()
+
 //-------------------------------------------- Constructeurs - destructeur
     Noeud ( );
     // Mode d'emploi :
@@ -55,7 +57,7 @@ protected:
 //----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
-    std::map < std::string source, uint nbOcc >;
+    std::map <std::string, uint> m_mapSources;
     uint m_nbOcc;
 
 };

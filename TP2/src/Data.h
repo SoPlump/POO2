@@ -67,7 +67,7 @@ protected:
     // Mode d'emploi :
     //
     // Contrat :
-    /
+    
 ///----------------------------------------------------- Attributs protégés
     std::map<std::string, Noeud*> m_docInfo;
 };
