@@ -32,7 +32,7 @@ using namespace std;
 //{
 //} //----- Fin de Méthode
 
-vector <string> FileManager::Decoupage (stringstream s)
+vector <string> FileManager::Decouper (stringstream& s)
 // Algorithme :
 //
 {
