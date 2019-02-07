@@ -36,7 +36,7 @@ public:
     // Contrat :
     //
 
-    void Ajouter()
+    void Ajouter();
 
 //-------------------------------------------- Constructeurs - destructeur
     Noeud ( );

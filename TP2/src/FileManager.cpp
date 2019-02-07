@@ -11,11 +11,6 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
-#include <cstring>
-#include <vector>
-#include <string>
-#include <fstream>
-#include <sstream>
 using namespace std;
 
 //------------------------------------------------------ Include personnel

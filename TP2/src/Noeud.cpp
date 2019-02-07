@@ -26,7 +26,7 @@ uint GetNbOcc ( )
 // Algorithme :
 //
 {
-	return m_nbOcc;
+	//return m_nbOcc;
 } //----- Fin de GetNbOcc
 
 

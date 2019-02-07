@@ -14,6 +14,8 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <string>
+#include <cstring>
 using namespace std;
 //------------------------------------------------------------- Constantes
 
