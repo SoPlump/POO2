@@ -13,6 +13,7 @@
 //--------------------------------------------------- Interfaces utilisées
 
 #include <iostream>
+#include <fstream>
 #include <algorithm>
 #include <string>
 #include <cstring>
@@ -34,6 +35,16 @@ struct Options
     string graphName;
 
 };
+
+struct InvalidChar
+{
+    bool operator() ( const char& car ) const
+    {
+        return !isalnum(car) && car != '_' && car != '.' && car != '/' && car != '-';
+    }
+};
+
+
 //------------------------------------------------------------------------
 // Rôle de la classe <ArgManager>
 //
@@ -56,9 +67,9 @@ public:
 
     void getMessage (Status etat);
 
-    bool goodFilename(const string filename, const string fileext);
+    bool goodFilename(const string& filename, const string& fileext);
 
-    bool goodFile(const string filename);
+    bool goodFile(const string& filename);
 
 //-------------------------------------------- Constructeurs - destructeur
     ArgManager (int argc, char **argv );

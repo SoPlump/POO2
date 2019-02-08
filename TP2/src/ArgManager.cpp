@@ -108,7 +108,7 @@ void ArgManager::getMessage(Status etat)
 	}
 }
 
-bool ArgManager::goodFilename(const string filename, const string fileext)
+bool ArgManager::goodFilename(const string& filename, const string& fileext)
 {
 	//Verification des caractères illicites
 	unsigned int i = 0;
@@ -120,15 +120,7 @@ bool ArgManager::goodFilename(const string filename, const string fileext)
 	{
 		return false;
 	}
-	if(find_if(filename.begin(), filename.end(), '/') != filename.end())
-	{
-		return false;
-	}
-	if(find_if(filename.begin(), filename.end(), '-') != filename.end())
-	{
-		return false;
-	}
-	if(find_if(filename.begin(), filename.end(), '_') != filename.end())
+	if(find_if(filename.begin(), filename.end(), InvalidChar()) != filename.end())
 	{
 		return false;
 	}
@@ -143,6 +135,24 @@ bool ArgManager::goodFilename(const string filename, const string fileext)
         return false;
     }
     return true;
+}
+
+bool ArgManager::goodFile (const string& filename)
+{
+	//Vérification que le fichier existe
+	ifstream test(filename.c_str());
+	if(!test.is_open())
+	{
+		return false;
+	}
+
+	//Vérification que le fichier n'est pas vide
+	if (test)
+	{
+		test.get();
+		return test.eof();
+	}
+	return false;
 }
 //-------------------------------------------- Constructeurs - destructeur
 ArgManager::ArgManager (int argc, char **argv)
