@@ -7,6 +7,7 @@
 #include <stdio.h>
 //#include "Data.h"
 #include "FileManager.h"
+#include "ArgManager.h"
 
 int main(int argn, char** argv)
 {
@@ -16,7 +17,18 @@ int main(int argn, char** argv)
 	string line;
 
 	//Data* data = new Data();
-	
+
+	ArgManager aM(argn,argv);
+	Options chx = aM.getOptions();
+	aM.getMessage(chx.etat);
+	cout << chx.eOption << endl;
+	cout << chx.gOption << endl;
+	cout << chx.tOption << endl;
+	cout << chx.hour << endl;
+	cout << chx.logName << endl;
+	cout << chx.graphName << endl;
+
+
 	FileManager fileM(path +"test");
 	getline(fileM,line);
 	stringstream s(line);
