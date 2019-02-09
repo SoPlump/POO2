@@ -13,6 +13,7 @@
 //--------------------------------------------------- Interfaces utilisées
 #include <string>
 #include <map>
+#include <ostream>
 
 //------------------------------------------------------------- Constantes
 
@@ -30,16 +31,26 @@ class Noeud
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    uint GetNbOcc ( );
+    //uint GetNbOcc ( );
     // Mode d'emploi :
     //
     // Contrat :
     //
+    friend std::ostream & operator << (std::ostream & out, Noeud & noeud)
+    {
+        map<string, uint>::iterator it;
+        for ( it = noeud.m_mapSources.begin(); it != noeud.m_mapSources.end(); it++)
+        {
+            out << " | " << it->first << ", " << it->second << endl;
+        }
+        return out;
+    }
 
-    void Ajouter();
+    void Ajouter ( std::string source );
 
+    std::map <std::string, uint> GetMapSources ( );
 //-------------------------------------------- Constructeurs - destructeur
-    Noeud ( );
+    Noeud ( std::string source );
     // Mode d'emploi :
     //
     // Contrat :
