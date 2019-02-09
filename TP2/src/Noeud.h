@@ -49,7 +49,6 @@ public:
     void Ajouter ( std::string source );
 
     std::map <std::string, uint> GetMapSources ( );
-    
 //-------------------------------------------- Constructeurs - destructeur
     Noeud ( std::string source );
     // Mode d'emploi :

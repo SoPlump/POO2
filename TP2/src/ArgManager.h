@@ -12,9 +12,38 @@
 
 //--------------------------------------------------- Interfaces utilisées
 
+#include <iostream>
+#include <fstream>
+#include <algorithm>
+#include <string>
+#include <cstring>
+#include <cctype>
+#include <utility>
+using namespace std;
 //------------------------------------------------------------- Constantes
 
+enum class Status { Good, Err_arg, Err_log, Err_t, Err_graphName, Err_gDup};
 //------------------------------------------------------------------ Types
+struct Options
+{
+    Status etat = Status::Good;
+    bool eOption = false;
+    bool gOption = false;
+    bool tOption = false;
+    unsigned int hour = 0;
+    string logName;
+    string graphName;
+
+};
+
+struct InvalidChar
+{
+    bool operator() ( const char& car ) const
+    {
+        return !isalnum(car) && car != '_' && car != '.' && car != '/' && car != '-';
+    }
+};
+
 
 //------------------------------------------------------------------------
 // Rôle de la classe <ArgManager>
@@ -22,7 +51,7 @@
 //
 //------------------------------------------------------------------------
 
-class ArgManager : public Ancetre
+class ArgManager
 {
 //----------------------------------------------------------------- PUBLIC
 
@@ -34,29 +63,22 @@ public:
     // Contrat :
     //
 
+    Options getOptions ();
 
-//------------------------------------------------- Surcharge d'opérateurs
-    ArgManager & operator = ( const ArgManager & unArgManager );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    void getMessage (Status etat);
 
+    bool goodFilename(const string& filename, const string& fileext);
+
+    bool goodFile(const string& filename);
 
 //-------------------------------------------- Constructeurs - destructeur
-    ArgManager ( const ArgManager & unArgManager );
-    // Mode d'emploi (constructeur de copie) :
-    //
-    // Contrat :
-    //
-
-    ArgManager ( );
+    ArgManager (int argc, char **argv );
     // Mode d'emploi :
     //
     // Contrat :
     //
 
-    virtual ~ArgManager ( );
+    ~ArgManager ( );
     // Mode d'emploi :
     //
     // Contrat :
@@ -68,7 +90,8 @@ protected:
 //----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
-
+int m_argc;
+string *m_argv;
 };
 
 //-------------------------------- Autres définitions dépendantes de <ArgManager>

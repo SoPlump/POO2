@@ -11,7 +11,6 @@
 //---------------------------------------------------------------- INCLUDE
 
 //-------------------------------------------------------- Include système
-#include <iostream>
 using namespace std;
 
 //------------------------------------------------------ Include personnel
@@ -28,30 +27,144 @@ using namespace std;
 //{
 //} //----- Fin de Méthode
 
-
-//------------------------------------------------- Surcharge d'opérateurs
-ArgManager & ArgManager::operator = ( const ArgManager & unArgManager )
-// Algorithme :
-//
+Options ArgManager::getOptions ()
 {
-} //----- Fin de operator =
+	Options options;
 
+	//Pas assez d'arguments
+	if (m_argc<2)
+	{
+		options.etat = Status::Err_arg;
+		return options;
+	}
 
+	//Nom du log
+	if(!goodFilename(m_argv[m_argc-1],".log"))
+	{
+		options.etat = Status::Err_log;
+		return options;
+	}
+	else
+	{
+		options.logName = m_argv[m_argc-1];
+	}
+
+	//Options choisies
+	for(int i = 1;i<m_argc-2;i++)
+	{
+		if(m_argv[i].compare("-e")==0)
+		{
+			options.eOption = true;
+		}
+		if(m_argv[i].compare("-g")==0)
+		{
+			options.gOption = true;
+			if (!goodFilename(m_argv[i+1],".dot"))
+			{
+				options.etat = Status::Err_graphName;
+				return options;
+			} 
+			else
+			{
+				options.logName = m_argv[i+1];
+			}
+		}
+		if(m_argv[i].compare("-t")==0)
+		{
+			if(stoi(m_argv[i+1])<0 || stoi(m_argv[i+1])>23)
+			{
+				options.etat = Status::Err_t;
+				return options;
+			}
+			else
+			{
+				options.tOption = true;
+				options.hour = stoi(m_argv[i+1]);	
+			}
+			
+		}
+	}
+
+	return options;
+}
+
+void ArgManager::getMessage(Status etat)
+{
+	switch(etat)
+	{
+		case Status::Good:
+		default:
+			cerr << "Lancement du traitement" << endl;
+			break;
+		case Status::Err_arg :
+			cerr << "Arguments manquants" << endl;
+			break;
+		case Status::Err_log :
+			cerr << "Erreur nom fichier log" << endl;
+			break;
+		case Status::Err_graphName :
+			cerr << "Erreur nom graphViz de sortie" << endl;
+			break;
+	}
+}
+
+bool ArgManager::goodFilename(const string& filename, const string& fileext)
+{
+	//Verification des caractères illicites
+	unsigned int i = 0;
+	while(isalnum(filename[i]))
+	{
+		i++;
+	}
+	if (i!=filename.length()-1)
+	{
+		return false;
+	}
+	if(find_if(filename.begin(), filename.end(), InvalidChar()) != filename.end())
+	{
+		return false;
+	}
+
+	//Verification de l'extension
+	if(filename.size() <= fileext.size())
+    {
+        return false;
+    }
+    if(filename.compare(filename.size() - fileext.size(), fileext.size(), fileext) != 0)
+    {
+        return false;
+    }
+    return true;
+}
+
+bool ArgManager::goodFile (const string& filename)
+{
+	//Vérification que le fichier existe
+	ifstream test(filename.c_str());
+	if(!test.is_open())
+	{
+		return false;
+	}
+
+	//Vérification que le fichier n'est pas vide
+	if (test)
+	{
+		test.get();
+		return test.eof();
+	}
+	return false;
+}
 //-------------------------------------------- Constructeurs - destructeur
-ArgManager::ArgManager ( const ArgManager & unArgManager )
+ArgManager::ArgManager (int argc, char **argv)
 // Algorithme :
 //
 {
-#ifdef MAP
-    cout << "Appel au constructeur de copie de <ArgManager>" << endl;
-#endif
-} //----- Fin de ArgManager (constructeur de copie)
+	m_argc = argc;
+	for(int i = 0; i<argc;i++)
+	{
+		m_argv[i] = string(argv[i]);
+	}	
 
-
-ArgManager::ArgManager ( )
-// Algorithme :
-//
-{
 #ifdef MAP
     cout << "Appel au constructeur de <ArgManager>" << endl;
 #endif
@@ -69,7 +182,6 @@ ArgManager::~ArgManager ( )
 
 
 //------------------------------------------------------------------ PRIVE
-
 
 
 //----------------------------------------------------- Méthodes protégées
