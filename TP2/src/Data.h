@@ -34,11 +34,36 @@ class Data
 
 public:
 //----------------------------------------------------- Méthodes publiques
+
+    friend std::ostream & operator << (std::ostream & out, Data & data)
+    {
+        map<std::string, Noeud*>::iterator it;
+        for ( it = data.m_docInfo.begin(); it != data.m_docInfo.end(); it++)
+        {
+            out << it->first << endl;
+            out << *(it->second) << endl;
+        }
+        out << endl;
+
+        map<std::string, uint>::iterator itN;
+        for ( itN = data.m_nodes.begin(); itN != data.m_nodes.end(); itN++)
+        {
+            out << itN->first << ", ";
+            out << itN->second << endl;
+        }
+
+        return out;
+    }
+
     void Ajouter ( std::string source, std::string cible );
     // Mode d'emploi :
     //
     // Contrat :
     // 
+    
+    void AddNode ( std::string source, std::string cible );
+
+    bool GenerateGraph ( const std::string & fileName );
 
 //-------------------------------------------- Constructeurs - destructeur
     Data ( );
@@ -61,7 +86,7 @@ protected:
     // Mode d'emploi :
     //
     // Contrat :
-    //
+    //w
 
     void Save();
     // Mode d'emploi :
@@ -70,6 +95,7 @@ protected:
     
 ///----------------------------------------------------- Attributs protégés
     std::map<std::string, Noeud*> m_docInfo;
+    std::map<std::string, uint> m_nodes;
 };
 
 //-------------------------------- Autres définitions dépendantes de <Data>
