@@ -14,6 +14,7 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include "ArgManager.h"
 #include "FileManager.h"
 #include "Noeud.h"
 
@@ -65,8 +66,10 @@ public:
 
     bool GenerateGraph ( const std::string & fileName );
 
+    bool Traiter ();
+
 //-------------------------------------------- Constructeurs - destructeur
-    Data ( );
+    Data (Options opt);
     // Mode d'emploi :
     //
     // Contrat :
@@ -94,6 +97,7 @@ protected:
     // Contrat :
     
 ///----------------------------------------------------- Attributs protégés
+    Options choix;
     std::map<std::string, Noeud*> m_docInfo;
     std::map<std::string, uint> m_nodes;
 };

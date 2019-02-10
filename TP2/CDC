@@ -2,16 +2,19 @@ CDC
 
 TODO :
 - Spécifications des besoins + Tests
-- Pas stocker les lignes, les lire, les découper et direct renvoyer la donnée interessante
+- Pas stocker les lignes, les lire, les découper et direct renvoyer la donnée interessante OK à moitié
 - GetLine(index, string "source") voir si il existe fgets
 - Vérifier que le log existe dans le ArgManager
 - Gerer dans le main le dossier logs
+- Vérifier que ArgManager::goodFile() est bonne
+
+
 
 10 meilleurs éléments
-OU
+ET :
 Tous sauf image, css ou js
-OU
+	ET/OU
 Tous dans un intervalle de temps
-OU
+	ET/OU
 Création .dot
 

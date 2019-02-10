@@ -57,7 +57,6 @@ Noeud::Noeud ( string source )
 {
 
 	m_mapSources.insert(make_pair(source, 1));
-	cout << "Appel au constructeur de <Noeud>" << endl;
 #ifdef MAP
 	cout << "Appel au constructeur de <Noeud>" << endl;
 #endif
@@ -68,7 +67,6 @@ Noeud::~Noeud ( )
 // Algorithme :
 //
 {
-	cout << "Appel au destructeur de <Noeud>" << endl;
 #ifdef MAP
 	cout << "Appel au destructeur de <Noeud>" << endl;
 #endif

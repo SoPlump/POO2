@@ -52,8 +52,6 @@ Options ArgManager::getOptions ()
 	//Options choisies
 	for(int i = 1;i<m_argc-1;i++)
 	{
-		cout << m_argv[i] << endl;
-
 		if(m_argv[i].compare("-e")==0)
 		{
 			options.eOption = true;
@@ -74,7 +72,7 @@ Options ArgManager::getOptions ()
 		if(m_argv[i].compare("-t")==0)
 		{
 			try{
-				if(stoi(m_argv[i+1])<0 || stoi(m_argv[i+1])>23)
+				if(stoul(m_argv[i+1])<0 || stoul(m_argv[i+1])>23)
 				{
 					options.etat = Status::Err_t;
 					return options;
@@ -82,7 +80,7 @@ Options ArgManager::getOptions ()
 				else
 				{
 					options.tOption = true;
-					options.hour = stoi(m_argv[i+1]);	
+					options.hour = stoul(m_argv[i+1]);	
 				}
 			}
 			catch(exception e)
@@ -108,7 +106,7 @@ void ArgManager::getMessage(Status etat)
 			cerr << "Arguments manquants" << endl;
 			break;
 		case Status::Err_log :
-			cerr << "Erreur nom fichier log" << endl;
+			cerr << "Erreur fichier log" << endl;
 			break;
 		case Status::Err_graphName :
 			cerr << "Erreur nom graphViz de sortie" << endl;
@@ -127,11 +125,13 @@ bool ArgManager::goodFilename(const string& filename, const string& fileext)
 		return false;
 	}
 
-	//Verification de l'extension
+	//Verification qu'il y a un nom
 	if(filename.size() <= fileext.size())
     {
         return false;
     }
+
+    //Verification de l'extension
     if(filename.compare(filename.size() - fileext.size(), fileext.size(), fileext) != 0)
     {
         return false;
@@ -152,9 +152,9 @@ bool ArgManager::goodFile (const string& filename)
 	if (test)
 	{
 		test.get();
-		return test.eof();
+		return !test.eof();
 	}
-	return false;
+	return true;
 }
 //-------------------------------------------- Constructeurs - destructeur
 ArgManager::ArgManager (int argc, char **argv)

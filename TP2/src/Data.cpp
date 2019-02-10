@@ -110,13 +110,73 @@ bool Data::GenerateGraph ( const string & fileName )
 	return true;
 }
 
+bool Data::Traiter ()
+{
+	FileManager fileM(choix.logName);
+	int i=0;
+
+	while(!fileM.eof())
+	{
+		bool keep = true;
+		string line;
+		getline(fileM,line);
+		stringstream s(line);
+		vector <string> v = fileM.Decouper(s);
+
+		// Traitement type d'entrées (-e)
+		if(choix.eOption == 1)
+		{
+			if((v[6].find(".css",0)!= string::npos) || (v[6].find(".js",0)!= string::npos) || (v[6].find(".png",0)!= string::npos) || (v[6].find(".bmp",0)!= string::npos) || (v[6].find(".jpg",0)!= string::npos) || (v[6].find(".jpeg",0)!= string::npos) || (v[6].find(".gif",0)!= string::npos) || (v[6].find(".ico",0)!= string::npos))
+			{
+				keep = false;
+			}
+		}
+
+		// Traitement intervalle temporelle (-t)
+		if(choix.tOption == 1)
+		{
+			size_t pos = v[3].find(':',0);
+			uint t = stoul(v[3].substr(pos+1, pos+2));
+
+			if(!(t==choix.hour))
+			{
+				keep = false;
+			}
+		}
+
+		// Prise en compte dans le résultat
+		if(keep == true)
+		{
+			//TODO : insérer dans les maps
+			cout << i++ << endl;
+		}
+	}
+
+	// Affichage du Top 10
+
+	// Traitement création graphe (-g)
+	if(choix.gOption == 1)
+	{
+		//TODO : Générer graphe
+	}
+
+	return true;
+}
+
 //-------------------------------------------- Constructeurs - destructeur
 
-Data::Data ( )
+Data::Data (Options opt)
 // Algorithme :
 //
 {
-	cout << "Appel au constructeur de <Data>" << endl;
+	// Récupération des choix
+	choix.etat = opt.etat;
+    choix.eOption = opt.eOption;
+    choix.gOption = opt.gOption;
+    choix.tOption = opt.tOption;
+    choix.hour = opt.hour;
+    choix.logName = opt.logName;
+    choix.graphName = opt.graphName;
 
 #ifdef MAP
 	cout << "Appel au constructeur de <Data>" << endl;
