@@ -17,7 +17,7 @@ using namespace std;
 #include "ArgManager.h"
 
 //------------------------------------------------------------- Constantes
-
+const string path ="logs/";
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
@@ -46,12 +46,14 @@ Options ArgManager::getOptions ()
 	}
 	else
 	{
-		options.logName = m_argv[m_argc-1];
+		options.logName = path + m_argv[m_argc-1];
 	}
 
 	//Options choisies
-	for(int i = 1;i<m_argc-2;i++)
+	for(int i = 1;i<m_argc-1;i++)
 	{
+		cout << m_argv[i] << endl;
+
 		if(m_argv[i].compare("-e")==0)
 		{
 			options.eOption = true;
@@ -66,22 +68,28 @@ Options ArgManager::getOptions ()
 			} 
 			else
 			{
-				options.logName = m_argv[i+1];
+				options.graphName = m_argv[i+1];
 			}
 		}
 		if(m_argv[i].compare("-t")==0)
 		{
-			if(stoi(m_argv[i+1])<0 || stoi(m_argv[i+1])>23)
+			try{
+				if(stoi(m_argv[i+1])<0 || stoi(m_argv[i+1])>23)
+				{
+					options.etat = Status::Err_t;
+					return options;
+				}
+				else
+				{
+					options.tOption = true;
+					options.hour = stoi(m_argv[i+1]);	
+				}
+			}
+			catch(exception e)
 			{
 				options.etat = Status::Err_t;
 				return options;
 			}
-			else
-			{
-				options.tOption = true;
-				options.hour = stoi(m_argv[i+1]);	
-			}
-			
 		}
 	}
 
@@ -105,21 +113,15 @@ void ArgManager::getMessage(Status etat)
 		case Status::Err_graphName :
 			cerr << "Erreur nom graphViz de sortie" << endl;
 			break;
+		case Status::Err_t :
+			cerr << "Erreur heure indiquée" << endl;
+			break;
 	}
 }
 
 bool ArgManager::goodFilename(const string& filename, const string& fileext)
 {
 	//Verification des caractères illicites
-	unsigned int i = 0;
-	while(isalnum(filename[i]))
-	{
-		i++;
-	}
-	if (i!=filename.length()-1)
-	{
-		return false;
-	}
 	if(find_if(filename.begin(), filename.end(), InvalidChar()) != filename.end())
 	{
 		return false;
@@ -162,7 +164,7 @@ ArgManager::ArgManager (int argc, char **argv)
 	m_argc = argc;
 	for(int i = 0; i<argc;i++)
 	{
-		m_argv[i] = string(argv[i]);
+		m_argv.push_back(string(argv[i]));
 	}	
 
 #ifdef MAP

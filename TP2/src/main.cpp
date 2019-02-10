@@ -5,9 +5,11 @@
 #include <sstream>
 #include <iostream>
 #include <stdio.h>
-//#include "Data.h"
+#include "Data.h"
 #include "FileManager.h"
 #include "ArgManager.h"
+
+const string path = "logs/";
 
 int main(int argn, char** argv)
 {
@@ -31,10 +33,7 @@ int main(int argn, char** argv)
 
 	bool e = false, t = false;
 	int heure = 0;
-	string path = "logs/";
 	string line;
-
-	//Data* data = new Data();
 
 	ArgManager aM(argn,argv);
 	Options chx = aM.getOptions();
@@ -47,10 +46,18 @@ int main(int argn, char** argv)
 	cout << chx.graphName << endl;
 
 
-	FileManager fileM(path +"test");
+	FileManager fileM(path +"test.log");
 	getline(fileM,line);
 	stringstream s(line);
 	vector <string> v = fileM.Decouper(s);
+	for(int i = 0; i<v.size();i++)
+	{
+		cout << v[i] << endl;
+	}
+
+	getline(fileM,line);
+	s=stringstream(line);
+	v=fileM.Decouper(s);
 	for(int i = 0; i<v.size();i++)
 	{
 		cout << v[i] << endl;

@@ -11,10 +11,11 @@
 #define ArgManager_H
 
 //--------------------------------------------------- Interfaces utilisées
-
+#include <memory>
 #include <iostream>
 #include <fstream>
 #include <algorithm>
+#include <vector>
 #include <string>
 #include <cstring>
 #include <cctype>
@@ -91,7 +92,7 @@ protected:
 
 //----------------------------------------------------- Attributs protégés
 int m_argc;
-string *m_argv;
+vector<string> m_argv;
 };
 
 //-------------------------------- Autres définitions dépendantes de <ArgManager>
