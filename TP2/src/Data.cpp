@@ -42,6 +42,8 @@ void Data::Ajouter ( string source, string cible )
 		// found
 		it->second->Ajouter(source);
 	}
+
+	AddNode(source, cible);
 }
 
 void Data::AddNode ( string source, string cible )
