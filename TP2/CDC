@@ -7,11 +7,11 @@ TODO :
 - Vérifier que le log existe dans le ArgManager
 - Gerer dans le main le dossier logs
 
-10 meilleurs éléments
+10 meilleurs éléments | Géré après avoir tout ajouter
 OU
-Tous sauf image, css ou js
+Tous sauf image, css ou js | Géré dans le main
 OU
-Tous dans un intervalle de temps
+Tous dans un intervalle de temps | Géré dans le main
 OU
 Création .dot
 
