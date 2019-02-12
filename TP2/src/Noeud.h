@@ -43,12 +43,17 @@ public:
         {
             out << " | " << it->first << ", " << it->second << endl;
         }
+        //out << m_nbOcc << endl;
         return out;
     }
 
     void Ajouter ( std::string source );
 
     std::map <std::string, uint> GetMapSources ( );
+
+    uint GetNbOcc() const;
+
+    bool GenerateGraph();
 //-------------------------------------------- Constructeurs - destructeur
     Noeud ( std::string source );
     // Mode d'emploi :
