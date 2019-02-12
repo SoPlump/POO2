@@ -75,11 +75,6 @@ public:
     // Mode d'emploi :
     // Affiche l'etat du programme
 
-    bool goodFilename( const string& filename, const string& fileext ) const;
-    // Mode d'emploi :
-    // Verifie si le nom du fichier est valide. Que ce soit pour le log
-    // ou pour le dot
-
     bool goodFile( const string& filename );
     // Mode d'emploi :
     // Verifie si le fichier log existe et n'est pas vide
@@ -95,10 +90,15 @@ public:
 
 protected:
 //----------------------------------------------------- Méthodes protégées
+    
+    bool goodFilename( const string& filename, const string& fileext ) const;
+    // Mode d'emploi :
+    // Verifie si le nom du fichier est valide. Que ce soit pour le log
+    // ou pour le dot
 
 //----------------------------------------------------- Attributs protégés
-int m_argc;
-vector<string> m_argv;
+    int m_argc;
+    vector<string> m_argv;
 };
 
 //-------------------------------- Autres définitions dépendantes de <ArgManager>
