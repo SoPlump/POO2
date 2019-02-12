@@ -39,6 +39,19 @@ vector <string> FileManager::Decouper (stringstream& s)
 		elts.push_back(word); 
 	}
 
+	// Retire la base de l'URL quand elle est locale
+	string localURL = "http://intranet-if.insa-lyon.fr";
+	size_t pos = elts[10].find(localURL);
+
+	if (pos != string::npos) //Adresse locale
+	{
+		elts[10] = elts[10].substr(localURL.size() + 1, elts[10].size() - (localURL.size() + 2));
+	}
+	else // Adresse non locale -> On retire quand meme les guillemets
+	{
+		elts[10] = elts[10].substr(1, elts[10].size() - 2);
+	}
+
 	return elts;
 } //----- Fin de Méthode
 
@@ -50,7 +63,7 @@ FileManager::~FileManager ( )
 //
 {
 #ifdef MAP
-    cout << "Appel au destructeur de <FileManager>" << endl;
+	cout << "Appel au destructeur de <FileManager>" << endl;
 #endif
 } //----- Fin de ~FileManager
 
