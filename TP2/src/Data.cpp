@@ -129,17 +129,20 @@ bool Data::Traiter ()
 
 		if (!v.empty())
 		{
-			// Traitement type d'entrées (-e)
-			if(choix.eOption == 1)
-			{
+		// Traitement type d'entrées (-e)
+		if(choix.eOption == 1)
+		{
 				if((v[6].find(".css",0)!= string::npos) || (v[6].find(".js",0)!= string::npos) || (v[6].find(".png",0)!= string::npos) || (v[6].find(".bmp",0)!= string::npos) || (v[6].find(".jpg",0)!= string::npos) || (v[6].find(".jpeg",0)!= string::npos) || (v[6].find(".gif",0)!= string::npos) || (v[6].find(".ico",0)!= string::npos))
 				{
 					// La ligne correspond à un site qui ne correspond pas a ce qui est desire
 					keep = false;
 				}
-			}
-			// Traitement intervalle temporelle (-t)
-			if(choix.tOption == 1)
+		}
+
+		// Traitement intervalle temporelle (-t)
+		if(choix.tOption == 1)
+		{
+			if (!v.empty())
 			{
 				size_t pos = v[3].find(':',0);
 				uint t = stoul(v[3].substr(pos+1, pos+2));
@@ -152,10 +155,9 @@ bool Data::Traiter ()
 			}
 
 			// Ajout de la cible et de la source dans la map qui contient tous les sites cibles
-			if(keep == true)
-			{
-				Ajouter(v[10], v[6]);
-			}
+		if(keep == true)
+		{
+			Ajouter(v[10], v[6]);
 		}
 	}
 
