@@ -104,7 +104,14 @@ bool Data::Traiter ()
 			// Traitement création graphe (-g)
 	if(choix.gOption == 1)
 	{
-		GenerateGraph(choix.graphName);
+		if (GenerateGraph(choix.graphName))
+		{
+			cout << choix.graphName << ".dot a ete genere." << endl;
+		}
+		else
+		{
+			cout << choix.graphName << ".dot n'a pas ete genere." << endl;
+		}
 	}
 
 	AfficherTopTen();
