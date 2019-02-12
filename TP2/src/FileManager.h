@@ -16,15 +16,12 @@
 #include <vector>
 #include <string>
 #include <cstring>
-using namespace std;
-//------------------------------------------------------------- Constantes
-
-//------------------------------------------------------------------ Types
 
 //------------------------------------------------------------------------
 // Rôle de la classe <FileManager>
-//
-//
+// La classe FileManager permet d'ouvrir un fichier et de decouper ses lignes
+// en vector de string.
+// Cette classe herite de ifstream.
 //------------------------------------------------------------------------
 
 class FileManager : public ifstream
@@ -33,44 +30,18 @@ class FileManager : public ifstream
 
 public:
 //----------------------------------------------------- Méthodes publiques
-    // type Méthode ( liste des paramètres );
+
+    std::vector < std::string > Decouper (std::stringstream& s);
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
-
-    vector <string> Decouper (stringstream& s);
-
-//------------------------------------------------- Surcharge d'opérateurs
-    FileManager & operator = ( const FileManager & unFileManager );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
-
+    // Fonction appelee par Data::Traiter pour decouper une ligne en un vecteur de mots
 
 //-------------------------------------------- Constructeurs - destructeur
-    FileManager (string fileName) : ifstream(fileName.c_str()) {}
+    FileManager ( std::string fileName );
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    // Construit un FileManager a partir d'un nom de fichier .log
 
     virtual ~FileManager ( );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
-
-//------------------------------------------------------------------ PRIVE
-
-protected:
-//----------------------------------------------------- Méthodes protégées
-
-//----------------------------------------------------- Attributs protégés
 };
-
-//-------------------------------- Autres définitions dépendantes de <FileManager>
 
 #endif // FileManager_H
 

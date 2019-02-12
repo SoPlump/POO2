@@ -23,7 +23,7 @@
 using namespace std;
 //------------------------------------------------------------- Constantes
 
-enum class Status { Good, Err_arg, Err_log, Err_t, Err_graphName, Err_gDup};
+enum class Status { Good, Err_arg, Err_log, Err_t, Err_graphName, Err_gDup };
 //------------------------------------------------------------------ Types
 struct Options
 {
@@ -48,8 +48,11 @@ struct InvalidChar
 
 //------------------------------------------------------------------------
 // Rôle de la classe <ArgManager>
-//
-//
+// La classe ArgManager permet de verifier la coherence des arguments passes
+// lors de l'execution et de ne pas lancer la lecture d'un log si ils ne
+// sont pas bons.
+// ArgManager met a jour les elements d'une instance d'une structure
+// option.
 //------------------------------------------------------------------------
 
 class ArgManager
@@ -64,26 +67,29 @@ public:
     // Contrat :
     //
 
-    Options getOptions ();
+    Options getOptions ( );
+    // Mode d'emploi :
+    // Verifie la validite de chaque argument et met a jour option selon
 
-    void getMessage (Status etat);
+    void getMessage ( Status etat );
+    // Mode d'emploi :
+    // Affiche l'etat du programme
 
-    bool goodFilename(const string& filename, const string& fileext);
+    bool goodFilename( const string& filename, const string& fileext ) const;
+    // Mode d'emploi :
+    // Verifie si le nom du fichier est valide. Que ce soit pour le log
+    // ou pour le dot
 
-    bool goodFile(const string& filename);
+    bool goodFile( const string& filename );
+    // Mode d'emploi :
+    // Verifie si le fichier log existe et n'est pas vide
 
 //-------------------------------------------- Constructeurs - destructeur
-    ArgManager (int argc, char **argv );
-    // Mode d'emploi :
-    //
+    ArgManager ( int argc, char **argv );
     // Contrat :
-    //
+    // Doit recevoir tous les arguments passes lors de l'execution
 
     ~ArgManager ( );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
 
 //------------------------------------------------------------------ PRIVE
 

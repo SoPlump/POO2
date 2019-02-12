@@ -13,7 +13,7 @@ const string path = "logs/";
 
 int main(int argn, char** argv)
 {
-	// Vérification des arguments
+	// Verification des arguments
 	ArgManager aM(argn,argv);
 	Options chx = aM.getOptions();
 	aM.getMessage(chx.etat);
@@ -28,50 +28,4 @@ int main(int argn, char** argv)
 
 		delete data;
 	}
-
-	/*Data* data = new Data();
-	//FileManager* fileM;
-
-	data->Ajouter("b", "a");
-
-	data->Ajouter("c", "a");
-	data->Ajouter("c", "a");
-
-	data->Ajouter("b", "c");
-	data->Ajouter("b", "c");
-
-	cout << *data;
-
-	bool e = false, t = false;
-	int heure = 0;
-	string line;
-
-	//ArgManager aM(argn,argv);
-	//Options chx = aM.getOptions();
-	//aM.getMessage(chx.etat);
-	cout << chx.eOption << endl;
-	cout << chx.gOption << endl;
-	cout << chx.tOption << endl;
-	cout << chx.hour << endl;
-	cout << chx.logName << endl;
-	cout << chx.graphName << endl;
-
-
-	//delete data;
-
-	/*string line;
-	FileManager fileM(path +"anonyme.log");
-	getline(fileM,line);
-	stringstream s(line);
-	vector <string> v = fileM.Decouper(s);
-	
-	for(int i = 0; i<v.size();i++)
-	{
-		cout << v[i] << endl;
-	}
-
-	size_t pos = v[3].find(':',0);
-	uint t = stoul(v[3].substr(pos+1, pos+2));
-
-	cout << t << endl;*/
 }

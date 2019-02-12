@@ -16,35 +16,30 @@ using namespace std;
 //------------------------------------------------------ Include personnel
 #include "FileManager.h"
 
-//------------------------------------------------------------- Constantes
-
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-// type FileManager::Méthode ( liste des paramètres )
-// Algorithme :
-//
-//{
-//} //----- Fin de Méthode
 
 vector <string> FileManager::Decouper (stringstream& s)
 // Algorithme :
-//
+// Recupere une ligne du log et la retourne decoupee en plusieurs parties
 {
 	vector <string> elts;
 	string word;
 
+	// Recupere chaque mot
 	while (std::getline(s, word,' ')) 
 	{ 
 		elts.push_back(word); 
 	}
 
-	// Retire la base de l'URL quand elle est locale
-	string localURL = "http://intranet-if.insa-lyon.fr";
-
+	// Verifie que la ligne n'est pas vide
 	if (!elts.empty())
 	{
+		// Retire la base de l'URL quand elle est locale
+		string localURL = "http://intranet-if.insa-lyon.fr";
 		size_t pos = elts[10].find(localURL);
+
 		if (pos != string::npos) //Adresse locale
 		{
 			elts[10] = elts[10].substr(localURL.size() + 1, elts[10].size() - (localURL.size() + 2));
@@ -56,24 +51,19 @@ vector <string> FileManager::Decouper (stringstream& s)
 	}
 
 	return elts;
-}//----- Fin de Méthode
-
-
+} //----- Fin de Decouper
 
 //-------------------------------------------- Constructeurs - destructeur
-FileManager::~FileManager ( )
-// Algorithme :
-//
+FileManager::FileManager ( string fileName ) : ifstream ( fileName.c_str() )
 {
 #ifdef MAP
 	cout << "Appel au destructeur de <FileManager>" << endl;
 #endif
 } //----- Fin de ~FileManager
 
-
-//------------------------------------------------------------------ PRIVE
-
-
-
-//----------------------------------------------------- Méthodes protégées
-
+FileManager::~FileManager ( )
+{
+#ifdef MAP
+	cout << "Appel au destructeur de <FileManager>" << endl;
+#endif
+} //----- Fin de ~FileManager

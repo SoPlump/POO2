@@ -15,14 +15,15 @@
 #include <map>
 #include <ostream>
 
-//------------------------------------------------------------- Constantes
-
 //------------------------------------------------------------------ Types
 typedef unsigned int uint;
 //------------------------------------------------------------------------
 // Rôle de la classe <Noeud>
-//
-//
+// La classe Noeud a pour principal attribut une map m_mapSources qui
+// contient une liste de site referer a un site cible ainsi que leur nombre
+// de hit pour chacun.
+// Son deuxieme attribut permet de compatabiliser le nombre total de hits
+// effectues.
 //------------------------------------------------------------------------
 
 class Noeud
@@ -30,55 +31,48 @@ class Noeud
 //----------------------------------------------------------------- PUBLIC
 
 public:
-//----------------------------------------------------- Méthodes publiques
-    //uint GetNbOcc ( );
+//------------------------------------------------- Surcharge d'opérateurs
+    
+    friend std::ostream & operator << ( std::ostream & out, Noeud & noeud );
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
-    friend std::ostream & operator << (std::ostream & out, Noeud & noeud)
-    {
-        map<string, uint>::iterator it;
-        for ( it = noeud.m_mapSources.begin(); it != noeud.m_mapSources.end(); it++)
-        {
-            out << " | " << it->first << ", " << it->second << endl;
-        }
-        //out << m_nbOcc << endl;
-        return out;
-    }
+    // Operateur uniquement utilise pour le debug du programme
+    // Fonction appelee par Data::operator << 
 
-    void Ajouter ( std::string source );
+//----------------------------------------------------- Méthodes publiques
+
+    void Ajouter ( const std::string source );
+    // Mode d'emploi :
+    // Fonction appelee par Data::Ajouter
+    // Ajoute a m_mapSources une source supplementaire ou incremente le nombre
+    // de hit provenant de ce site
 
     std::map <std::string, uint> GetMapSources ( );
+    // Mode d'emploi :
+    // Retourne la map des sources d'un site cible
 
     uint GetNbOcc() const;
-
-    bool GenerateGraph();
-//-------------------------------------------- Constructeurs - destructeur
-    Noeud ( std::string source );
     // Mode d'emploi :
-    //
-    // Contrat :
-    //
+    // Retourne le nombre de hit total lie a un site cible
+
+//-------------------------------------------- Constructeurs - destructeur
+
+    Noeud ( std::string source );
 
     virtual ~Noeud ( );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
 
 //------------------------------------------------------------------ PRIVE
 
 protected:
-//----------------------------------------------------- Méthodes protégées
 
 //----------------------------------------------------- Attributs protégés
+
+    // Map contenant les sites sources d'un meme site cible avec le nombre de hit
+    // par site source
     std::map <std::string, uint> m_mapSources;
+
+    // Nombre de hit total lie a un site cible
     uint m_nbOcc;
-
 };
-
-//-------------------------------- Autres définitions dépendantes de <Noeud>
 
 #endif // NOEUD_H
 

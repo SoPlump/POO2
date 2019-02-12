@@ -18,15 +18,18 @@
 #include "FileManager.h"
 #include "Noeud.h"
 
-//------------------------------------------------------------- Constantes
-
 //------------------------------------------------------------------ Types
 typedef unsigned int uint;
 
 //------------------------------------------------------------------------
 // Rôle de la classe <Data>
-//
-//
+// La classe Data permet de stocker les donnees relatives a un fichier log
+// Il stockera chaque site cible atteint en tant que cle de son attribut
+// m_docInfo. La valeur associe est un Noeud qui regroupe les informations
+// quant aux sites sources.
+// Ca sera egalement a partir de la classe Data qu'un fichier dot peut etre
+// genere, grace a ses attributs m_docInfo et m_nodes. Cette derniere map
+// associe a chaque site traite un index.
 //------------------------------------------------------------------------
 
 class Data
@@ -34,77 +37,70 @@ class Data
 //----------------------------------------------------------------- PUBLIC
 
 public:
+//------------------------------------------------- Surcharge d'opérateurs
+
+    friend std::ostream & operator << ( std::ostream & out, Data & data );
+    // Mode d'emploi :
+    // Operateur uniquement utilise pour le debug du programme
+
 //----------------------------------------------------- Méthodes publiques
 
-    friend std::ostream & operator << (std::ostream & out, Data & data)
-    {
-        map<std::string, Noeud*>::iterator it;
-        for ( it = data.m_docInfo.begin(); it != data.m_docInfo.end(); it++)
-        {
-            out << it->first << ", " << it->second->GetNbOcc() << endl;
-            out << *(it->second) << endl;
-        }
-        out << endl;
-
-        map<std::string, uint>::iterator itN;
-        for ( itN = data.m_nodes.begin(); itN != data.m_nodes.end(); itN++)
-        {
-            out << itN->first << ", ";
-            out << itN->second << endl;
-        }
-
-        return out;
-    }
-
-    void Ajouter ( std::string source, std::string cible );
+    bool Traiter ( );
     // Mode d'emploi :
-    //
+    // Fonction appelee par le main. Lance la decoupe des lignes d'un .log
+    // Puis selon les parametres passes a l'execution, appelle les fonctions :
+    // - Ajouter
+    // - GenerateGraph
+    // La fonction appelera toujours la fonction AfficherTopTen
     // Contrat :
-    // 
-    
-    void AddNode ( std::string source, std::string cible );
-
-    bool GenerateGraph ( const std::string & fileName ) const;
-
-    bool Traiter ();
-
-    void AfficherTopTen ( );
+    // Les parametres passes a l'execution doivent etre traite avant, ce qui
+    // est gere dans l'ArgManager
 
 //-------------------------------------------- Constructeurs - destructeur
-    Data (Options opt);
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
+
+    Data ( Options opt );
 
     virtual ~Data ( );
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //
 
 //------------------------------------------------------------------ PRIVE
 
 protected:
 //----------------------------------------------------- Méthodes protégées
-    void Afficher();
-    // Mode d'emploi :
-    //
-    // Contrat :
-    //w
 
-    void Save();
+    void Ajouter ( const std::string source, const std::string cible );
     // Mode d'emploi :
-    //
+    // Fonction appelee par la fonction Traiter a chaque ligne 
+    // correspondante aux options d'execution.
+    // Ajoute les informations necessaires a la m_docInfo
+
+    void AddNode ( const std::string source, const std::string cible );
+    // Mode d'emploi :
+    // Fonction appelee par la fonction Ajouter. Ajoute a m_nodes les
+    // sites qui n'ont jamais ete ajoute auparavant.
+
+    bool GenerateGraph ( const std::string & fileName ) const;
+    // Mode d'emploi :
+    // Fonction appelee par Traiter. Genere un .dot correspondant
+    // au .log et aux parametres d'execution
     // Contrat :
+    // Le nom de fichier ne doit pas exister. Condition verifiee par
+    // l'ArgManager donc ok
+
+    void AfficherTopTen ( );
+    // Mode d'emploi :
+    // Affiche sous forme textuelle la liste des 10 documents les plus consultes
+    // par ordre decroissant de popularite. 
     
 ///----------------------------------------------------- Attributs protégés
+
+    // Contient toutes les options choisies ou non par l'utilisateur
     Options choix;
+
+    // Map contenant toutes les infos importantes (cible, source, occurence) du .log passe en parametre
     std::map<std::string, Noeud*> m_docInfo;
+
+    // Map associant chaque site avec un index different 
     std::map<std::string, uint> m_nodes;
 };
 
-//-------------------------------- Autres définitions dépendantes de <Data>
-
 #endif // DATA_H
-

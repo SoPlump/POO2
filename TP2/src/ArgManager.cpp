@@ -21,13 +21,8 @@ const string path ="logs/";
 //----------------------------------------------------------------- PUBLIC
 
 //----------------------------------------------------- Méthodes publiques
-// type ArgManager::Méthode ( liste des paramètres )
-// Algorithme :
-//
-//{
-//} //----- Fin de Méthode
 
-Options ArgManager::getOptions ()
+Options ArgManager::getOptions ( )
 {
 	Options options;
 
@@ -100,9 +95,9 @@ Options ArgManager::getOptions ()
 	}
 
 	return options;
-}
+} //----- Fin de ArgManager
 
-void ArgManager::getMessage(Status etat)
+void ArgManager::getMessage ( Status etat )
 {
 	switch(etat)
 	{
@@ -126,9 +121,9 @@ void ArgManager::getMessage(Status etat)
 			cerr << "Erreur : fichier graphViz déjà existant" << endl;
 			break;
 	}
-}
+} //----- Fin de GetMessage
 
-bool ArgManager::goodFilename(const string& filename, const string& fileext)
+bool ArgManager::goodFilename ( const string& filename, const string& fileext ) const
 {
 	//Verification des caractères illicites
 	if(find_if(filename.begin(), filename.end(), InvalidChar()) != filename.end())
@@ -148,9 +143,9 @@ bool ArgManager::goodFilename(const string& filename, const string& fileext)
         return false;
     }
     return true;
-}
+} //----- Fin de GoodFileName
 
-bool ArgManager::goodFile (const string& filename)
+bool ArgManager::goodFile ( const string& filename )
 {
 	//Vérification que le fichier existe
 	ifstream test(filename.c_str());
@@ -166,11 +161,13 @@ bool ArgManager::goodFile (const string& filename)
 		return !test.eof();
 	}
 	return true;
-}
+} //----- Fin de GoodFile
+
 //-------------------------------------------- Constructeurs - destructeur
+
 ArgManager::ArgManager (int argc, char **argv)
 // Algorithme :
-//
+// Recupere le nombre d'argument et la liste des arguments passes a l'execution
 {
 	m_argc = argc;
 	for(int i = 0; i<argc;i++)
@@ -185,8 +182,6 @@ ArgManager::ArgManager (int argc, char **argv)
 
 
 ArgManager::~ArgManager ( )
-// Algorithme :
-//
 {
 #ifdef MAP
     cout << "Appel au destructeur de <ArgManager>" << endl;

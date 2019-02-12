@@ -21,28 +21,37 @@ using namespace std;
 
 //----------------------------------------------------------------- PUBLIC
 
-//----------------------------------------------------- Méthodes publiques
-/*uint GetNbOcc ( )
-// Algorithme :
-//
+std::ostream & operator << (std::ostream & out, Noeud & noeud)
 {
-	return m_nbOcc;
-} //----- Fin de GetNbOcc*/
-
-
-void Noeud::Ajouter ( string source )
-{	
-	map<string, uint>::iterator it = m_mapSources.find(source);
-	if ( it == m_mapSources.end())
+	map<string, uint>::iterator it;
+	for ( it = noeud.m_mapSources.begin(); it != noeud.m_mapSources.end(); it++)
 	{
-		// not found
+		out << " | " << it->first << ", " << it->second << endl;
+	}
+	return out;
+}
+
+//----------------------------------------------------- Méthodes publiques
+
+void Noeud::Ajouter ( const string source )
+// Algorithme :
+// Ajoute a m_mapSources une source supplementaire ou incremente le nombre
+// de hit provenant de ce site
+{	
+	// Verifie si le site source existe deja dans la map qui contient tous les sites sources
+	// d'un meme site cible
+	map<string, uint>::iterator it = m_mapSources.find(source);
+	if ( it == m_mapSources.end()) // Site non trouve
+	{
+		// On ajoute le site source dans m_mapSources avec 1 hit
 		m_mapSources.insert(make_pair(source, 1));
 	}
-	else
+	else // Site trouve
 	{
-		// found
+		// On incremente de 1 le nombre de hit lie au site source
 		++(it->second);
 	}
+	// Augmente le nombre de hit total lie a un site cible
 	++m_nbOcc;
 }
 
@@ -58,8 +67,6 @@ uint Noeud::GetNbOcc() const
 
 //-------------------------------------------- Constructeurs - destructeur
 Noeud::Noeud ( string source )
-// Algorithme :
-//
 {
 
 	m_mapSources.insert(make_pair(source, 1));
