@@ -203,7 +203,8 @@ bool Data::GenerateGraph ( const string & fileName ) const
 // Genere un .dot a partir de m_docInfo et m_nodes
 // construit precedemment
 {
-	ofstream fileOut(fileName.c_str(), ios::trunc);
+	const string path = "dots/"; 
+	ofstream fileOut(path + fileName.c_str(), ios::trunc);
 
 	// Verification de l'ouverture du fichier
 	if(!fileOut)
