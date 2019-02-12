@@ -1,1 +1,1 @@
-Test du code retour du programme correct
+Ce test vérifie qu'on peut passer les options -e, -g graphName.dot et -t 11 dans cet ordre

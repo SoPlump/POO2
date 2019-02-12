@@ -100,7 +100,7 @@ void ArgManager::getMessage(Status etat)
 	{
 		case Status::Good:
 		default:
-			cerr << "Lancement du traitement" << endl;
+			cout << "Lancement du traitement" << endl;
 			break;
 		case Status::Err_arg :
 			cerr << "Arguments manquants" << endl;

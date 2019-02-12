@@ -1,1 +1,1 @@
-echo "yop !"
+../../main -e -g graphName.dot -t 11 court.log

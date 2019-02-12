@@ -1,1 +1,1 @@
-./exe
+../../main -t gr court.log

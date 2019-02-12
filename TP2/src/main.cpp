@@ -14,7 +14,7 @@ const string path = "logs/";
 int main(int argn, char** argv)
 {
 	// Vérification des arguments
-	ArgManager aM(argn,argv);
+	/*ArgManager aM(argn,argv);
 	Options chx = aM.getOptions();
 	aM.getMessage(chx.etat);
 
@@ -25,7 +25,7 @@ int main(int argn, char** argv)
 		data->Traiter();
 
 		delete data;
-	}
+	}*/
 
 	/*Data* data = new Data();
 	//FileManager* fileM;

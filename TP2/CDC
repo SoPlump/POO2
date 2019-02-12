@@ -4,9 +4,11 @@ TODO :
 - Spécifications des besoins + Tests
 - Pas stocker les lignes, les lire, les découper et direct renvoyer la donnée interessante OK à moitié
 - GetLine(index, string "source") voir si il existe fgets
-- Vérifier que le log existe dans le ArgManager
+- Vérifier que le log existe dans le ArgManager OK
 - Gerer dans le main le dossier logs
 - Vérifier que ArgManager::goodFile() est bonne
+- Si autres lettres que les options ?
+- Si on a moins de 10 entrées dans le top ? et plus de 10 ?
 
 
 

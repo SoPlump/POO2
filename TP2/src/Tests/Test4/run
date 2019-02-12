@@ -1,0 +1,1 @@
+﻿../../main -t 11 -e -g graphName.dot court.log
