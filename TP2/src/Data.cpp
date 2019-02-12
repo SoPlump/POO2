@@ -87,8 +87,8 @@ bool Data::GenerateGraph ( const string & fileName )
 	{
 		for (auto itSource = m_nodes.begin(); itSource != m_nodes.end(); ++itSource)
 		{
-			fileOut << "\tnode" << m_nodes.find(itCible->first)->second << " -> node" << pos->first.second;
-			fileOut << " [label=\"" << pos->second << "\"];" << endl;
+			//fileOut << "\tnode" << m_nodes.find(itCible->first)->second << " -> node" << pos->first.second;
+			//fileOut << " [label=\"" << pos->second << "\"];" << endl;
 		}
 	}
 
