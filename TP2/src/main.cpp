@@ -23,7 +23,7 @@ int main(int argn, char** argv)
 	{
 		Data* data = new Data(chx);
 		data->Traiter();
-		
+
 		//cout << *data;
 
 		delete data;
