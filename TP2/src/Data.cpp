@@ -85,10 +85,11 @@ bool Data::GenerateGraph ( const string & fileName )
 
 	for(auto itCible = m_docInfo.begin(); itCible != m_docInfo.end(); ++itCible)
 	{
-		for (auto itSource = m_nodes.begin(); itSource != m_nodes.end(); ++itSource)
+		map <std::string, uint> mapSource = itCible->second->GetMapSources();
+		for ( auto itSource = mapSource.begin() ; itSource != mapSource.end() ; ++itSource )
 		{
-			fileOut << "\tnode" << m_nodes.find(itCible->first)->second << " -> node" << pos->first.second;
-			fileOut << " [label=\"" << pos->second << "\"];" << endl;
+			fileOut << "\tnode" << m_nodes.find(itSource->first)->second << " -> node" << m_nodes.find(itCible->first)->second;
+			fileOut << " [label=\"" << itSource->second << "\"];" << endl;
 		}
 	}
 
@@ -139,26 +140,23 @@ bool Data::Traiter ()
 		}*/
 
 		// Traitement type d'entrées (-e)
-		if(choix.eOption == 1)
+		if (v.empty())
 		{
-			if (!v.empty())
+			keep = false;
+		}
+		else
+		{
+			if(choix.eOption == 1)
 			{
 				if((v[6].find(".css",0)!= string::npos) || (v[6].find(".js",0)!= string::npos) || (v[6].find(".png",0)!= string::npos) || (v[6].find(".bmp",0)!= string::npos) || (v[6].find(".jpg",0)!= string::npos) || (v[6].find(".jpeg",0)!= string::npos) || (v[6].find(".gif",0)!= string::npos) || (v[6].find(".ico",0)!= string::npos))
 				{
 					keep = false;
 				}
 			}
-			else
+			// Traitement intervalle temporelle (-t)
+			if(choix.tOption == 1)
 			{
-				keep = false;
-			}
-		}
-
-		// Traitement intervalle temporelle (-t)
-		if(choix.tOption == 1)
-		{
-			if (!v.empty())
-			{
+				cout << "wtf" <<endl;
 				size_t pos = v[3].find(':',0);
 				uint t = stoul(v[3].substr(pos+1, pos+2));
 
@@ -167,18 +165,15 @@ bool Data::Traiter ()
 					keep = false;
 				}
 			}
-			else
+
+			// Prise en compte dans le résultat
+			if(keep == true)
 			{
-				keep = false;
+				Ajouter(v[10], v[6]);
 			}
+
 		}
 
-		// Prise en compte dans le résultat
-		if(keep == true)
-		{
-			//TODO : insérer dans les maps
-			Ajouter(v[10], v[6]);
-		}
 	}
 
 	// Traitement création graphe (-g)
@@ -187,7 +182,7 @@ bool Data::Traiter ()
 		GenerateGraph(choix.graphName);
 	}
 
-	AfficherTopTen();
+	//AfficherTopTen();
 
 	return true;
 }
