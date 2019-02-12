@@ -65,16 +65,8 @@ Options ArgManager::getOptions ()
 				return options;
 			} 
 			else
-			{	
+			{
 				options.graphName = m_argv[i+1];
-
-				//Vérification que le fichier existe
-				ifstream test(options.graphName.c_str());
-				if(test.is_open())
-				{
-					options.etat = Status::Err_gDup;
-					return options;
-				}
 			}
 		}
 		if(m_argv[i].compare("-t")==0)
@@ -114,16 +106,13 @@ void ArgManager::getMessage(Status etat)
 			cerr << "Arguments manquants" << endl;
 			break;
 		case Status::Err_log :
-			cerr << "Erreur : fichier log non-valide" << endl;
+			cerr << "Erreur fichier log" << endl;
 			break;
 		case Status::Err_graphName :
-			cerr << "Erreur : nom graphViz de sortie erroné" << endl;
+			cerr << "Erreur nom graphViz de sortie" << endl;
 			break;
 		case Status::Err_t :
-			cerr << "Erreur : heure indiquée erronée" << endl;
-			break;
-		case Status::Err_gDup :
-			cerr << "Erreur : fichier graphViz déjà existant" << endl;
+			cerr << "Erreur heure indiquée" << endl;
 			break;
 	}
 }
