@@ -43,11 +43,17 @@ void Noeud::Ajouter ( string source )
 		// found
 		++(it->second);
 	}
+	++m_nbOcc;
 }
 
 map <string, uint> Noeud::GetMapSources ( )
 {
 	return m_mapSources;
+}
+
+uint Noeud::GetNbOcc() const
+{
+	return m_nbOcc;
 }
 
 //-------------------------------------------- Constructeurs - destructeur
@@ -57,6 +63,7 @@ Noeud::Noeud ( string source )
 {
 
 	m_mapSources.insert(make_pair(source, 1));
+	m_nbOcc = 1;
 #ifdef MAP
 	cout << "Appel au constructeur de <Noeud>" << endl;
 #endif

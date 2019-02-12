@@ -41,7 +41,7 @@ public:
         map<std::string, Noeud*>::iterator it;
         for ( it = data.m_docInfo.begin(); it != data.m_docInfo.end(); it++)
         {
-            out << it->first << endl;
+            out << it->first << ", " << it->second->GetNbOcc() << endl;
             out << *(it->second) << endl;
         }
         out << endl;
@@ -67,6 +67,8 @@ public:
     bool GenerateGraph ( const std::string & fileName );
 
     bool Traiter ();
+
+    void AfficherTopTen ( );
 
 //-------------------------------------------- Constructeurs - destructeur
     Data (Options opt);
