@@ -71,7 +71,7 @@ void Data::AddNode ( string source, string cible )
 
 }
 
-bool Data::GenerateGraph ( const string & fileName )
+bool Data::GenerateGraph ( const string & fileName ) const
 {
 
 	ofstream fileOut(fileName.c_str(), ios::trunc);
@@ -169,46 +169,48 @@ bool Data::Traiter ()
 
 			AfficherTopTen();
 
-			return true;
 		}
+	}
+	return true;
+}
 
-		void Data::AfficherTopTen ( )
-		{
-			cout << "La liste des dix meilleurs pages atteintes\n" << endl;
+void Data::AfficherTopTen ( )
+{
+	cout << "La liste des dix meilleurs pages atteintes\n" << endl;
 
-			multimap <uint,string> topTen;
-			map<string, Noeud*>::iterator itCible;
-			for ( itCible = m_docInfo.begin(); itCible != m_docInfo.end(); itCible++ )
-			{
-				topTen.insert(make_pair(itCible->second->GetNbOcc(),itCible->first));
-			}
+	multimap <uint,string> topTen;
+	map<string, Noeud*>::iterator itCible;
+	for ( itCible = m_docInfo.begin(); itCible != m_docInfo.end(); itCible++ )
+	{
+		topTen.insert(make_pair(itCible->second->GetNbOcc(),itCible->first));
+	}
 
-			multimap <uint,string> ::reverse_iterator itTopTen;
-			uint nbTopTen = 0;
-			for ( itTopTen = topTen.rbegin(); itTopTen != topTen.rend() && nbTopTen < 10; itTopTen++ )
-			{
-				++nbTopTen;
-				cout << itTopTen->first << ", " << itTopTen->second << endl;
-			}
-		}
+	multimap <uint,string> ::reverse_iterator itTopTen;
+	uint nbTopTen = 0;
+	for ( itTopTen = topTen.rbegin(); itTopTen != topTen.rend() && nbTopTen < 10; itTopTen++ )
+	{
+		++nbTopTen;
+		cout << itTopTen->first << ", " << itTopTen->second << endl;
+	}
+}
 
 //-------------------------------------------- Constructeurs - destructeur
 
-		Data::Data (Options opt)
+Data::Data (Options opt)
 // Algorithme :
 //
-		{
+{
 	// Récupération des choix
-			choix.etat = opt.etat;
-			choix.eOption = opt.eOption;
-			choix.gOption = opt.gOption;
-			choix.tOption = opt.tOption;
-			choix.hour = opt.hour;
-			choix.logName = opt.logName;
-			choix.graphName = opt.graphName;
+	choix.etat = opt.etat;
+	choix.eOption = opt.eOption;
+	choix.gOption = opt.gOption;
+	choix.tOption = opt.tOption;
+	choix.hour = opt.hour;
+	choix.logName = opt.logName;
+	choix.graphName = opt.graphName;
 
 #ifdef MAP
-			cout << "Appel au constructeur de <Data>" << endl;
+	cout << "Appel au constructeur de <Data>" << endl;
 #endif
 } //----- Fin de Data
 

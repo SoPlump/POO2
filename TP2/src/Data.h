@@ -64,7 +64,7 @@ public:
     
     void AddNode ( std::string source, std::string cible );
 
-    bool GenerateGraph ( const std::string & fileName );
+    bool GenerateGraph ( const std::string & fileName ) const;
 
     bool Traiter ();
 
