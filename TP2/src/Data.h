@@ -68,7 +68,7 @@ public:
 
     bool Traiter ();
 
-    void AfficherTopTen ( );
+    void AfficherTopTen ();
 
 //-------------------------------------------- Constructeurs - destructeur
     Data (Options opt);
@@ -99,7 +99,7 @@ protected:
     // Contrat :
     
 ///----------------------------------------------------- Attributs protégés
-    Options choix;
+    Options m_choix;
     std::map<std::string, Noeud*> m_docInfo;
     std::map<std::string, uint> m_nodes;
 };

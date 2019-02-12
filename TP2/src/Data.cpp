@@ -124,7 +124,7 @@ bool Data::GenerateGraph ( const string & fileName )
 
 bool Data::Traiter ()
 {
-	FileManager fileM(choix.logName);
+	FileManager fileM(m_choix.logName);
 
 	while(!fileM.eof())
 	{
@@ -146,7 +146,7 @@ bool Data::Traiter ()
 		}
 		else
 		{
-			if(choix.eOption == 1)
+			if(m_choix.eOption == 1)
 			{
 				if((v[6].find(".css",0)!= string::npos) || (v[6].find(".js",0)!= string::npos) || (v[6].find(".png",0)!= string::npos) || (v[6].find(".bmp",0)!= string::npos) || (v[6].find(".jpg",0)!= string::npos) || (v[6].find(".jpeg",0)!= string::npos) || (v[6].find(".gif",0)!= string::npos) || (v[6].find(".ico",0)!= string::npos))
 				{
@@ -154,13 +154,13 @@ bool Data::Traiter ()
 				}
 			}
 			// Traitement intervalle temporelle (-t)
-			if(choix.tOption == 1)
+			if(m_choix.tOption == 1)
 			{
 				cout << "wtf" <<endl;
 				size_t pos = v[3].find(':',0);
 				uint t = stoul(v[3].substr(pos+1, pos+2));
 
-				if(!(t==choix.hour))
+				if(!(t==m_choix.hour))
 				{
 					keep = false;
 				}
@@ -177,9 +177,9 @@ bool Data::Traiter ()
 	}
 
 	// Traitement création graphe (-g)
-	if(choix.gOption == 1)
+	if(m_choix.gOption == 1)
 	{
-		GenerateGraph(choix.graphName);
+		GenerateGraph(m_choix.graphName);
 	}
 
 	//AfficherTopTen();
@@ -214,13 +214,13 @@ Data::Data (Options opt)
 //
 {
 	// Récupération des choix
-	choix.etat = opt.etat;
-	choix.eOption = opt.eOption;
-	choix.gOption = opt.gOption;
-	choix.tOption = opt.tOption;
-	choix.hour = opt.hour;
-	choix.logName = opt.logName;
-	choix.graphName = opt.graphName;
+	m_choix.etat = opt.etat;
+	m_choix.eOption = opt.eOption;
+	m_choix.gOption = opt.gOption;
+	m_choix.tOption = opt.tOption;
+	m_choix.hour = opt.hour;
+	m_choix.logName = opt.logName;
+	m_choix.graphName = opt.graphName;
 
 #ifdef MAP
 	cout << "Appel au constructeur de <Data>" << endl;
