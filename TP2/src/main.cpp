@@ -19,7 +19,7 @@ int main(int argn, char** argv)
 	aM.getMessage(chx.etat);
 
 	// Demande de traitement
-	if (aM.goodFile(chx.logName))
+	if ((aM.goodFile(chx.logName)) && (chx.etat!=Status::Err_gDup))
 	{
 		Data* data = new Data(chx);
 		data->Traiter();
@@ -56,23 +56,6 @@ int main(int argn, char** argv)
 	cout << chx.logName << endl;
 	cout << chx.graphName << endl;
 
-
-	FileManager fileM(path +"test.log");
-	getline(fileM,line);
-	stringstream s(line);
-	vector <string> v = fileM.Decouper(s);
-	for(int i = 0; i<v.size();i++)
-	{
-		cout << v[i] << endl;
-	}
-
-	getline(fileM,line);
-	s=stringstream(line);
-	v=fileM.Decouper(s);
-	for(int i = 0; i<v.size();i++)
-	{
-		cout << v[i] << endl;
-	}*/
 
 	//delete data;
 
