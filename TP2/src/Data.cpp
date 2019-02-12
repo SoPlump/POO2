@@ -42,6 +42,8 @@ void Data::Ajouter ( string source, string cible )
 		// found
 		it->second->Ajouter(source);
 	}
+
+	AddNode(source, cible);
 }
 
 void Data::AddNode ( string source, string cible )
@@ -81,10 +83,19 @@ bool Data::GenerateGraph ( const string & fileName )
 		fileOut << "\tnode" << it->second << " [label=\"" <<  it->first << "\"];" << endl;
 	}
 
+	for(auto itCible = m_docInfo.begin(); itCible != m_docInfo.end(); ++itCible)
+	{
+		for (auto itSource = m_nodes.begin(); itSource != m_nodes.end(); ++itSource)
+		{
+			fileOut << "\tnode" << m_nodes.find(itCible->first)->second << " -> node" << pos->first.second;
+			fileOut << " [label=\"" << pos->second << "\"];" << endl;
+		}
+	}
+
 	// Ecriture des arcs entre les sites
 	// On parcours la table edges contenant l'ensemble des arcs
 
-	map<string, uint> mapSource;
+	/*map<string, uint> mapSource;
 	map<string, uint>::iterator itSource;
 
 	map<string, Noeud*>::iterator itCible;
@@ -94,7 +105,7 @@ bool Data::GenerateGraph ( const string & fileName )
 		itNode = m_nodes.find(itCible->first);
 		mapSource = itCible->second->GetMapSources();
 		//fileOut << "\tnode" << itNode->second << " -> node" << pos->first.second;
-	}
+	}*/
 
 	/*for(auto pos=edges.begin(); pos!=edges.end(); pos++)
 	{
@@ -113,7 +124,6 @@ bool Data::GenerateGraph ( const string & fileName )
 bool Data::Traiter ()
 {
 	FileManager fileM(choix.logName);
-	int i=0;
 
 	while(!fileM.eof())
 	{
@@ -123,10 +133,22 @@ bool Data::Traiter ()
 		stringstream s(line);
 		vector <string> v = fileM.Decouper(s);
 
+		/*for (int i = 0; i < v.size(); ++i)
+		{
+			cout << v[i] << endl;
+		}*/
+
 		// Traitement type d'entrées (-e)
 		if(choix.eOption == 1)
 		{
-			if((v[6].find(".css",0)!= string::npos) || (v[6].find(".js",0)!= string::npos) || (v[6].find(".png",0)!= string::npos) || (v[6].find(".bmp",0)!= string::npos) || (v[6].find(".jpg",0)!= string::npos) || (v[6].find(".jpeg",0)!= string::npos) || (v[6].find(".gif",0)!= string::npos) || (v[6].find(".ico",0)!= string::npos))
+			if (!v.empty())
+			{
+				if((v[6].find(".css",0)!= string::npos) || (v[6].find(".js",0)!= string::npos) || (v[6].find(".png",0)!= string::npos) || (v[6].find(".bmp",0)!= string::npos) || (v[6].find(".jpg",0)!= string::npos) || (v[6].find(".jpeg",0)!= string::npos) || (v[6].find(".gif",0)!= string::npos) || (v[6].find(".ico",0)!= string::npos))
+				{
+					keep = false;
+				}
+			}
+			else
 			{
 				keep = false;
 			}
@@ -135,10 +157,17 @@ bool Data::Traiter ()
 		// Traitement intervalle temporelle (-t)
 		if(choix.tOption == 1)
 		{
-			size_t pos = v[3].find(':',0);
-			uint t = stoul(v[3].substr(pos+1, pos+2));
+			if (!v.empty())
+			{
+				size_t pos = v[3].find(':',0);
+				uint t = stoul(v[3].substr(pos+1, pos+2));
 
-			if(!(t==choix.hour))
+				if(!(t==choix.hour))
+				{
+					keep = false;
+				}
+			}
+			else
 			{
 				keep = false;
 			}
@@ -148,19 +177,39 @@ bool Data::Traiter ()
 		if(keep == true)
 		{
 			//TODO : insérer dans les maps
-			cout << i++ << endl;
+			Ajouter(v[10], v[6]);
 		}
 	}
-
-	// Affichage du Top 10
 
 	// Traitement création graphe (-g)
 	if(choix.gOption == 1)
 	{
-		//TODO : Générer graphe
+		GenerateGraph(choix.graphName);
 	}
 
+	AfficherTopTen();
+
 	return true;
+}
+
+void Data::AfficherTopTen ( )
+{
+	cout << "La liste des dix meilleurs pages atteintes\n" << endl;
+
+	multimap <uint,string> topTen;
+	map<string, Noeud*>::iterator itCible;
+	for ( itCible = m_docInfo.begin(); itCible != m_docInfo.end(); itCible++ )
+	{
+		topTen.insert(make_pair(itCible->second->GetNbOcc(),itCible->first));
+	}
+
+	multimap <uint,string> ::reverse_iterator itTopTen;
+	uint nbTopTen = 0;
+	for ( itTopTen = topTen.rbegin(); itTopTen != topTen.rend() && nbTopTen < 10; itTopTen++ )
+	{
+		++nbTopTen;
+		cout << itTopTen->first << ", " << itTopTen->second << endl;
+	}
 }
 
 //-------------------------------------------- Constructeurs - destructeur
@@ -171,12 +220,12 @@ Data::Data (Options opt)
 {
 	// Récupération des choix
 	choix.etat = opt.etat;
-    choix.eOption = opt.eOption;
-    choix.gOption = opt.gOption;
-    choix.tOption = opt.tOption;
-    choix.hour = opt.hour;
-    choix.logName = opt.logName;
-    choix.graphName = opt.graphName;
+	choix.eOption = opt.eOption;
+	choix.gOption = opt.gOption;
+	choix.tOption = opt.tOption;
+	choix.hour = opt.hour;
+	choix.logName = opt.logName;
+	choix.graphName = opt.graphName;
 
 #ifdef MAP
 	cout << "Appel au constructeur de <Data>" << endl;
