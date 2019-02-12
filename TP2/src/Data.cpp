@@ -129,86 +129,86 @@ bool Data::Traiter ()
 
 		if (!v.empty())
 		{
-		// Traitement type d'entrées (-e)
-		if(choix.eOption == 1)
-		{
-				if((v[6].find(".css",0)!= string::npos) || (v[6].find(".js",0)!= string::npos) || (v[6].find(".png",0)!= string::npos) || (v[6].find(".bmp",0)!= string::npos) || (v[6].find(".jpg",0)!= string::npos) || (v[6].find(".jpeg",0)!= string::npos) || (v[6].find(".gif",0)!= string::npos) || (v[6].find(".ico",0)!= string::npos))
-				{
-					// La ligne correspond à un site qui ne correspond pas a ce qui est desire
-					keep = false;
-				}
-		}
-
-		// Traitement intervalle temporelle (-t)
-		if(choix.tOption == 1)
-		{
-			if (!v.empty())
+			// Traitement type d'entrées (-e)
+			if(choix.eOption == 1)
 			{
-				size_t pos = v[3].find(':',0);
-				uint t = stoul(v[3].substr(pos+1, pos+2));
-
-				if(!(t==choix.hour))
+				if((v[6].find(".css",0)!= string::npos) || (v[6].find(".js",0)!= string::npos) || (v[6].find(".png",0)!= string::npos) || (v[6].find(".bmp",0)!= string::npos) || (v[6].find(".jpg",0)!= string::npos) || (v[6].find(".jpeg",0)!= string::npos) || (v[6].find(".gif",0)!= string::npos) || (v[6].find(".ico",0)!= string::npos))
 				{
 					// La ligne correspond à un site qui ne correspond pas a ce qui est desire
 					keep = false;
 				}
 			}
 
-			// Ajout de la cible et de la source dans la map qui contient tous les sites cibles
-		if(keep == true)
-		{
-			Ajouter(v[10], v[6]);
+			// Traitement intervalle temporelle (-t)
+			if(choix.tOption == 1)
+			{
+				if (!v.empty())
+				{
+					size_t pos = v[3].find(':',0);
+					uint t = stoul(v[3].substr(pos+1, pos+2));
+
+					if(!(t==choix.hour))
+					{
+					// La ligne correspond à un site qui ne correspond pas a ce qui est desire
+						keep = false;
+					}
+				}
+
+				// Ajout de la cible et de la source dans la map qui contient tous les sites cibles
+				if(keep == true)
+				{
+					Ajouter(v[10], v[6]);
+				}
+			}
+
+			// Traitement création graphe (-g)
+			if(choix.gOption == 1)
+			{
+				GenerateGraph(choix.graphName);
+			}
+
+			AfficherTopTen();
+
+			return true;
 		}
-	}
 
-	// Traitement création graphe (-g)
-	if(choix.gOption == 1)
-	{
-		GenerateGraph(choix.graphName);
-	}
+		void Data::AfficherTopTen ( )
+		{
+			cout << "La liste des dix meilleurs pages atteintes\n" << endl;
 
-	AfficherTopTen();
+			multimap <uint,string> topTen;
+			map<string, Noeud*>::iterator itCible;
+			for ( itCible = m_docInfo.begin(); itCible != m_docInfo.end(); itCible++ )
+			{
+				topTen.insert(make_pair(itCible->second->GetNbOcc(),itCible->first));
+			}
 
-	return true;
-}
-
-void Data::AfficherTopTen ( )
-{
-	cout << "La liste des dix meilleurs pages atteintes\n" << endl;
-
-	multimap <uint,string> topTen;
-	map<string, Noeud*>::iterator itCible;
-	for ( itCible = m_docInfo.begin(); itCible != m_docInfo.end(); itCible++ )
-	{
-		topTen.insert(make_pair(itCible->second->GetNbOcc(),itCible->first));
-	}
-
-	multimap <uint,string> ::reverse_iterator itTopTen;
-	uint nbTopTen = 0;
-	for ( itTopTen = topTen.rbegin(); itTopTen != topTen.rend() && nbTopTen < 10; itTopTen++ )
-	{
-		++nbTopTen;
-		cout << itTopTen->first << ", " << itTopTen->second << endl;
-	}
-}
+			multimap <uint,string> ::reverse_iterator itTopTen;
+			uint nbTopTen = 0;
+			for ( itTopTen = topTen.rbegin(); itTopTen != topTen.rend() && nbTopTen < 10; itTopTen++ )
+			{
+				++nbTopTen;
+				cout << itTopTen->first << ", " << itTopTen->second << endl;
+			}
+		}
 
 //-------------------------------------------- Constructeurs - destructeur
 
-Data::Data (Options opt)
+		Data::Data (Options opt)
 // Algorithme :
 //
-{
+		{
 	// Récupération des choix
-	choix.etat = opt.etat;
-	choix.eOption = opt.eOption;
-	choix.gOption = opt.gOption;
-	choix.tOption = opt.tOption;
-	choix.hour = opt.hour;
-	choix.logName = opt.logName;
-	choix.graphName = opt.graphName;
+			choix.etat = opt.etat;
+			choix.eOption = opt.eOption;
+			choix.gOption = opt.gOption;
+			choix.tOption = opt.tOption;
+			choix.hour = opt.hour;
+			choix.logName = opt.logName;
+			choix.graphName = opt.graphName;
 
 #ifdef MAP
-	cout << "Appel au constructeur de <Data>" << endl;
+			cout << "Appel au constructeur de <Data>" << endl;
 #endif
 } //----- Fin de Data
 
