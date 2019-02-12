@@ -142,35 +142,32 @@ bool Data::Traiter ()
 			// Traitement intervalle temporelle (-t)
 			if(choix.tOption == 1)
 			{
-				if (!v.empty())
-				{
-					size_t pos = v[3].find(':',0);
-					uint t = stoul(v[3].substr(pos+1, pos+2));
+				size_t pos = v[3].find(':',0);
+				uint t = stoul(v[3].substr(pos+1, pos+2));
 
-					if(!(t==choix.hour))
-					{
+				if(!(t==choix.hour))
+				{
 					// La ligne correspond à un site qui ne correspond pas a ce qui est desire
-						keep = false;
-					}
+					keep = false;
 				}
+			}
 
 				// Ajout de la cible et de la source dans la map qui contient tous les sites cibles
-				if(keep == true)
-				{
-					Ajouter(v[10], v[6]);
-				}
+			if(keep == true)
+			{
+				Ajouter(v[10], v[6]);
 			}
+		}
+
+	}
 
 			// Traitement création graphe (-g)
-			if(choix.gOption == 1)
-			{
-				GenerateGraph(choix.graphName);
-			}
-
-			AfficherTopTen();
-
-		}
+	if(choix.gOption == 1)
+	{
+		GenerateGraph(choix.graphName);
 	}
+
+	AfficherTopTen();
 	return true;
 }
 
