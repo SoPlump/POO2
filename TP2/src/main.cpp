@@ -6,7 +6,6 @@
 #include <iostream>
 #include <stdio.h>
 #include "Data.h"
-#include "FileManager.h"
 #include "ArgManager.h"
 
 const string path = "logs/";
