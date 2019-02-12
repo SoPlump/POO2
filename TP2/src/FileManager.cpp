@@ -43,6 +43,8 @@ vector <string> FileManager::Decouper (stringstream& s)
 	string localURL = "http://intranet-if.insa-lyon.fr";
 	size_t pos = elts[10].find(localURL);
 
+	if (!elts.empty())
+	{
 	if (pos != string::npos) //Adresse locale
 	{
 		elts[10] = elts[10].substr(localURL.size() + 1, elts[10].size() - (localURL.size() + 2));
@@ -51,8 +53,9 @@ vector <string> FileManager::Decouper (stringstream& s)
 	{
 		elts[10] = elts[10].substr(1, elts[10].size() - 2);
 	}
+}
 
-	return elts;
+return elts;
 } //----- Fin de Méthode
 
 
