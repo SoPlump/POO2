@@ -18,7 +18,7 @@ int main(int argn, char** argv)
 	aM.getMessage(chx.etat);
 
 	// Demande de traitement
-	if ((aM.goodFile(chx.logName)) && (chx.etat!=Status::Err_gDup))
+	if ((aM.goodFile(chx.logName)) && (chx.etat==Status::Good))
 	{
 		Data* data = new Data(chx);
 		data->Traiter();
