@@ -154,11 +154,14 @@ bool ArgManager::goodFile ( const string& filename )
 		return false;
 	}
 
+	bool isEnd;
 	//Vérification que le fichier n'est pas vide
 	if (test)
 	{
 		test.get();
-		return test.eof();
+
+		isEnd = !test.eof();
+		return isEnd;
 	}
 } //----- Fin de GoodFile
 
