@@ -20,6 +20,8 @@ int main(int argn, char** argv)
 	// Demande de traitement
 	if ((aM.goodFile(chx.logName)) && (chx.etat==Status::Good))
 	{
+
+		cout << "what" << (aM.goodFile(chx.logName)) << boolalpha << endl;
 		Data* data = new Data(chx);
 		data->Traiter();
 		
