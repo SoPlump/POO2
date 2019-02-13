@@ -1,0 +1,8 @@
+digraph {
+	node0 [label="a.html"];
+	node1 [label="b.html"];
+	node2 [label="c.html"];
+	node1 -> node0 [label="1"];
+	node2 -> node0 [label="2"];
+	node1 -> node2 [label="2"];
+}

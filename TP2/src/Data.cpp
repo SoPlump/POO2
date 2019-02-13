@@ -106,11 +106,11 @@ bool Data::Traiter ()
 	{
 		if (GenerateGraph(choix.graphName))
 		{
-			cout << choix.graphName << ".dot a ete genere." << endl;
+			cerr << choix.graphName << " a ete genere." << endl;
 		}
 		else
 		{
-			cout << choix.graphName << ".dot n'a pas ete genere." << endl;
+			cerr << choix.graphName << "n'a pas ete genere." << endl;
 		}
 	}
 
