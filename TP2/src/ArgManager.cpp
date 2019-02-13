@@ -158,9 +158,8 @@ bool ArgManager::goodFile ( const string& filename )
 	if (test)
 	{
 		test.get();
-		return !test.eof();
+		return test.eof();
 	}
-	return true;
 } //----- Fin de GoodFile
 
 //-------------------------------------------- Constructeurs - destructeur
